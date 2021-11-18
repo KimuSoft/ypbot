@@ -6,6 +6,7 @@ import * as path from 'path'
 import { KModulePath } from '@pikokr/command.ts/dist/constants'
 import chalk from 'chalk'
 import * as fs from 'fs'
+import { log } from '@blitzjs/display'
 
 export class Client extends CommandClient {
     constructor() {
@@ -27,18 +28,19 @@ export class Client extends CommandClient {
 
         const watcher = chokidar.watch(require.main!.path)
 
-        watcher.on('change', async path1 => {
-            if (path1.startsWith(path.join(require.main!.path,'modules'))) {
+        watcher.on('change', async (path1) => {
+            if (path1.startsWith(path.join(require.main!.path, 'modules'))) {
                 try {
-                    const mod = this.registry.modules.find(x=>Reflect.getMetadata(KModulePath, x) === path1)
+                    const mod = this.registry.modules.find((x) => Reflect.getMetadata(KModulePath, x) === path1)
                     if (!mod) {
                         await this.registry.loadModule(path1, true)
                     } else {
                         await this.registry.reloadModule(mod)
                     }
-                    console.log(`[${chalk.green('SUCCESS')}] ${chalk.blueBright(path1)} - ${chalk.green('Success')}`)
+
+                    log.success(`Reloaded module ${chalk.bold(path1)}`)
                 } catch (e: any) {
-                    console.log(`[${chalk.redBright('ERROR')}] ${chalk.blueBright(path1)} - ${chalk.redBright(e.message)}`)
+                    log.error(`Failed to reload module ${chalk.bold(path1)}`)
                 }
                 return
             }
@@ -46,6 +48,8 @@ export class Client extends CommandClient {
             if (mod) {
                 const f = (await fs.readFileSync(path1)).toString()
                 if (f.startsWith('// reloadable')) {
+                    delete require.cache[require.resolve(path1)]
+                    log.info(`Module cache deleted - ${mod.filename}`)
                 }
             }
         })

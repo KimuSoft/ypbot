@@ -2,6 +2,7 @@ import { listener, Module, slashCommand } from '@pikokr/command.ts'
 import { Client } from '../structures/client'
 import { SlashCommandBuilder } from '@discordjs/builders'
 import { CommandInteraction } from 'discord.js'
+import { log } from '@blitzjs/display'
 
 class Hello extends Module {
     constructor(private cts: Client) {
@@ -20,7 +21,7 @@ class Hello extends Module {
 
     @listener('ready')
     ready() {
-        console.log(`Logged in as ${this.cts.client.user!.tag}`)
+        log.info(`Logged in as ${this.cts.client.user!.tag}`)
     }
 }
 

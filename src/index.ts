@@ -3,4 +3,11 @@ import { config } from './config'
 
 export const cts = new Client()
 
-cts.client.login(config.token)
+import { initServer } from './webManager'
+import { setGlobal } from './utils/global'
+
+setGlobal('yp.client', cts.client)
+
+// cts.client.login(config.token).then(() => initServer())
+
+initServer().then()
