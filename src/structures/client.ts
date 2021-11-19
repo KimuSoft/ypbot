@@ -7,6 +7,7 @@ import { KModulePath } from '@pikokr/command.ts/dist/constants'
 import chalk from 'chalk'
 import * as fs from 'fs'
 import { log } from '@blitzjs/display'
+import { restartServer } from '../webManager'
 
 export class Client extends CommandClient {
     constructor() {
@@ -44,12 +45,20 @@ export class Client extends CommandClient {
                 }
                 return
             }
+            if (path1.startsWith(path.join(require.main!.path, 'web'))) {
+                try {
+                    await restartServer()
+                } catch (e) {
+                    console.error(e)
+                }
+                return
+            }
             const mod = require.cache[require.resolve(path1)]
             if (mod) {
                 const f = (await fs.readFileSync(path1)).toString()
                 if (f.startsWith('// reloadable')) {
                     delete require.cache[require.resolve(path1)]
-                    log.info(`Module cache deleted - ${mod.filename}`)
+                    log.success(`Module cache deleted - ${mod.filename}`)
                 }
             }
         })
