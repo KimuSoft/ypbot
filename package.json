@@ -13,10 +13,12 @@
   },
   "dependencies": {
     "@blitzjs/display": "^0.43.0",
+    "@blitzjs/server": "^0.43.0",
     "@discordjs/builders": "^0.6.0",
     "@discordjs/rest": "^0.1.0-canary.0",
     "@pikokr/command.ts": "^3.0.6",
     "@prisma/client": "3.5.0",
+    "axios": "^0.24.0",
     "blitz": "^0.43.0",
     "chalk": "^4.1.2",
     "chokidar": "^3.5.2",

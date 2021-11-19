@@ -6,5 +6,12 @@
   "web": {
     "port": 3000
   },
-  "dev": false
+  "dev": false,
+  "discord": {
+    "client": {
+      "id": "",
+      "secret": "",
+      "callback": ""
+    }
+  }
 }
