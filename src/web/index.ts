@@ -10,6 +10,7 @@ import passport from 'passport'
 import DiscordStrategy from 'passport-discord'
 import { cts } from '../index'
 import * as path from 'path'
+import noapi from './routes/noapi'
 
 passport.use(
     new DiscordStrategy(
@@ -102,6 +103,8 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 app.use('/assets', express.static(path.join(__dirname, '../../web/dist')))
+
+app.use(noapi)
 
 app.use((req, res, next) => {
     if (req.headers['x-yp-api'] === 'true') {
