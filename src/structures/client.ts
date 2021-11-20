@@ -1,5 +1,5 @@
 import { CommandClient } from '@pikokr/command.ts'
-import Discord, { Intents, IntentsString } from 'discord.js'
+import Discord, { Intents, IntentsString, Message } from 'discord.js'
 import { config } from '../config'
 import chokidar from 'chokidar'
 import * as path from 'path'
@@ -8,6 +8,7 @@ import chalk from 'chalk'
 import * as fs from 'fs'
 import { log } from '@blitzjs/display'
 import { restartServer } from '../webManager'
+import Dokdo from 'dokdo'
 
 export class Client extends CommandClient {
     constructor() {
@@ -62,5 +63,16 @@ export class Client extends CommandClient {
                 }
             }
         })
+    }
+
+    async ready(): Promise<void> {
+        await super.ready()
+        const dokdo = new Dokdo(this.client, {
+            owners: this.owners,
+            noPerm(): any {},
+            prefix: this.options.command.prefix as string,
+        })
+
+        this.client.on('messageCreate', (msg) => dokdo.run(msg))
     }
 }

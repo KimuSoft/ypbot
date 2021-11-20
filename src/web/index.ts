@@ -103,6 +103,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 app.use('/assets', express.static(path.join(__dirname, '../../web/dist')))
+app.use('/lang', express.static(path.join(__dirname, '../../lang')))
 
 app.use(noapi)
 
