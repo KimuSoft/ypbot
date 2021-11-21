@@ -39,7 +39,7 @@ router.get('/guilds', requireAuth, async (req, res) => {
         result.push({
             id: guild.id,
             name: guild.name,
-            icon: `https://cdn.discord.app.com/guilds${guild.id}/${guild.icon}.png?size=512`,
+            icon: guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png?size=512` : '',
             invited,
         })
     }

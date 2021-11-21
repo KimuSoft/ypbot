@@ -55,7 +55,8 @@
     "recoil": "^0.5.2",
     "sass": "^1.43.4",
     "sass-loader": "^12.3.0",
-    "styled-components": "^5.3.3"
+    "styled-components": "^5.3.3",
+    "swr": "^1.0.1"
   },
   "scripts": {
     "dev": "ts-node src",
