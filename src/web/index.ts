@@ -29,12 +29,11 @@ passport.use(
                     create: {
                         id: profile.id,
                         discordAccessToken: accessToken,
-                        discordRefreshToken: accessToken,
+                        discordRefreshToken: refreshToken,
                     },
                     update: {
-                        id: profile.id,
                         discordAccessToken: accessToken,
-                        discordRefreshToken: accessToken,
+                        discordRefreshToken: refreshToken,
                     },
                 })
 

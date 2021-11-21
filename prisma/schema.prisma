@@ -16,6 +16,7 @@ model User {
   updatedAt      DateTime @updatedAt
   discordAccessToken String
   discordRefreshToken String
+  discordTokenExpiresAt DateTime @default(now())
 }
 
 model Session {
