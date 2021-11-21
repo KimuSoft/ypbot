@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { useCurrentUser } from '../../hooks/useCurrentUser'
-import { useTranslation } from 'react-i18next'
 
 const Container = styled.div`
     background: #202225;
@@ -77,8 +76,6 @@ const UserDropdown = styled.div`
 `
 
 const AccountMenu: React.FC = () => {
-    const { t } = useTranslation('common')
-
     const user = useCurrentUser()
 
     return (
@@ -88,12 +85,12 @@ const AccountMenu: React.FC = () => {
                     <div className="activator">{user.tag}</div>
                     <div className="content">
                         <a href={'/auth/logout'} className="item">
-                            {t('header.user.logout')}
+                            로그아웃
                         </a>
                     </div>
                 </UserDropdown>
             ) : (
-                <LogInBtn href="/auth/login">{t('header.user.login')}</LogInBtn>
+                <LogInBtn href="/auth/login">로그인</LogInBtn>
             )}
         </div>
     )

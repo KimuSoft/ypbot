@@ -1,4 +1,4 @@
-import { selector } from 'recoil'
+import { atom, selector } from 'recoil'
 import { YPUser } from '../../src/sharedTypings'
 import { api } from './api'
 
@@ -12,4 +12,9 @@ export const userState = selector<YPUser | null>({
             return null
         }
     },
+})
+
+export const guildSidebarOpen = atom({
+    key: 'guildSidebarOpen',
+    default: false,
 })

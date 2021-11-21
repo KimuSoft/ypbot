@@ -5,8 +5,10 @@ import Select, { components, OptionProps, SingleValueProps, useStateManager } fr
 import { useGuildList } from '../../hooks/useGuildList'
 import { Link, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useRecoilValue } from 'recoil'
+import { guildSidebarOpen } from '../../state'
 
-const Container = styled.div`
+const Container = styled.div<{ open: boolean }>`
     background: #202225;
     width: 300px;
     height: 100%;
@@ -15,6 +17,12 @@ const Container = styled.div`
     padding: 20px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     gap: 20px;
+    @media (max-width: 1024px) {
+        position: fixed;
+        left: 0;
+        top: 60px;
+        display: ${({ open }) => (open ? 'flex' : 'none')};
+    }
 `
 
 const CustomOption: React.FC<OptionProps> = ({ children, data, ...rest }) => {
@@ -88,6 +96,8 @@ const BackButton = styled(Link)`
 `
 
 const Sidebar: React.FC = () => {
+    const open = useRecoilValue(guildSidebarOpen)
+
     const guilds = useGuildList().filter((x) => x.invited)
     const guild = useCurrentGuild()
     const navigate = useNavigate()
@@ -105,7 +115,7 @@ const Sidebar: React.FC = () => {
     }))
 
     return (
-        <Container>
+        <Container open={open}>
             <BackButton to="/servers">
                 <FontAwesomeIcon icon={['fas', 'arrow-left']} />
                 돌아가기

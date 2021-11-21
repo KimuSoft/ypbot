@@ -16,7 +16,7 @@ const GuildLayout: React.FC = () => {
             <GuildHeader />
             <div style={{ display: 'flex', paddingTop: 60, height: '100%' }}>
                 <Sidebar />
-                <div style={{ paddingTop: 10 }}>
+                <div style={{ padding: 10, height: '100%', overflowY: 'scroll', flexGrow: 1, width: 0 }}>
                     <Outlet />
                 </div>
             </div>
