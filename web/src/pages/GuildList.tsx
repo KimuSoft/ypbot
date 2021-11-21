@@ -82,7 +82,7 @@ const GuildItem: React.FC<{ guild: Guild }> = ({ guild }) => {
             {content}
         </Link>
     ) : (
-        <a style={{ color: '#fff', textDecoration: 'none' }} href={`/servers/invite/${guild.id}`}>
+        <a style={{ color: '#fff', textDecoration: 'none' }} href={`/invite/${guild.id}`}>
             {content}
         </a>
     )
@@ -110,8 +110,6 @@ const Content: React.FC = () => {
     data.sort((a, b) => {
         return a.invited === b.invited ? 0 : a.invited ? -1 : 1
     })
-
-    console.log(JSON.stringify(data))
 
     return (
         <List>

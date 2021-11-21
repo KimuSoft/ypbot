@@ -12,7 +12,8 @@
     "client": {
       "id": "",
       "secret": "",
-      "callback": ""
+      "callback": "",
+      "inviteCallback": ""
     }
   }
 }
