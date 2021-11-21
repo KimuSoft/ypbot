@@ -3,8 +3,8 @@ import { useCurrentUser } from '../hooks/useCurrentUser'
 import { Link, Navigate } from 'react-router-dom'
 import Skeleton from 'react-loading-skeleton'
 import styled from 'styled-components'
-import { api } from '../api'
-import useSWR from 'swr'
+import type { Guild } from '../../../src/sharedTypings'
+import { useGuildList } from '../hooks/useGuildList'
 
 const ItemContainerSkeleton = styled.div`
     display: flex;
@@ -35,13 +35,6 @@ const GuildItemLoading: React.FC = () => {
             </div>
         </ItemContainerSkeleton>
     )
-}
-
-type Guild = {
-    id: string
-    icon: string
-    invited: boolean
-    name: string
 }
 
 const Button = styled.div<{ invited: boolean }>`
@@ -102,10 +95,8 @@ const List = styled.div`
     flex-direction: column;
 `
 
-const fetcher = (url: string) => api.get(url).then((x) => x.data)
-
 const Content: React.FC = () => {
-    const data = useSWR<Guild[]>('/me/guilds', fetcher, { suspense: true }).data!
+    const data = useGuildList()
 
     data.sort((a, b) => {
         return a.invited === b.invited ? 0 : a.invited ? -1 : 1

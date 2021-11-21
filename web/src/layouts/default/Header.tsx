@@ -11,6 +11,11 @@ const Container = styled.div`
     padding-right: 30px;
     height: 60px;
     align-items: center;
+    gap: 20px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 99999;
 `
 
 const Title = styled(Link)`
@@ -76,8 +81,6 @@ const AccountMenu: React.FC = () => {
 
     const user = useCurrentUser()
 
-    console.log(user)
-
     return (
         <div>
             {user ? (
@@ -99,7 +102,7 @@ const AccountMenu: React.FC = () => {
 const DefaultHeader: React.FC = () => {
     return (
         <Container>
-            <Title to="/">YP</Title>
+            <Title to="/">위브</Title>
             <div style={{ flexGrow: 1 }} />
             <AccountMenu />
         </Container>
@@ -107,3 +110,5 @@ const DefaultHeader: React.FC = () => {
 }
 
 export default DefaultHeader
+
+export { AccountMenu, Title as HeaderTitle, Container as HeaderContainer }

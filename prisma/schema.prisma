@@ -19,6 +19,10 @@ model User {
   discordTokenExpiresAt DateTime @default(now())
 }
 
+model Guild {
+    id String @id
+}
+
 model Session {
   id        String   @id
   sid       String   @unique

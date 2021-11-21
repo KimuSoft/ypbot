@@ -10,7 +10,9 @@ discordApi.interceptors.response.use(
     },
     (error: AxiosError) => {
         if (error.response?.status === 429) {
-            return axios.request(error.config)
+            return new Promise((resolve) => {
+                setTimeout(resolve, Number(error.response?.headers['x-retry-after']))
+            }).then(() => axios.request(error.config))
         }
         return Promise.reject(error)
     }

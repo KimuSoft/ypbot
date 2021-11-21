@@ -6,7 +6,9 @@ const DefaultLayout: React.FC = () => {
     return (
         <div>
             <Header />
-            <Outlet />
+            <div style={{ paddingTop: 70 }}>
+                <Outlet />
+            </div>
         </div>
     )
 }
