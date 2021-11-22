@@ -10,8 +10,9 @@ discordApi.interceptors.response.use(
     },
     (error: AxiosError) => {
         if (error.response?.status === 429) {
+            console.log(`Rate limited. retrying after ${error.response?.data.retry_after}s`)
             return new Promise((resolve) => {
-                setTimeout(resolve, Number(error.response?.headers['x-retry-after']))
+                setTimeout(resolve, error.response?.data.retry_after * 1000)
             }).then(() => axios.request(error.config))
         }
         return Promise.reject(error)
