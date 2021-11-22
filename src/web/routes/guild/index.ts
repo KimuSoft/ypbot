@@ -4,6 +4,7 @@ import { getYPGuild } from '../../../utils/guild'
 import { Guild } from 'discord.js'
 import { Guild as YPGuild } from '@prisma/client'
 import { requireAuth } from '../../middlewares/auth'
+import blacklists from './blacklists'
 
 const router = Router({
     mergeParams: true,
@@ -45,5 +46,7 @@ router.get('/', (req, res) => {
         icon: d.iconURL({ size: 512, dynamic: true }),
     })
 })
+
+router.use('/blacklists', blacklists)
 
 export default router

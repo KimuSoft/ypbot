@@ -206,7 +206,7 @@ const Sidebar: React.FC = () => {
             <AnimateSharedLayout>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                     <SidebarItem to="/" icon={['fas', 'chart-line']} label="대시보드" />
-                    <SidebarItem to="/blacklist" icon={['fas', 'list']} label="검열" />
+                    <SidebarItem to="/blacklists" icon={['fas', 'list']} label="검열" />
                 </div>
             </AnimateSharedLayout>
         </Container>

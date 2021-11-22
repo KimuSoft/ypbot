@@ -21,10 +21,10 @@ model User {
 
 model Guild {
     id String @id
-    blacklists Blacklist[]
+    blacklists BlackList[]
 }
 
-model Blacklist {
+model BlackList {
     id String @id @default(cuid())
     guildId String
     guild Guild @relation(fields: [guildId], references: [id], onDelete: Cascade)

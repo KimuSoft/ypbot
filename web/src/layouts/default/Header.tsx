@@ -20,7 +20,7 @@ const Container = styled.div`
 const Title = styled(Link)`
     color: #fff;
     font-size: 24px;
-    font-weight: 700;
+    font-weight: 800;
     text-decoration: none;
 `
 
