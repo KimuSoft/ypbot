@@ -21,6 +21,15 @@ model User {
 
 model Guild {
     id String @id
+    blacklists Blacklist[]
+}
+
+model Blacklist {
+    id String @id @default(cuid())
+    guildId String
+    guild Guild @relation(fields: [guildId], references: [id], onDelete: Cascade)
+    words String[]
+    channels String[]
 }
 
 model Session {
