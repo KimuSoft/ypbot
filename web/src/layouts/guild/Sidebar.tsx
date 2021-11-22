@@ -3,10 +3,12 @@ import styled from 'styled-components'
 import { useCurrentGuild } from '../../hooks/useCurrentGuild'
 import Select, { components, OptionProps, SingleValueProps, useStateManager } from 'react-select'
 import { useGuildList } from '../../hooks/useGuildList'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useRecoilValue } from 'recoil'
 import { guildSidebarOpen } from '../../state'
+import { AnimateSharedLayout, motion } from 'framer-motion'
+import { IconProp } from '@fortawesome/fontawesome-svg-core'
 
 const Container = styled.div<{ open: boolean }>`
     background: #202225;
@@ -95,6 +97,51 @@ const BackButton = styled(Link)`
     }
 `
 
+const SidebarItemContainer = styled(Link)`
+    position: relative;
+    height: 36px;
+    width: 100%;
+    color: #fff;
+    text-decoration: none;
+`
+
+const SidebarItem: React.FC<{ icon: IconProp; label: React.ReactNode; to: string }> = ({ icon, label, to }) => {
+    const loc = useLocation()
+    const params = useParams<'id'>()
+
+    const base = `/servers/${params.id}`
+
+    const path = base + (to === '/' ? '' : to)
+
+    const active = path === loc.pathname
+
+    return (
+        <SidebarItemContainer to={path}>
+            {active && (
+                <motion.div
+                    layoutId="guild-sidebar-current-item"
+                    style={{
+                        width: '100%',
+                        height: '100%',
+                        left: 0,
+                        top: 0,
+                        position: 'absolute',
+                        background: 'rgba(255,255,255,0.1)',
+                        borderRadius: 5,
+                        pointerEvents: 'none',
+                    }}
+                />
+            )}
+            <div style={{ zIndex: 3, width: '100%', height: '100%', display: 'flex', alignItems: 'center', gap: 10, paddingLeft: 10, paddingRight: 10 }}>
+                <div>
+                    <FontAwesomeIcon icon={icon} />
+                </div>
+                <div>{label}</div>
+            </div>
+        </SidebarItemContainer>
+    )
+}
+
 const Sidebar: React.FC = () => {
     const open = useRecoilValue(guildSidebarOpen)
 
@@ -156,6 +203,12 @@ const Sidebar: React.FC = () => {
                 options={options}
                 value={options.filter((x) => x.value === guild.id)}
             />
+            <AnimateSharedLayout>
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <SidebarItem to="/" icon={['fas', 'chart-line']} label="대시보드" />
+                    <SidebarItem to="/blacklist" icon={['fas', 'list']} label="검열" />
+                </div>
+            </AnimateSharedLayout>
         </Container>
     )
 }
