@@ -105,14 +105,14 @@ const SidebarItemContainer = styled(Link)`
     text-decoration: none;
 `
 
-const SidebarItem: React.FC<{ icon: IconProp; label: React.ReactNode; to: string }> = ({ icon, label, to }) => {
+const SidebarItem: React.FC<{ icon: IconProp; label: React.ReactNode; to: string; starts?: boolean }> = ({ icon, label, starts, to }) => {
     const params = useParams<'id' | '*'>()
 
     const base = `/servers/${params.id}`
 
     const path = base + '/' + (to === '/' ? '' : to)
 
-    const active = params['*'] === to
+    const active = starts ? params['*'].startsWith(to) : params['*'] === to
 
     return (
         <SidebarItemContainer to={path}>
@@ -205,7 +205,7 @@ const Sidebar: React.FC = () => {
             <AnimateSharedLayout>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                     <SidebarItem to="" icon={['fas', 'chart-line']} label="대시보드" />
-                    <SidebarItem to="blacklists" icon={['fas', 'list']} label="검열" />
+                    <SidebarItem to="blacklists" icon={['fas', 'list']} label="검열" starts />
                 </div>
             </AnimateSharedLayout>
         </Container>
