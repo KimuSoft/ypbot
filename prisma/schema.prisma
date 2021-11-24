@@ -30,6 +30,7 @@ model BlackList {
     guild Guild @relation(fields: [guildId], references: [id], onDelete: Cascade)
     words String[]
     channels String[]
+    name String
 }
 
 model Session {

@@ -17,11 +17,20 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-    const data = await blacklistCreateSchema.safeParseAsync(req.body)
-    if (!data.success) {
-        res.status(400).json(data.error.issues)
+    const v = await blacklistCreateSchema.safeParseAsync(req.body)
+    if (!v.success) {
+        res.status(400).json(v.error.issues)
         return
     }
+
+    const { id } = await db.blackList.create({
+        data: {
+            guildId: req.guild.yp.id,
+            name: v.data.name,
+        },
+    })
+
+    res.json({ id })
 })
 
 export default router

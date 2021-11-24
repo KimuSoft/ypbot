@@ -6,6 +6,7 @@ import Modal from '../../../components/Modal'
 import Button from '../../../components/Button'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import Input from '../../../components/Input'
+import { useNavigate } from 'react-router-dom'
 
 const fetcher = (url: string) => api.get(url).then((r) => r.data)
 
@@ -28,9 +29,23 @@ const Blacklists: React.FC = () => {
         formState: { errors },
     } = useForm<CreateInputs>()
 
-    const onSubmit: SubmitHandler<CreateInputs> = (data) => {
-        console.log(data)
+    const [submit, setSubmit] = React.useState(false)
+
+    const navigate = useNavigate()
+
+    const onSubmit: SubmitHandler<CreateInputs> = async (data) => {
+        if (submit) return
+        setSubmit(true)
+        try {
+            const { data: resData } = await api.post(`/guilds/${guild.id}/blacklists`, data)
+            navigate(`/servers/${guild.id}/blacklists/${resData.id}`)
+        } catch (e) {
+            console.error(e)
+            setSubmit(false)
+        }
     }
+
+    console.log(data)
 
     return (
         <div style={{ maxWidth: 900, marginLeft: 'auto', marginRight: 'auto', width: '100%', marginTop: 20 }}>
