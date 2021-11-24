@@ -7,6 +7,8 @@ import Button from '../../../components/Button'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import Input from '../../../components/Input'
 import { useNavigate } from 'react-router-dom'
+import styled from 'styled-components'
+import type { BlackList } from '@prisma/client'
 
 const fetcher = (url: string) => api.get(url).then((r) => r.data)
 
@@ -14,12 +16,56 @@ type CreateInputs = {
     name: string
 }
 
+const ListItemContainer = styled.div`
+    padding: 20px;
+    background: #202225;
+    overflow: hidden;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+`
+
+const ListItemWord = styled.div`
+    background: rgba(255, 255, 255, 0.2);
+    padding: 5px;
+`
+
+const ListItem: React.FC<{ item: BlackList }> = ({ item }) => {
+    return (
+        <ListItemContainer>
+            <div style={{ fontSize: 20, fontWeight: 800 }}>{item.name}</div>
+            <div style={{ flexGrow: 1 }} />
+            <div style={{ display: 'flex', gap: 5, whiteSpace: 'nowrap', overflow: 'hidden' }}>
+                {item.words.map((x, i) => (
+                    <ListItemWord key={i}>{x}</ListItemWord>
+                ))}
+                {!item.words.length && <ListItemWord>키워드 없음</ListItemWord>}
+            </div>
+        </ListItemContainer>
+    )
+}
+
+const List = styled.div`
+    display: grid;
+    gap: 10px;
+    margin-top: 20px;
+    @media (min-width: 769px) and (max-width: 1024px) {
+        grid-template-columns: 1fr 1fr;
+    }
+    @media (min-width: 1025px) {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+    }
+`
+
 const Blacklists: React.FC = () => {
     const guild = useCurrentGuild()
 
     const [showModal, setShowModal] = React.useState(false)
 
-    const { data } = useSWR(`/guilds/${guild.id}/blacklists`, fetcher, {
+    const { data } = useSWR<BlackList[]>(`/guilds/${guild.id}/blacklists`, fetcher, {
         suspense: true,
     })
 
@@ -81,6 +127,11 @@ const Blacklists: React.FC = () => {
                 <div style={{ flexGrow: 1 }} />
                 <Button onClick={() => setShowModal(true)}>추가하기</Button>
             </div>
+            <List>
+                {data.map((x, i) => {
+                    return <ListItem key={i} item={x} />
+                })}
+            </List>
         </div>
     )
 }
