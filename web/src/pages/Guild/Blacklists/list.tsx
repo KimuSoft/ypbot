@@ -6,7 +6,7 @@ import Modal from '../../../components/Modal'
 import Button from '../../../components/Button'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import Input from '../../../components/Input'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import type { BlackList } from '@prisma/client'
 
@@ -16,13 +16,15 @@ type CreateInputs = {
     name: string
 }
 
-const ListItemContainer = styled.div`
+const ListItemContainer = styled(Link)`
     padding: 20px;
     background: #202225;
     overflow: hidden;
     height: 100px;
     display: flex;
     flex-direction: column;
+    color: #fff;
+    text-decoration: none;
 `
 
 const ListItemWord = styled.div`
@@ -32,7 +34,7 @@ const ListItemWord = styled.div`
 
 const ListItem: React.FC<{ item: BlackList }> = ({ item }) => {
     return (
-        <ListItemContainer>
+        <ListItemContainer to={item.id}>
             <div style={{ fontSize: 20, fontWeight: 800 }}>{item.name}</div>
             <div style={{ flexGrow: 1 }} />
             <div style={{ display: 'flex', gap: 5, whiteSpace: 'nowrap', overflow: 'hidden' }}>
