@@ -1,6 +1,6 @@
 {
   "name": "command.ts-v3-quickstart-template",
-  "version": "1.0.0",
+  "version": "0.0.1-alpha",
   "license": "MIT",
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.16.4",
