@@ -45,6 +45,7 @@
     "chalk": "^4.1.2",
     "chokidar": "^3.5.2",
     "console-table-printer": "^2.10.0",
+    "dayjs": "^1.10.7",
     "discord-api-types": "^0.23.1",
     "discord.js": "^13.1.0",
     "dokdo": "^0.5.1",
