@@ -1,10 +1,11 @@
 import { Router } from 'express'
 import { cts } from '../../../index'
 import { getYPGuild } from '../../../utils/guild'
-import { Guild } from 'discord.js'
+import { Guild, TextChannel } from 'discord.js'
 import { Guild as YPGuild } from '@prisma/client'
 import { requireAuth } from '../../middlewares/auth'
 import blacklists from './blacklists'
+import { YPChannel } from '../../../sharedTypings'
 
 const router = Router({
     mergeParams: true,
@@ -45,6 +46,21 @@ router.get('/', (req, res) => {
         name: d.name,
         icon: d.iconURL({ size: 512, dynamic: true }),
     })
+})
+
+router.get('/channels/text', (req, res) => {
+    res.json(
+        req.guild.discord.channels.cache
+            .filter((x) => ['GUILD_TEXT', 'GUILD_NEWS'].includes(x.type))
+            .map(
+                (x) =>
+                    ({
+                        id: x.id,
+                        name: x.name,
+                        desc: (x as TextChannel).topic,
+                    } as YPChannel)
+            )
+    )
 })
 
 router.use('/blacklists', blacklists)

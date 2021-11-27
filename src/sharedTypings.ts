@@ -14,3 +14,9 @@ export type Guild = {
     invited: boolean
     name: string
 }
+
+export type YPChannel = {
+    id: string
+    name: string
+    desc: string
+}
