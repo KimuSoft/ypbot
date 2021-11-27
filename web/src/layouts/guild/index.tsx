@@ -17,7 +17,9 @@ const GuildLayout: React.FC = () => {
             <div style={{ display: 'flex', paddingTop: 60, height: '100%' }}>
                 <Sidebar />
                 <div style={{ padding: 10, height: '100%', overflowY: 'scroll', flexGrow: 1, width: 0 }}>
-                    <Outlet />
+                    <React.Suspense fallback={<div>Loading....</div>}>
+                        <Outlet />
+                    </React.Suspense>
                 </div>
             </div>
         </div>

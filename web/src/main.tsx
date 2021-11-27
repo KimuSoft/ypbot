@@ -9,15 +9,17 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
-import { ToastContainer } from 'react-toastify'
+import { ToastContainer, Bounce } from 'react-toastify'
 
 library.add(fas, fab, far)
 
 ReactDOM.render(
     <RecoilRoot>
         <ToastContainer
+            transition={Bounce}
+            theme="colored"
             style={{
-                top: 64,
+                zIndex: 999999,
             }}
         />
         <BrowserRouter>

@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 const Overlay = styled.div<{ show: boolean }>`
-    z-index: 999999;
+    z-index: 1000;
     position: fixed;
     left: 0;
     top: 0;

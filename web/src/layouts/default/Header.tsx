@@ -14,7 +14,7 @@ const Container = styled.div`
     position: fixed;
     width: 100%;
     top: 0;
-    z-index: 99999;
+    z-index: 1000;
 `
 
 const Title = styled(Link)`

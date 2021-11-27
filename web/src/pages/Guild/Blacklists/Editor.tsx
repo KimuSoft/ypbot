@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navigate, useParams } from 'react-router-dom'
+import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import useSWR from 'swr'
 import { api } from '../../../api'
 import { useGuildTextChannels } from '../../../hooks/useGuildTextChannels'
@@ -11,6 +11,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { blacklistEditSchema } from '../../../../../src/web/validation/blacklists'
 import { toast } from 'react-toastify'
 import Select from 'react-select'
+import Modal from '../../../components/Modal'
 
 const fetcher = (url: string) =>
     api
@@ -29,6 +30,8 @@ const BlackListEdit: React.FC = () => {
 
     const channels = useGuildTextChannels()
 
+    const navigate = useNavigate()
+
     type Option = { value: string; label: string }
 
     const options: Option[] = channels.map((x) => ({ value: x.id, label: x.name }))
@@ -41,6 +44,9 @@ const BlackListEdit: React.FC = () => {
     } = useForm<{ name: string; channels: string[]; words: string[] }>({ defaultValues: data, resolver: zodResolver(blacklistEditSchema) })
 
     const [editing, setEditing] = React.useState(false)
+
+    const [deleteDialog, setDeleteDialog] = React.useState(false)
+    const [deleting, setDeleting] = React.useState(false)
 
     const onSubmit = handleSubmit((value) => {
         if (editing) return
@@ -63,8 +69,49 @@ const BlackListEdit: React.FC = () => {
     })
 
     return (
-        <form style={{ padding: '20px 10px', display: 'flex', flexDirection: 'column', gap: 10 }} onSubmit={onSubmit}>
-            <div style={{ fontSize: 24, marginBottom: 10 }}>검열 트리거 수정</div>
+        <form style={{ padding: '20px 10px', display: 'flex', flexDirection: 'column', gap: 10, maxWidth: '512px', marginLeft: 'auto', marginRight: 'auto' }} onSubmit={onSubmit}>
+            <Modal
+                width="400px"
+                open={deleteDialog}
+                title="트리거 삭제하기"
+                footer={
+                    <>
+                        <Button onClick={() => setDeleteDialog(false)}>취소하기</Button>
+                        <Button
+                            color="#ED4245"
+                            onClick={() => {
+                                toast
+                                    .promise(api.delete(`/guilds/${id}/blacklists/${blacklistId}`), {
+                                        pending: '삭제 중...',
+                                        error: '삭제 실패',
+                                        success: '삭제 성공',
+                                    })
+                                    .then(() => {
+                                        navigate('..')
+                                    })
+                                    .catch(() => {
+                                        setDeleting(false)
+                                    })
+                            }}
+                        >
+                            삭제하기
+                        </Button>
+                    </>
+                }
+            >
+                이 트리거를 삭제할까요? 삭제하면 복구 불가능합니다.
+            </Modal>
+            <div style={{ fontSize: 24, marginBottom: 10, display: 'flex', alignItems: 'center' }}>
+                <div style={{ flexGrow: 1 }}>검열 트리거 수정</div>
+                <Button
+                    color="#ED4245"
+                    onClick={() => {
+                        setDeleteDialog(true)
+                    }}
+                >
+                    삭제
+                </Button>
+            </div>
             <Input error={errors.name?.message} column label="트리거 이름" {...register('name')} />
             <Input
                 label="검열 단어"

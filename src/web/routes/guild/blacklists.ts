@@ -88,4 +88,30 @@ router.put('/:id', async (req, res) => {
     })
 })
 
+router.delete('/:id', async (req, res) => {
+    const blackList = await db.blackList.findFirst({
+        where: {
+            id: req.params.id,
+            guildId: req.guild.discord.id,
+        },
+    })
+
+    if (!blackList) {
+        res.status(404).json({
+            message: 'Blacklist not found',
+        })
+        return
+    }
+
+    await db.blackList.delete({
+        where: {
+            id: req.params.id,
+        },
+    })
+
+    res.json({
+        message: 'Blacklist deleted',
+    })
+})
+
 export default router
