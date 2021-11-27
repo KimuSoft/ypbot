@@ -33,4 +33,22 @@ router.post('/', async (req, res) => {
     res.json({ id })
 })
 
+router.get('/:id', async (req, res) => {
+    const blackList = await db.blackList.findFirst({
+        where: {
+            id: req.params.id,
+            guildId: req.guild.discord.id,
+        },
+    })
+
+    if (!blackList) {
+        res.status(404).json({
+            message: 'Blacklist not found',
+        })
+        return
+    }
+
+    res.json(blackList)
+})
+
 export default router
