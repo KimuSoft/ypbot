@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 const Container = styled.div`
     display: flex;
@@ -7,12 +7,19 @@ const Container = styled.div`
     flex-direction: column;
 `
 
-const InputContainer = styled.div`
+const InputContainer = styled.div<{ column?: boolean }>`
     display: flex;
     gap: 10px;
     font-size: 18px;
     align-items: center;
     white-space: nowrap;
+    ${({ column }) =>
+        column &&
+        css`
+            align-items: flex-start;
+            flex-direction: column;
+            width: 100%;
+        `}
 `
 
 const InputComponent = styled.input`
@@ -21,18 +28,21 @@ const InputComponent = styled.input`
     outline: none;
     color: #fff;
     border: none;
+    width: 100%;
 `
 
-const Input = React.forwardRef<HTMLInputElement, React.InputHTMLAttributes<any> & { label?: React.ReactNode; error?: string }>(({ label, error, ...rest }, ref) => {
-    return (
-        <Container>
-            <InputContainer>
-                {label && <div>{label}</div>}
-                <InputComponent ref={ref} style={{ flexGrow: 1 }} {...rest} />
-            </InputContainer>
-            {error && <div style={{ color: '#ED4245' }}>{error}</div>}
-        </Container>
-    )
-})
+const Input = React.forwardRef<HTMLInputElement, React.InputHTMLAttributes<any> & { label?: React.ReactNode; error?: string; column?: boolean; control?: React.ReactNode }>(
+    ({ label, column, error, control, ...rest }, ref) => {
+        return (
+            <Container>
+                <InputContainer column={column}>
+                    {label && <div>{label}</div>}
+                    {control ? control : <InputComponent ref={ref} style={{ flexGrow: 1 }} {...rest} />}
+                </InputContainer>
+                {error && <div style={{ color: '#ED4245' }}>{error}</div>}
+            </Container>
+        )
+    }
+)
 
 export default Input

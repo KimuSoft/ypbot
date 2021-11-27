@@ -1,5 +1,8 @@
 @import url('https://cdn.jsdelivr.net/gh/innks/NanumSquareRound@master/nanumsquareround.css');
 
+@import "~react-loading-skeleton/dist/skeleton.css";
+@import "~react-toastify/dist/ReactToastify.css";
+
 * {
   box-sizing: border-box;
   font-family: NanumSquareRound, sans-serif;
@@ -12,3 +15,4 @@ body {
   height: 100%;
   background: #36393f;
 }
+

@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import db from '../../../utils/db'
-import { blacklistCreateSchema } from '../../validation/blacklists'
+import { blacklistCreateSchema, blacklistEditSchema } from '../../validation/blacklists'
 
 const router = Router()
 
@@ -49,6 +49,43 @@ router.get('/:id', async (req, res) => {
     }
 
     res.json(blackList)
+})
+
+router.put('/:id', async (req, res) => {
+    const v = await blacklistEditSchema.safeParseAsync(req.body)
+    if (!v.success) {
+        res.status(400).json(v.error.issues)
+        return
+    }
+
+    const blackList = await db.blackList.findFirst({
+        where: {
+            id: req.params.id,
+            guildId: req.guild.discord.id,
+        },
+    })
+
+    if (!blackList) {
+        res.status(404).json({
+            message: 'Blacklist not found',
+        })
+        return
+    }
+
+    await db.blackList.update({
+        where: {
+            id: req.params.id,
+        },
+        data: {
+            name: v.data.name,
+            words: v.data.words,
+            channels: v.data.channels.filter((x) => req.guild.discord.channels.cache.get(x)),
+        },
+    })
+
+    res.json({
+        message: 'Blacklist updated',
+    })
 })
 
 export default router
