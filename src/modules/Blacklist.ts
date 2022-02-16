@@ -1,15 +1,9 @@
 import { listener, Module } from '@pikokr/command.ts'
-import { Client } from '../structures/client'
-import { log } from '@blitzjs/display'
 import { Message } from 'discord.js'
 import db from '../utils/db'
 import parseRegex from 'regex-parser'
 
 class Blacklist extends Module {
-    constructor(private cts: Client) {
-        super()
-    }
-
     isValidRegex(s: string) {
         try {
             const m = s.match(/^([/~@;%#'])(.*?)\1([gimsuy]*)$/)
@@ -32,6 +26,7 @@ class Blacklist extends Module {
                 },
             },
         })
+
         for (const blacklist of blacklists) {
             for (const word of blacklist.words) {
                 if (this.isValidRegex(word)) {
@@ -52,6 +47,6 @@ class Blacklist extends Module {
     }
 }
 
-export function install(cts: Client) {
-    return new Blacklist(cts)
+export function install() {
+    return new Blacklist()
 }

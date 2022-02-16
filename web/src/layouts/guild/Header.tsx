@@ -26,7 +26,7 @@ const GuildHeader: React.FC = () => {
     return (
         <HeaderContainer>
             <MenuIcon icon={['fas', sidebar ? 'close' : 'bars']} onClick={() => setSidebar(!sidebar)} />
-            <HeaderTitle to="/">YP</HeaderTitle>
+            <HeaderTitle to="/">위브</HeaderTitle>
             <div style={{ flexGrow: 1 }} />
             <AccountMenu />
         </HeaderContainer>
