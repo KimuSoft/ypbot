@@ -73,7 +73,7 @@ const BlackListEdit: React.FC = () => {
             <Modal
                 width="400px"
                 open={deleteDialog}
-                title="트리거 삭제하기"
+                title="규칙 삭제하기"
                 footer={
                     <>
                         <Button onClick={() => setDeleteDialog(false)}>취소하기</Button>
@@ -99,10 +99,10 @@ const BlackListEdit: React.FC = () => {
                     </>
                 }
             >
-                이 트리거를 삭제할까요? 삭제하면 복구 불가능합니다.
+                이 규칙을 삭제할까요? 삭제하면 복구 불가능합니다.
             </Modal>
             <div style={{ fontSize: 24, marginBottom: 10, display: 'flex', alignItems: 'center' }}>
-                <div style={{ flexGrow: 1 }}>검열 트리거 수정</div>
+                <div style={{ flexGrow: 1 }}>검열 규칙 수정</div>
                 <Button
                     color="#ED4245"
                     onClick={() => {
@@ -112,7 +112,7 @@ const BlackListEdit: React.FC = () => {
                     삭제
                 </Button>
             </div>
-            <Input error={errors.name?.message} column label="트리거 이름" {...register('name')} />
+            <Input error={errors.name?.message} column label="규칙 이름" {...register('name')} />
             <Input
                 label="검열 단어"
                 column

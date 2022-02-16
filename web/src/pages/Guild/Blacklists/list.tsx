@@ -100,7 +100,7 @@ const Blacklists: React.FC = () => {
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Modal
                     width="400px"
-                    title="검열 트리거 추가하기"
+                    title="검열 규칙 추가하기"
                     open={showModal}
                     footer={
                         <>
@@ -114,7 +114,7 @@ const Blacklists: React.FC = () => {
                     }
                 >
                     <Input
-                        label="트리거 이름"
+                        label="규칙 이름"
                         {...register('name', {
                             required: {
                                 value: true,
