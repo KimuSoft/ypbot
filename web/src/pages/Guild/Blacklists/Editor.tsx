@@ -120,7 +120,27 @@ const BlackListEdit: React.FC = () => {
                     <Controller
                         control={control}
                         name="words"
-                        render={({ field: { onChange, value, ref } }) => <CreatableInput ref={ref} value={value} onChange={(value) => onChange(value)} />}
+                        render={({ field: { onChange, value, ref } }) => (
+                            <div style={{ width: '100%', display: 'flex', gap: 10, flexDirection: 'column' }}>
+                                {value.map((x, i) => (
+                                    <div style={{ display: 'flex', width: '100%', gap: 10, alignItems: 'stretch' }} key={i}>
+                                        <div style={{ flexGrow: 1 }}>
+                                            <Input
+                                                value={x}
+                                                onChange={(e) => {
+                                                    value[i] = e.target.value
+                                                    onChange(value)
+                                                }}
+                                            />
+                                        </div>
+                                        <Button onClick={() => onChange((value as string[]).filter((y, j) => j !== i))} color="#ED4245">
+                                            제거
+                                        </Button>
+                                    </div>
+                                ))}
+                                <Button onClick={() => onChange([...value, ''])}>추가</Button>
+                            </div>
+                        )}
                     />
                 }
             />

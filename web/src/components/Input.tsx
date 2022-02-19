@@ -13,6 +13,7 @@ const InputContainer = styled.div<{ column?: boolean }>`
     font-size: 18px;
     align-items: center;
     white-space: nowrap;
+
     ${({ column }) =>
         column &&
         css`
@@ -29,6 +30,7 @@ const InputComponent = styled.input`
     color: #fff;
     border: none;
     width: 100%;
+    height: 38px;
 `
 
 const Input = React.forwardRef<HTMLInputElement, React.InputHTMLAttributes<any> & { label?: React.ReactNode; error?: string; column?: boolean; control?: React.ReactNode }>(
