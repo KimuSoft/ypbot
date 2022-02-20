@@ -1,2 +1,2 @@
 build-web:
-	cd web && node build
+	cd web && yarn webpack
