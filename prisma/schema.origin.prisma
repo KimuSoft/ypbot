@@ -1,0 +1,41 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String      @id
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  discordAccessToken String
+  discordRefreshToken String
+  discordTokenExpiresAt DateTime @default(now())
+}
+
+model Guild {
+    id String @id
+    blacklists BlackList[]
+}
+
+model BlackList {
+    id String @id @default(cuid())
+    guildId String
+    guild Guild @relation(fields: [guildId], references: [id], onDelete: Cascade)
+    words String[]
+    channels String[]
+    name String
+}
+
+model Session {
+  id        String   @id
+  sid       String   @unique
+  data      String
+  expiresAt   DateTime
+}

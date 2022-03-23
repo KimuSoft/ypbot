@@ -1,5 +1,4 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+// 제안용
 
 generator client {
   provider = "prisma-client-js"
@@ -11,31 +10,56 @@ datasource db {
 }
 
 model User {
-  id             String      @id
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-  discordAccessToken String
-  discordRefreshToken String
+  id                    String   @id
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  rules                 Rule[]
+  sharedRules           Rule[]   @relation("_sharedRule")
+  discordAccessToken    String
+  discordRefreshToken   String
   discordTokenExpiresAt DateTime @default(now())
 }
 
-model Guild {
-    id String @id
-    blacklists BlackList[]
+model Channel {
+  id      String @id
+  guildId String
+  rules   Rule[] @relation("_ruleOnChannel")
 }
 
-model BlackList {
-    id String @id @default(cuid())
-    guildId String
-    guild Guild @relation(fields: [guildId], references: [id], onDelete: Cascade)
-    words String[]
-    channels String[]
-    name String
+model Rule {
+  id          String        @id @default(cuid()) // id
+  name        String
+  description String
+  authorId    String
+  author      User          @relation(fields: [authorId], references: [id])
+  sharedUser  User[]        @relation("_sharedRule")
+  elements    RuleElement[]
+  // channelIds String[]
+  channels    Channel[]     @relation("_ruleOnChannel")
+  isOfficial  Boolean       @default(false)
+}
+
+model RuleElement {
+  id             String   @id @default(cuid())
+  ruleId         String
+  rule           Rule     @relation(fields: [ruleId], references: [id], onDelete: Cascade)
+  name           String
+  ruleType       RuleType
+  regex          String // 고급 옵션을 키지 않으면 name과 동일하게 지정
+  includedRuleId String?
+  // includedRule Rule? @relation(fields: [includedRuleId], references: [id], onDelete: Cascade)
+  isSeparation   Boolean  @default(false) // 자모 분리 옵션
 }
 
 model Session {
   id        String   @id
   sid       String   @unique
   data      String
-  expiresAt   DateTime
+  expiresAt DateTime
+}
+
+enum RuleType {
+  Black // 해당 정규식에 해당하면 제재함
+  White // 해당 정규식에 해당하지 않으면 제재함
+  Include // 해당 규칙을 하위 규칙으로 둠
 }
