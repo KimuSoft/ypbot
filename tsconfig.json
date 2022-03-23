@@ -83,7 +83,22 @@
     "skipLibCheck": true, /* Skip type checking all .d.ts files. */
     "jsx": "preserve",
     "allowJs": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "noEmit": true,
+    "incremental": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "baseUrl": ".",
+    "paths": {
+      "@atoms/*": ["ui/atoms/*"],
+      "@molecules/*": ["ui/molecules/*"],
+      "@organisms/*": ["ui/organisms/*"],
+    }
   },
   "include": [
     "src/**/*"

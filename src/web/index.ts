@@ -11,6 +11,9 @@ import DiscordStrategy from 'passport-discord'
 import { cts } from '../index'
 import * as path from 'path'
 import noapi from './routes/noapi'
+import { RequestHandler } from 'next/dist/server/next'
+
+let nextApp: RequestHandler | null = null
 
 passport.use(
     new DiscordStrategy(
@@ -112,9 +115,16 @@ app.use((req, res, next) => {
     if (req.headers['x-yp-api'] === 'true') {
         return next()
     }
-    return res.render('app')
+    if (!nextApp) {
+        return res.send('Frontend is not yet initialized')
+    }
+    return nextApp(req, res)
 })
 
 app.use(routes)
+
+export const setNext = (handler: RequestHandler) => {
+    nextApp = handler
+}
 
 export default app

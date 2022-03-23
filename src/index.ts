@@ -2,7 +2,7 @@ import { Client } from './structures/client'
 
 export const cts = new Client()
 
-import { startServer, stopServer } from './webManager'
+import { startServer } from './webManager'
 import { config } from './config'
 
 process.on('unhandledRejection', console.error)
@@ -12,8 +12,6 @@ process.on('exit', (code) => {
     process.stdin.resume()
 
     cts.client.destroy()
-
-    stopServer()
 })
 
 process.on('SIGINT', function () {

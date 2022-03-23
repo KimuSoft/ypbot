@@ -7,8 +7,8 @@ import { KModulePath } from '@pikokr/command.ts/dist/constants'
 import chalk from 'chalk'
 import * as fs from 'fs'
 import { log } from '@blitzjs/display'
-import { restartServer } from '../webManager'
 import Dokdo from 'dokdo'
+import { loadServer } from '../webManager'
 
 export class Client extends CommandClient {
     constructor() {
@@ -48,7 +48,7 @@ export class Client extends CommandClient {
             }
             if (path1.startsWith(path.join(require.main!.path, 'web'))) {
                 try {
-                    await restartServer()
+                    await loadServer(true)
                 } catch (e) {
                     console.error(e)
                 }
