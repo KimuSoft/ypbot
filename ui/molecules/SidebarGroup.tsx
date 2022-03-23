@@ -8,7 +8,7 @@ const SidebarGroup: React.FC<{ title: React.ReactNode; icon: IconType }> = ({ ti
     const [open, setOpen] = React.useState(false)
 
     return (
-        <div className="w-full flex justify-center flex-col gap-[12px]">
+        <div className="w-full flex justify-center flex-col">
             <SidebarGroupButton onClick={() => setOpen((v) => !v)}>
                 <Icon size={12} />
                 <span className="flex-grow">{title}</span>
@@ -25,7 +25,12 @@ const SidebarGroup: React.FC<{ title: React.ReactNode; icon: IconType }> = ({ ti
             </SidebarGroupButton>
             <AnimatePresence>
                 {open && (
-                    <motion.div initial={{ height: 0 }} animate={{ height: 'auto' }} exit={{ height: 0 }} className="overflow-hidden px-[6px]">
+                    <motion.div
+                        initial={{ height: 0, marginTop: 0 }}
+                        animate={{ height: 'auto', marginTop: 12 }}
+                        exit={{ height: 0, marginTop: 0 }}
+                        className="overflow-hidden px-[6px] flex flex-col gap-[6px]"
+                    >
                         {children}
                     </motion.div>
                 )}
