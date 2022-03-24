@@ -3,4 +3,11 @@ export type Guild = {
     name: string
     iconURL?: string
     isOwner: boolean
+    invited: boolean
+}
+
+export type YPUser = {
+    id: string
+    tag: string
+    avatar: string
 }

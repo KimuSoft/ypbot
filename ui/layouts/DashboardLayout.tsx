@@ -3,28 +3,33 @@ import Sidebar from '../organisms/Sidebar'
 import { Guild } from '../../src/globalTypes'
 import { faker } from '@faker-js/faker'
 import _ from 'lodash'
+import { useCurrentUser } from '../../webUtils/hooks/useCurrentUser'
+import LoadingScreen from '../organisms/LoadingScreen'
+import { AnimatePresence } from 'framer-motion'
 
 const DashboardLayout: React.FC = ({ children }) => {
+    const { data: user, error } = useCurrentUser()
+
+    if (error) {
+        window.location.href = '/auth/login'
+        return <div>Authentication required</div>
+    }
+
     const fakeGuilds = React.useMemo(() => {
-        return _.sortBy(
-            new Array(10).fill(void 0).map(
-                () =>
-                    ({
-                        id: faker.datatype.uuid(),
-                        name: faker.name.title(),
-                        iconURL: faker.image.avatar(),
-                        isOwner: faker.datatype.boolean(),
-                    } as Guild)
-            ),
-            'isOwner'
-        ).reverse()
-    }, [])
+        return user?.guilds ?? ([] as Guild[])
+    }, [user])
 
     return (
-        <div className="flex h-screen">
-            <Sidebar guilds={fakeGuilds} />
-            <div className="flex-grow px-[30px] py-[50px] overflow-y-auto h-full">{children}</div>
-        </div>
+        <AnimatePresence>
+            {user ? (
+                <div className="flex h-screen">
+                    <Sidebar guilds={fakeGuilds} />
+                    <div className="flex-grow px-[30px] py-[50px] overflow-y-auto h-full">{children}</div>
+                </div>
+            ) : (
+                <LoadingScreen />
+            )}
+        </AnimatePresence>
     )
 }
 

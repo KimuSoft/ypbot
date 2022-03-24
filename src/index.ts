@@ -7,7 +7,6 @@ import { config } from './config'
 
 process.on('unhandledRejection', console.error)
 process.on('uncaughtException', console.error)
-
 process.on('exit', (code) => {
     process.stdin.resume()
 

@@ -9,15 +9,7 @@ import { cts } from '../../../index'
 
 const router = Router()
 
-router.get('/', requireAuth, (req, res) => {
-    const user = req.user!
-
-    res.json(userToJson(user))
-})
-
-const rest = new REST({ version: '8' })
-
-router.get('/guilds', requireAuth, async (req, res) => {
+router.get('/', requireAuth, async (req, res) => {
     const user = req.user!
 
     const token = await getToken(user)
@@ -32,19 +24,18 @@ router.get('/guilds', requireAuth, async (req, res) => {
 
     const result = []
 
-    await cts.client.guilds.fetch()
-
     for (const guild of data) {
         let invited = cts.client.guilds.cache.has(guild.id)
         result.push({
             id: guild.id,
             name: guild.name,
-            icon: guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png?size=512` : '',
+            iconURL: guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png?size=512` : '',
             invited,
+            isOwner: guild.owner,
         })
     }
 
-    res.json(result)
+    res.json({ ...userToJson(user), guilds: result })
 })
 
 export default router

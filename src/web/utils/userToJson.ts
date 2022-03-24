@@ -1,4 +1,4 @@
-import { YPUser } from '../../sharedTypings'
+import { YPUser } from '../../globalTypes'
 
 export const userToJson = (user: Express.User): YPUser => {
     return {
