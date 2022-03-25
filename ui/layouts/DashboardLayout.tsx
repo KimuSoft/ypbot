@@ -16,7 +16,7 @@ const DashboardLayout: React.FC = ({ children }) => {
     }
 
     const fakeGuilds = React.useMemo(() => {
-        return user?.guilds ?? ([] as Guild[])
+        return _.sortBy(user?.guilds ?? ([] as Guild[]), 'isOwner').reverse()
     }, [user])
 
     return (

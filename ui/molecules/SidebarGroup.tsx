@@ -5,7 +5,7 @@ import { MdExpandMore } from 'react-icons/md'
 import { AnimatePresence, motion } from 'framer-motion'
 
 const SidebarGroup: React.FC<{ title: React.ReactNode; icon: IconType }> = ({ title, icon: Icon, children }) => {
-    const [open, setOpen] = React.useState(false)
+    const [open, setOpen] = React.useState(true)
 
     return (
         <div className="w-full flex justify-center flex-col">
