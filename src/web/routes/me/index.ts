@@ -27,9 +27,11 @@ router.get('/', requireAuth, async (req, res) => {
     for (const guild of data) {
         let invited = cts.client.guilds.cache.has(guild.id)
         result.push({
-            id: guild.id,
-            name: guild.name,
-            iconURL: guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png?size=512` : '',
+            meta: {
+                id: guild.id,
+                name: guild.name,
+                icon: guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png?size=512` : '',
+            },
             invited,
             isOwner: guild.owner,
         })

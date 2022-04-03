@@ -15,7 +15,7 @@ const DashboardLayout: React.FC = ({ children }) => {
         return <div>Authentication required</div>
     }
 
-    const fakeGuilds = React.useMemo(() => {
+    const guilds = React.useMemo(() => {
         return _.sortBy(user?.guilds ?? ([] as Guild[]), 'isOwner').reverse()
     }, [user])
 
@@ -23,7 +23,7 @@ const DashboardLayout: React.FC = ({ children }) => {
         <AnimatePresence>
             {user ? (
                 <div className="flex h-screen">
-                    <Sidebar guilds={fakeGuilds} />
+                    <Sidebar guilds={guilds} />
                     <div className="flex-grow px-[30px] py-[50px] overflow-y-auto h-full">{children}</div>
                 </div>
             ) : (
