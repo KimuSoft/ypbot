@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import { FaChevronDown, FaList } from 'react-icons/fa'
 import { motion } from 'framer-motion'
 
-const CategoryCollapseButton: React.FC<{ active: boolean } & React.HTMLAttributes<HTMLDivElement>> = ({ active, className, children, ...props }) => {
+const ListCollapseButton: React.FC<{ active: boolean } & React.HTMLAttributes<HTMLDivElement>> = ({ active, className, children, ...props }) => {
     return (
         <div {...props} className={clsx('flex items-center gap-[11px] cursor-pointer', className)}>
             <div className="h-[1px] bg-stone-500 flex-grow" />
@@ -22,4 +22,4 @@ const CategoryCollapseButton: React.FC<{ active: boolean } & React.HTMLAttribute
     )
 }
 
-export default CategoryCollapseButton
+export default ListCollapseButton

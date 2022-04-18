@@ -74,7 +74,7 @@
     "react-hook-form": "^7.20.2",
     "react-icons": "^4.3.1",
     "react-loader-spinner": "^6.0.0-0",
-    "react-loading-skeleton": "^3.0.1",
+    "react-loading-skeleton": "^3.0.3",
     "react-router-dom": "^6.0.2",
     "react-select": "^5.2.1",
     "react-toastify": "^8.1.0",

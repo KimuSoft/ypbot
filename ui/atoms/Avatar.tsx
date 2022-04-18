@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import React from 'react'
 
-const Avatar: React.FC<{ src?: string; size: number }> = ({ src, size }) => {
+const Avatar: React.FC<{ src?: string; size: number; name?: string }> = ({ src, size, name }) => {
     const [loading, setLoading] = React.useState(false)
 
     React.useEffect(() => {
@@ -22,7 +22,17 @@ const Avatar: React.FC<{ src?: string; size: number }> = ({ src, size }) => {
     }, [src])
 
     if (!src) {
-        return <div />
+        return (
+            <div
+                style={{
+                    width: size,
+                    height: size,
+                }}
+                className="bg-stone-900 rounded-full flex items-center justify-center"
+            >
+                {name?.[0]}
+            </div>
+        )
     }
 
     return loading ? (

@@ -5,7 +5,7 @@ import Avatar from '../atoms/Avatar'
 const GuildDisplay: React.FC<{ guild: Guild }> = ({ guild }) => {
     return (
         <div className="flex gap-[20px] items-center">
-            <Avatar size={40} src={guild.meta.icon} />
+            <Avatar size={40} src={guild.meta.icon} name={guild.meta.name} />
             <div className="font-bold text-[24px]">{guild.meta.name}</div>
         </div>
     )
