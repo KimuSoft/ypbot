@@ -4,7 +4,7 @@ import ListCollapse from './ListCollapse'
 import { api } from '../../webUtils/api'
 import useSWR from 'swr'
 import type { Rule } from '@prisma/client'
-import { FaPlus } from 'react-icons/fa'
+import RuleCreateModal from './RuleCreateModal'
 
 const fetcher = (url: string) => api.get(url).then((x) => x.data)
 
@@ -34,15 +34,7 @@ const RuleList: React.FC<{ url: string; title: React.ReactNode; creatable?: bool
                             </div>
                         )
                     }
-                    return (
-                        <div className="mt-[12px] grid gap-[12px] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                            {creatable && (
-                                <div className="flex min-h-[64px] bg-stone-800 justify-center items-center rounded-[16px] hover:bg-stone-700 transition-all select-none cursor-pointer">
-                                    <FaPlus size={24} />
-                                </div>
-                            )}
-                        </div>
-                    )
+                    return <div className="mt-[12px] grid gap-[12px] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">{creatable && <RuleCreateModal />}</div>
                 }
             })()}
         </ListCollapse>

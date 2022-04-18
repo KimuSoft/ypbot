@@ -5,7 +5,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import DefaultLayout from '../ui/layouts/DefaultLayout'
 import DashboardLayout from '../ui/layouts/DashboardLayout'
 import { NextPageWithLayout } from '../webUtils/next'
-import {SkeletonTheme} from 'react-loading-skeleton'
+import { SkeletonTheme } from 'react-loading-skeleton'
 
 const CustomApp: React.FC<AppProps & { Component: NextPageWithLayout }> = ({ Component, pageProps }) => {
     const LayoutComponent = React.useMemo(() => {
