@@ -5,6 +5,7 @@ import { api } from '../../webUtils/api'
 import useSWR from 'swr'
 import type { Rule } from '@prisma/client'
 import RuleCreateModal from './RuleCreateModal'
+import ErrorMessage from '../atoms/ErrorMessage'
 
 const fetcher = (url: string) => api.get(url).then((x) => x.data)
 
@@ -15,7 +16,7 @@ const RuleList: React.FC<{ url: string; title: React.ReactNode; creatable?: bool
         <ListCollapse title={title}>
             {(() => {
                 if (error) {
-                    return <div className="bg-red-500 p-4 rounded-md mt-[12px]">{(data as any)?.error ?? error.message}</div>
+                    return <ErrorMessage>{(data as any)?.error ?? error.message}</ErrorMessage>
                 }
                 if (!data) {
                     return (
@@ -34,7 +35,16 @@ const RuleList: React.FC<{ url: string; title: React.ReactNode; creatable?: bool
                             </div>
                         )
                     }
-                    return <div className="mt-[12px] grid gap-[12px] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">{creatable && <RuleCreateModal />}</div>
+                    return (
+                        <div className="mt-[12px] grid gap-[12px] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                            {data.map((x, i) => (
+                                <div key={i}>
+                                    <pre style={{ overflow: 'auto' }}>{JSON.stringify(x, null, 2)}</pre>
+                                </div>
+                            ))}
+                            {creatable && <RuleCreateModal />}
+                        </div>
+                    )
                 }
             })()}
         </ListCollapse>

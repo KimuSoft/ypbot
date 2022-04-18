@@ -2,7 +2,7 @@ import React from 'react'
 import ListCollapseButton from '../atoms/ListCollapseButton'
 import { motion } from 'framer-motion'
 
-const ListCollapse: React.FC<{title: React.ReactNode}> = ({title, children}) => {
+const ListCollapse: React.FC<{ title: React.ReactNode }> = ({ title, children }) => {
     const [open, setOpen] = React.useState(true)
 
     return (

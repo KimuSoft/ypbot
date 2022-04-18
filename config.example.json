@@ -1,19 +1,19 @@
 {
-  "token": "TOKEN_HERE",
-  "slash": {
-    "guild": ""
-  },
-  "web": {
-    "port": 3000,
-    "sessionSecret": ""
-  },
-  "dev": false,
-  "discord": {
-    "client": {
-      "id": "",
-      "secret": "",
-      "callback": "",
-      "inviteCallback": ""
+    "token": "TOKEN_HERE",
+    "slash": {
+        "guild": ""
+    },
+    "web": {
+        "port": 3000,
+        "sessionSecret": ""
+    },
+    "dev": false,
+    "discord": {
+        "client": {
+            "id": "",
+            "secret": "",
+            "callback": "",
+            "inviteCallback": ""
+        }
     }
-  }
 }

@@ -7,11 +7,14 @@ export const Button = styled.button`
     user-select: none;
     outline: none;
 
-    &:hover,
-    &:focus {
-        filter: brightness(0.9);
-    }
-    &:active {
-        filter: brightness(0.8);
+    &:not(:disabled) {
+        cursor: pointer;
+        &:hover,
+        &:focus {
+            filter: brightness(0.9);
+        }
+        &:active {
+            filter: brightness(0.8);
+        }
     }
 `
