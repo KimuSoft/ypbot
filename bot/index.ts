@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import { PrismaClient } from '@prisma/client'
+import type { PrismaClient } from '@prisma/client'
 import { client } from './bot'
 import server, { BUILD_DIR } from './server'
 import { Bot } from './structures/bot'

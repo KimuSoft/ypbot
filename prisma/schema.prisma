@@ -10,8 +10,9 @@ generator client {
 model User {
   id String @id
 
-  discordAccessToken  String
-  discordRefreshToken String
+  discordAccessToken    String   @ignore
+  discordRefreshToken   String
+  discordTokenExpiresAt DateTime
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

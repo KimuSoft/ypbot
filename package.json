@@ -6,16 +6,13 @@
   "sideEffects": false,
   "scripts": {
     "build": "run-s build:*",
-    "build:css": "npm run generate:css -- --minify",
     "build:remix": "remix build",
     "build:server": "tsc --project tsconfig.server.json",
     "dev": "run-p dev:*",
     "dev:server": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register --project tsconfig.server.json bot",
     "dev:remix": "cross-env NODE_ENV=development remix watch",
-    "dev:css": "cross-env NODE_ENV=development npm run generate:css -- --watch",
     "docker": "docker-compose up -d",
     "format": "prettier --write .",
-    "generate:css": "tailwindcss -o ./app/styles/tailwind.css",
     "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
     "setup": "prisma migrate dev && prisma db seed",
     "start": "cross-env NODE_ENV=production node ./build/bot/index.js",
@@ -31,12 +28,17 @@
     "/public/build"
   ],
   "dependencies": {
+    "@emotion/react": "^11.9.0",
+    "@emotion/styled": "^11.8.1",
+    "@mui/icons-material": "^5.6.2",
+    "@mui/material": "^5.7.0",
     "@pikokr/command.ts": "^4.0.6",
     "@prisma/client": "^3.11.1",
     "@remix-run/express": "^1.4.3",
     "@remix-run/node": "^1.4.3",
     "@remix-run/react": "^1.4.3",
     "@remix-run/server-runtime": "^1.4.3",
+    "axios": "^0.27.2",
     "bcryptjs": "^2.4.3",
     "compression": "^1.7.4",
     "cross-env": "^7.0.3",
@@ -46,7 +48,9 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "tiny-invariant": "^1.2.0",
-    "tslog": "^3.3.3"
+    "tlru": "^1.0.2",
+    "tslog": "^3.3.3",
+    "zod": "^3.16.0"
   },
   "devDependencies": {
     "@faker-js/faker": "^6.1.1",
