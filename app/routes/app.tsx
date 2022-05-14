@@ -6,7 +6,6 @@ import { AppHeader } from '~/components/app/layout/Header'
 import { getGuildList } from '~/models/guild.server'
 import { getUserById } from '~/models/user.server'
 import { getUserId } from '~/session.server'
-import { useGuildList } from '~/util/guilds'
 
 export const loader: LoaderFunction = async ({ request }) => {
   const id = await getUserId(request)
@@ -22,10 +21,6 @@ export const loader: LoaderFunction = async ({ request }) => {
 }
 
 export default function App() {
-  const guilds = useGuildList()
-
-  console.log(guilds)
-
   return (
     <div>
       <AppHeader />
