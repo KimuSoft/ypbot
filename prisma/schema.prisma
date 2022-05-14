@@ -38,6 +38,7 @@ model Rule {
   // channelIds String[]
   channels    Channel[]     @relation("_ruleOnChannel")
   isOfficial  Boolean       @default(false)
+  shareCodes  ShareCode[]
 }
 
 model RuleElement {
@@ -50,6 +51,16 @@ model RuleElement {
   includedRuleId String?
   // includedRule Rule? @relation(fields: [includedRuleId], references: [id], onDelete: Cascade)
   isSeparation   Boolean  @default(false) // 자모 분리 옵션
+}
+
+model ShareCode {
+  id String @id @default(cuid())
+
+  rule   Rule   @relation(fields: [ruleId], references: [id], onDelete: Cascade)
+  ruleId String
+
+  maxCounts Int
+  count     Int
 }
 
 enum RuleType {

@@ -1,19 +1,17 @@
-import { Paper, Stack, Typography } from '@mui/material'
+import { Breadcrumbs, Link, Paper, Stack, Typography } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
-import { useTransition } from '@remix-run/react'
+import { NavLink, useTransition } from '@remix-run/react'
 import type { ActionFunction } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
 import { withZod } from '@remix-validated-form/with-zod'
 import { z } from 'zod'
 import { ValidatedForm, validationError } from 'remix-validated-form'
 import { ValidatedTextField } from '~/components/app/forms/ValidatedTextField'
-import { prisma } from '~/db.server'
 import { getUser } from '~/session.server'
 
 export const validator = withZod(
   z.object({
-    name: z.string().min(2),
-    description: z.string().min(10),
+    code: z.string(),
   })
 )
 
@@ -25,22 +23,9 @@ export const action: ActionFunction = async ({ request }) => {
   if (res.error) {
     return validationError(res.error)
   }
+  console.log(res)
 
-  const { data } = res
-
-  const { id } = await prisma.rule.create({
-    data: {
-      name: data.name,
-      description: data.description,
-      author: {
-        connect: {
-          id: user.id,
-        },
-      },
-    },
-  })
-
-  return redirect(`/app/rules/${id}`)
+  return {}
 }
 
 export default function NewRulePage() {
@@ -50,25 +35,37 @@ export default function NewRulePage() {
 
   return (
     <div>
+      <Breadcrumbs>
+        <Link component={NavLink} to="/app" underline="hover" color="inherit">
+          YPBOT
+        </Link>
+        <Link
+          component={NavLink}
+          to="/app/rules"
+          underline="hover"
+          color="inherit"
+        >
+          규칙
+        </Link>
+        <Typography color="text.primary" component="div">
+          공유
+        </Typography>
+      </Breadcrumbs>
       <ValidatedForm validator={validator} method="post">
-        <Paper variant="outlined" sx={{ maxWidth: 400, mx: 'auto', p: 2 }}>
+        <Paper
+          variant="outlined"
+          sx={{ maxWidth: 400, mx: 'auto', p: 2, mt: 2 }}
+        >
           <Stack direction="column" spacing={2} alignItems="center">
             <Typography variant="h6" fontWeight={600}>
-              규칙 만들기
+              공유받은 규칙 가져오기
             </Typography>
             <ValidatedTextField
-              label="이름"
+              label="공유 코드"
               disabled={submitting}
-              name="name"
+              name="code"
               fullWidth
               variant="standard"
-            />
-            <ValidatedTextField
-              label="설명"
-              name="description"
-              fullWidth
-              variant="standard"
-              disabled={submitting}
             />
             <LoadingButton
               variant="outlined"
@@ -76,7 +73,7 @@ export default function NewRulePage() {
               loading={submitting}
               type="submit"
             >
-              만들기
+              가져오기
             </LoadingButton>
           </Stack>
         </Paper>

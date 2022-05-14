@@ -1,5 +1,5 @@
-import { Breadcrumbs, Link, Typography } from '@mui/material'
-import { NavLink } from '@remix-run/react'
+import { Box, Breadcrumbs, Link, Typography } from '@mui/material'
+import { NavLink, Outlet } from '@remix-run/react'
 import type { LoaderFunction } from '@remix-run/server-runtime'
 import { redirect } from '@remix-run/server-runtime'
 import { prisma } from '~/db.server'
@@ -39,7 +39,9 @@ export default function RuleLayout() {
         </Typography>
       </Breadcrumbs>
 
-      <pre>{JSON.stringify(rule, null, 2)}</pre>
+      <Box sx={{ mt: 2 }}>
+        <Outlet />
+      </Box>
     </div>
   )
 }
