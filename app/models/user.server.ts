@@ -15,6 +15,7 @@ export type YPUser = {
   id: string
   tag: string
   avatar: string
+  admin: boolean
 }
 
 export async function getUserById(id: User['id']) {
@@ -46,6 +47,7 @@ export async function convertUser(user: User): Promise<YPUser> {
       : `https://cdn.discordapp.com/embed/avatars/${
           Number(data.discriminator) % 4
         }.webp`,
+    admin: user.admin,
   }
 
   cache.set(user.id, u)

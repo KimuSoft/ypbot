@@ -19,6 +19,8 @@ model User {
 
   rules       Rule[]
   sharedRules Rule[] @relation("_sharedRule")
+
+  admin Boolean @default(false)
 }
 
 model Channel {

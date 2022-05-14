@@ -1,7 +1,108 @@
+import { Save } from '@mui/icons-material'
+import {
+  Paper,
+  Stack,
+  Tab,
+  Tabs,
+  Box,
+  Button,
+  FormControl,
+  FormControlLabel,
+  Checkbox,
+} from '@mui/material'
+import { Rule, RuleElement } from '@prisma/client'
+import { withZod } from '@remix-validated-form/with-zod'
+import React from 'react'
+import { ValidatedForm } from 'remix-validated-form'
+import { z } from 'zod'
+import { zfd } from 'zod-form-data'
+import { ValidatedCheckbox } from '~/components/app/forms/ValidatedCheckbox'
+import { ValidatedTextField } from '~/components/app/forms/ValidatedTextField'
 import { useCurrentRule } from '~/util/rules'
+import { useUser } from '~/utils'
+
+const validator = withZod(
+  z.object({
+    name: z.string().min(2),
+    description: z.string().min(10),
+    isOfficial: zfd.checkbox(),
+  })
+)
+
+function a11yProps(index: number) {
+  return {
+    id: `vertical-tab-${index}`,
+    'aria-controls': `rule-editor-tabpanel-${index}`,
+  }
+}
+
+const MetadataArea: React.FC = () => {
+  const user = useUser()
+  return (
+    <Stack direction="column" spacing={2}>
+      <ValidatedTextField
+        name="name"
+        label="이름"
+        fullWidth
+        variant="standard"
+      />
+      <ValidatedTextField
+        name="description"
+        label="설명"
+        fullWidth
+        variant="standard"
+      />
+      {user.admin && (
+        <>
+          <FormControl>
+            <FormControlLabel
+              control={<ValidatedCheckbox name="isOfficial" />}
+              label="공식"
+            />
+          </FormControl>
+        </>
+      )}
+    </Stack>
+  )
+}
 
 export default function RuleEdit() {
   const rule = useCurrentRule()
 
-  return <div>{rule.id} wow</div>
+  React.useEffect(() => console.log(rule), [rule])
+
+  const [currentTab, setCurrentTab] = React.useState(0)
+
+  return (
+    <div>
+      <ValidatedForm
+        validator={validator}
+        defaultValues={rule}
+        onSubmit={(data) => {
+          console.log(data)
+        }}
+      >
+        <Button startIcon={<Save />} type="submit">
+          저장
+        </Button>
+        <Paper sx={{ display: 'flex', height: 400 }} variant="outlined">
+          <Tabs
+            orientation="vertical"
+            value={currentTab}
+            sx={{ borderRight: 1, borderColor: 'divider' }}
+            onChange={(_, v) => setCurrentTab(v)}
+          >
+            <Tab label="메타데이터" {...a11yProps(0)} />
+            <Tab label="금지 규칙" {...a11yProps(1)} />
+            <Tab label="강제 규칙" {...a11yProps(2)} />
+            <Tab label="포함 규칙" {...a11yProps(3)} />
+            <Tab label="공유" {...a11yProps(4)} />
+          </Tabs>
+          <Box sx={{ flexGrow: 1, width: 0, p: 2 }}>
+            {currentTab === 0 && <MetadataArea />}
+          </Box>
+        </Paper>
+      </ValidatedForm>
+    </div>
+  )
 }
