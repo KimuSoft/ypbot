@@ -1,5 +1,9 @@
 import { useCurrentGuild } from '~/util/guilds'
 
 export default function GuildPage() {
-  return <div></div>
+  const guild = useCurrentGuild()
+
+  console.log(guild)
+
+  return <div>{guild.id}</div>
 }

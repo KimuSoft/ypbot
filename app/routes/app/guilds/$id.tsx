@@ -1,6 +1,13 @@
 import { Dns } from '@mui/icons-material'
-import { Avatar, Breadcrumbs, Link, Stack, Typography } from '@mui/material'
-import { NavLink } from '@remix-run/react'
+import {
+  Avatar,
+  Box,
+  Breadcrumbs,
+  Link,
+  Stack,
+  Typography,
+} from '@mui/material'
+import { NavLink, Outlet } from '@remix-run/react'
 import type { LoaderFunction } from '@remix-run/server-runtime'
 import { redirect } from '@remix-run/server-runtime'
 import { getGuildList } from '~/models/guild.server'
@@ -41,6 +48,10 @@ export default function GuildLayout() {
           </Stack>
         </Typography>
       </Breadcrumbs>
+
+      <Box sx={{ mt: 2 }}>
+        <Outlet />
+      </Box>
     </div>
   )
 }
