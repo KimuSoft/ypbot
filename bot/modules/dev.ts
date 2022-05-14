@@ -1,5 +1,5 @@
 import { applicationCommand, Module } from '@pikokr/command.ts'
-import { CommandInteraction } from 'discord.js'
+import type { CommandInteraction } from 'discord.js'
 
 class Dev extends Module {
   @applicationCommand({
