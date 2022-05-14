@@ -73,8 +73,6 @@ export const getGuildList = async (
       }
     }
 
-    console.log(categories)
-
     return {
       id: x.id,
       name: x.name,
