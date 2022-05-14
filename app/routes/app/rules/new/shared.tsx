@@ -8,6 +8,7 @@ import { z } from 'zod'
 import { ValidatedForm, validationError } from 'remix-validated-form'
 import { ValidatedTextField } from '~/components/app/forms/ValidatedTextField'
 import { getUser } from '~/session.server'
+import { prisma } from '~/db.server'
 
 export const validator = withZod(
   z.object({
@@ -23,12 +24,50 @@ export const action: ActionFunction = async ({ request }) => {
   if (res.error) {
     return validationError(res.error)
   }
-  console.log(res)
+  const invite = await prisma.shareCode.findUnique({
+    where: { id: res.data.code },
+  })
 
-  return {}
+  if (!invite) {
+    return validationError({
+      fieldErrors: {
+        code: '코드를 찾을 수 없습니다',
+      },
+    })
+  }
+
+  if (invite.maxCounts !== 0 && invite.maxCounts <= invite.count + 1) {
+    await prisma.shareCode.delete({
+      where: { id: invite.id },
+    })
+  } else {
+    await prisma.shareCode.update({
+      where: {
+        id: invite.id,
+      },
+      data: {
+        count: { increment: 1 },
+      },
+    })
+  }
+
+  await prisma.rule.update({
+    where: {
+      id: invite.ruleId,
+    },
+    data: {
+      sharedUser: {
+        connect: {
+          id: user.id,
+        },
+      },
+    },
+  })
+
+  return redirect('/app/rules')
 }
 
-export default function NewRulePage() {
+export default function AddSharedRulePage() {
   const transition = useTransition()
 
   const submitting = transition.state === 'submitting'
@@ -62,7 +101,6 @@ export default function NewRulePage() {
             </Typography>
             <ValidatedTextField
               label="공유 코드"
-              disabled={submitting}
               name="code"
               fullWidth
               variant="standard"

@@ -32,7 +32,7 @@ model Rule {
   name        String
   description String
   authorId    String
-  author      User          @relation(fields: [authorId], references: [id])
+  author      User          @relation(fields: [authorId], references: [id], onDelete: Cascade)
   sharedUser  User[]        @relation("_sharedRule")
   elements    RuleElement[]
   // channelIds String[]

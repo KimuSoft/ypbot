@@ -50,7 +50,7 @@ const RuleItem: React.FC<{ rule: Rule; type: RuleType }> = ({ rule, type }) => {
         <Stack direction="row" spacing={2}>
           <Box sx={{ flexGrow: 1 }} />
           {type === 'owner' && (
-            <IconButton size="small">
+            <IconButton size="small" component={RouterLink} to={rule.id}>
               <Edit />
             </IconButton>
           )}

@@ -77,7 +77,6 @@ export default function NewRulePage() {
             </Typography>
             <ValidatedTextField
               label="이름"
-              disabled={submitting}
               name="name"
               fullWidth
               variant="standard"
@@ -87,7 +86,6 @@ export default function NewRulePage() {
               name="description"
               fullWidth
               variant="standard"
-              disabled={submitting}
             />
             <LoadingButton
               variant="outlined"
