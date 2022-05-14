@@ -26,7 +26,7 @@ export default function App() {
       <AppHeader />
       <Container>
         <Toolbar />
-        <Box sx={{ mt: 2 }}>
+        <Box sx={{ mt: 4 }}>
           <Outlet />
         </Box>
       </Container>

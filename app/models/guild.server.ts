@@ -11,7 +11,7 @@ export type YPGuild = {
   icon: string | null
 }
 
-const guildsCache = new TLRU<User['id'], YPGuild[]>({ maxAgeMs: 10000 })
+export const guildsCache = new TLRU<User['id'], YPGuild[]>({ maxAgeMs: 10000 })
 
 export const getGuildList = async (
   req: Request
