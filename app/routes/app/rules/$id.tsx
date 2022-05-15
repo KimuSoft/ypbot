@@ -8,25 +8,18 @@ import {
   Tabs,
   Typography,
 } from '@mui/material'
-import type { Prisma } from '@prisma/client'
 import {
   NavLink,
   Outlet,
   useMatches,
   Link as RouterLink,
 } from '@remix-run/react'
-import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
+import type { LoaderFunction } from '@remix-run/server-runtime'
 import { redirect } from '@remix-run/server-runtime'
-import { withZod } from '@remix-validated-form/with-zod'
-import { ValidatedForm, validationError } from 'remix-validated-form'
-import { z } from 'zod'
-import { zfd } from 'zod-form-data'
 import { prisma } from '~/db.server'
 import { getUser } from '~/session.server'
 import { useCurrentRule } from '~/util/rules'
 import React from 'react'
-import { Save } from '@mui/icons-material'
-import { SubmitButton } from '~/components/app/forms/SubmitButton'
 
 function a11yProps(index: number) {
   return {

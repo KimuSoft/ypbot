@@ -18,10 +18,11 @@ import {
   Typography,
 } from '@mui/material'
 import type { RuleElement, RuleType } from '@prisma/client'
-import { useControlField, ValidatedForm } from 'remix-validated-form'
-import { DataGrid, GridColDef, GridActionsCellItem } from '@mui/x-data-grid'
+import { ValidatedForm } from 'remix-validated-form'
+import type { GridColDef } from '@mui/x-data-grid'
+import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid'
 import { SubmitButton } from '../app/forms/SubmitButton'
-import { Form, useLocation, useSubmit } from '@remix-run/react'
+import { useLocation, useSubmit } from '@remix-run/react'
 import { withZod } from '@remix-validated-form/with-zod'
 import { z } from 'zod'
 import { ValidatedTextField } from '../app/forms/ValidatedTextField'
@@ -30,7 +31,6 @@ import { zfd } from 'zod-form-data'
 import { useCurrentRule } from '~/util/rules'
 import clsx from 'clsx'
 import { green, red, yellow } from '@mui/material/colors'
-import _ from 'lodash'
 
 const createValidator = withZod(
   z.object({

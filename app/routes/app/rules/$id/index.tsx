@@ -1,7 +1,8 @@
 import { Save } from '@mui/icons-material'
 import { Stack, FormControl, FormControlLabel, Box } from '@mui/material'
-import { Prisma } from '@prisma/client'
-import { ActionFunction, redirect } from '@remix-run/server-runtime'
+import type { Prisma } from '@prisma/client'
+import type { ActionFunction } from '@remix-run/server-runtime'
+import { redirect } from '@remix-run/server-runtime'
 import { withZod } from '@remix-validated-form/with-zod'
 import React from 'react'
 import { ValidatedForm, validationError } from 'remix-validated-form'
@@ -18,7 +19,7 @@ import { useUser } from '~/utils'
 const validator = withZod(
   z.object({
     name: z.string().min(2),
-    description: z.string().min(10),
+    description: z.string().min(3),
     isOfficial: zfd.checkbox().optional(),
   })
 )

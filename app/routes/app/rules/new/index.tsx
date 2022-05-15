@@ -13,7 +13,7 @@ import { SubmitButton } from '~/components/app/forms/SubmitButton'
 export const validator = withZod(
   z.object({
     name: z.string().min(2),
-    description: z.string().min(10),
+    description: z.string().min(3),
   })
 )
 

@@ -1,9 +1,6 @@
 import { RuleType } from '@prisma/client'
-import {
-  ActionFunction,
-  LoaderFunction,
-  redirect,
-} from '@remix-run/server-runtime'
+import type { ActionFunction } from '@remix-run/server-runtime'
+import { redirect } from '@remix-run/server-runtime'
 import { withZod } from '@remix-validated-form/with-zod'
 import { validationError } from 'remix-validated-form'
 import { z } from 'zod'
