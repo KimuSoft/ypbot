@@ -10,14 +10,17 @@ import {
   FormControlLabel,
   Checkbox,
 } from '@mui/material'
-import { Rule, RuleElement } from '@prisma/client'
+import { Prisma } from '@prisma/client'
+import { ActionFunction, redirect } from '@remix-run/node'
 import { withZod } from '@remix-validated-form/with-zod'
 import React from 'react'
-import { ValidatedForm } from 'remix-validated-form'
+import { ValidatedForm, validationError } from 'remix-validated-form'
 import { z } from 'zod'
 import { zfd } from 'zod-form-data'
 import { ValidatedCheckbox } from '~/components/app/forms/ValidatedCheckbox'
 import { ValidatedTextField } from '~/components/app/forms/ValidatedTextField'
+import { prisma } from '~/db.server'
+import { getUser } from '~/session.server'
 import { useCurrentRule } from '~/util/rules'
 import { useUser } from '~/utils'
 
@@ -25,9 +28,42 @@ const validator = withZod(
   z.object({
     name: z.string().min(2),
     description: z.string().min(10),
-    isOfficial: zfd.checkbox(),
+    isOfficial: zfd.checkbox().optional(),
   })
 )
+
+export const action: ActionFunction = async ({ request, params }) => {
+  const user = (await getUser(request))!
+
+  const rule = await prisma.rule.findFirst({
+    where: { id: params.id, authorId: user.id },
+  })
+
+  if (!rule) return redirect('/rules')
+
+  const res = await validator.validate(await request.formData())
+  if (res.error) {
+    return validationError(res.error)
+  }
+  const { data } = res
+
+  const updateArgs: Prisma.RuleUpdateInput = {
+    name: data.name,
+    description: data.description,
+  }
+
+  if (user.admin) {
+    updateArgs.isOfficial = data.isOfficial ?? false
+  }
+
+  await prisma.rule.update({
+    where: {
+      id: rule.id,
+    },
+    data: updateArgs,
+  })
+  return {}
+}
 
 function a11yProps(index: number) {
   return {
@@ -75,13 +111,7 @@ export default function RuleEdit() {
 
   return (
     <div>
-      <ValidatedForm
-        validator={validator}
-        defaultValues={rule}
-        onSubmit={(data) => {
-          console.log(data)
-        }}
-      >
+      <ValidatedForm validator={validator} defaultValues={rule} method="post">
         <Button startIcon={<Save />} type="submit">
           저장
         </Button>
