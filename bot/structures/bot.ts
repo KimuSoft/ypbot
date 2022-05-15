@@ -1,5 +1,5 @@
 import { CommandClient } from '@pikokr/command.ts'
-import { logger } from 'bot/logger'
+import { logger } from '../logger'
 import type { Client } from 'discord.js'
 
 export class Bot extends CommandClient {

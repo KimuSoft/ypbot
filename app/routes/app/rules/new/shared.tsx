@@ -9,6 +9,7 @@ import { ValidatedTextField } from '~/components/app/forms/ValidatedTextField'
 import { getUser } from '~/session.server'
 import { prisma } from '~/db.server'
 import { SubmitButton } from '~/components/app/forms/SubmitButton'
+import React from 'react'
 
 export const validator = withZod(
   z.object({
@@ -74,6 +75,12 @@ export default function AddSharedRulePage() {
 
   const submitting = transition.state === 'submitting'
 
+  const code = React.useMemo(() => {
+    if (typeof window === 'undefined') return
+
+    return new URLSearchParams(window.location.search).get('code')
+  }, [])
+
   return (
     <div>
       <Breadcrumbs>
@@ -106,6 +113,13 @@ export default function AddSharedRulePage() {
               name="code"
               fullWidth
               variant="standard"
+              inputProps={{
+                ref: (i: HTMLInputElement | null) => {
+                  if (i) {
+                    i.value = code || ''
+                  }
+                },
+              }}
             />
             <SubmitButton variant="outlined" fullWidth loading={submitting}>
               가져오기

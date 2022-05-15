@@ -49,7 +49,7 @@ const tabValues = [
   'routes/app/rules/$id/block',
   'routes/app/rules/$id/force',
   'routes/app/rules/$id/include',
-  'routes/app/rules/$id/share',
+  'routes/app/rules/$id/share/index',
 ]
 
 export default function RuleLayout() {

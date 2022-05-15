@@ -59,8 +59,12 @@ const RuleItem: React.FC<{ rule: Rule; type: RuleType }> = ({ rule, type }) => {
               <Edit />
             </IconButton>
           )}
-          {(['owner', 'shared'] as RuleType[]).includes(type) && (
-            <IconButton size="small">
+          {type === 'owner' && (
+            <IconButton
+              size="small"
+              component={RouterLink}
+              to={`${rule.id}/share`}
+            >
               <Share />
             </IconButton>
           )}

@@ -13,13 +13,21 @@ import {
   ScrollRestoration,
 } from '@remix-run/react'
 
+import '../node_modules/react-toastify/dist/ReactToastify.css'
 import { getUser } from './session.server'
 import type { YPUser } from './models/user.server'
 import { convertUser } from './models/user.server'
 import { CssBaseline } from '@mui/material'
+import { ToastContainer } from 'react-toastify'
+import toastify from 'react-toastify/dist/ReactToastify.css'
 
 export const links: LinksFunction = () => {
-  return []
+  return [
+    {
+      rel: 'stylesheet',
+      href: toastify,
+    },
+  ]
 }
 
 export const meta: MetaFunction = () => ({
@@ -48,6 +56,7 @@ export default function App() {
         <Links />
       </head>
       <body>
+        <ToastContainer position="top-center" />
         <CssBaseline />
         <Outlet />
         <ScrollRestoration />
