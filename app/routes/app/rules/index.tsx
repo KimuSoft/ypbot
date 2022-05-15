@@ -37,6 +37,11 @@ export const loader: LoaderFunction = async ({ request }) => {
   return {
     rules: user.rules,
     sharedRules: user.sharedRules,
+    officialRules: await prisma.rule.findMany({
+      where: {
+        isOfficial: true,
+      },
+    }),
   }
 }
 
@@ -106,12 +111,11 @@ const RuleGroup: React.FC<{
 }
 
 export default function RulesPage() {
-  const { rules, sharedRules } = useLoaderData<{
+  const { rules, sharedRules, officialRules } = useLoaderData<{
     rules: Rule[]
     sharedRules: Rule[]
+    officialRules: Rule[]
   }>()
-
-  console.log(rules)
 
   return (
     <div>
@@ -148,6 +152,7 @@ export default function RulesPage() {
       <Stack direction="column" spacing={2} sx={{ mt: 2 }}>
         <RuleGroup type="owner" title="내 규칙" rules={rules} />
         <RuleGroup type="shared" title="공유받은 규칙" rules={sharedRules} />
+        <RuleGroup type="official" title="공식 규칙" rules={officialRules} />
       </Stack>
     </div>
   )
