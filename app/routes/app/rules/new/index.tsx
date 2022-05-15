@@ -1,5 +1,4 @@
 import { Breadcrumbs, Link, Paper, Stack, Typography } from '@mui/material'
-import { LoadingButton } from '@mui/lab'
 import { NavLink, useTransition } from '@remix-run/react'
 import type { ActionFunction } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
@@ -9,6 +8,7 @@ import { ValidatedForm, validationError } from 'remix-validated-form'
 import { ValidatedTextField } from '~/components/app/forms/ValidatedTextField'
 import { prisma } from '~/db.server'
 import { getUser } from '~/session.server'
+import { SubmitButton } from '~/components/app/forms/SubmitButton'
 
 export const validator = withZod(
   z.object({
@@ -87,14 +87,9 @@ export default function NewRulePage() {
               fullWidth
               variant="standard"
             />
-            <LoadingButton
-              variant="outlined"
-              fullWidth
-              loading={submitting}
-              type="submit"
-            >
+            <SubmitButton variant="outlined" fullWidth loading={submitting}>
               만들기
-            </LoadingButton>
+            </SubmitButton>
           </Stack>
         </Paper>
       </ValidatedForm>
