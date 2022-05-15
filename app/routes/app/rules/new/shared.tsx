@@ -17,7 +17,9 @@ export const validator = withZod(
 )
 
 export const action: ActionFunction = async ({ request }) => {
-  const user = (await getUser(request))!
+  const user = await getUser(request)
+
+  if (!user) return { error: 'unauthorized' }
 
   const res = await validator.validate(await request.formData())
 

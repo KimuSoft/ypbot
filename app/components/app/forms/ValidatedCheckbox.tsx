@@ -14,8 +14,9 @@ export const ValidatedCheckbox: React.FC<CheckboxProps & { name: string }> = ({
   return (
     <Checkbox
       name={name}
-      defaultChecked={field.defaultValue}
       {...props}
+      {...field.getInputProps()}
+      defaultChecked={field.defaultValue}
       disabled={props.disabled || submitting}
     />
   )

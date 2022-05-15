@@ -1,5 +1,5 @@
 import React from 'react'
 
 export default function ShareSettings() {
-  return <div>block</div>
+  return <div>sharing</div>
 }

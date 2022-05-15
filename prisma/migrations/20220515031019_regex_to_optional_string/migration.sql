@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "RuleElement" ALTER COLUMN "regex" DROP NOT NULL,
+ALTER COLUMN "regex" SET DATA TYPE TEXT;

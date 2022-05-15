@@ -28,47 +28,6 @@ import React from 'react'
 import { Save } from '@mui/icons-material'
 import { SubmitButton } from '~/components/app/forms/SubmitButton'
 
-const validator = withZod(
-  z.object({
-    name: z.string().min(2),
-    description: z.string().min(10),
-    isOfficial: zfd.checkbox().optional(),
-  })
-)
-
-export const action: ActionFunction = async ({ request, params }) => {
-  const user = (await getUser(request))!
-
-  const rule = await prisma.rule.findFirst({
-    where: { id: params.id, authorId: user.id },
-  })
-
-  if (!rule) return redirect('/rules')
-
-  const res = await validator.validate(await request.formData())
-  if (res.error) {
-    return validationError(res.error)
-  }
-  const { data } = res
-
-  const updateArgs: Prisma.RuleUpdateInput = {
-    name: data.name,
-    description: data.description,
-  }
-
-  if (user.admin) {
-    updateArgs.isOfficial = data.isOfficial ?? false
-  }
-
-  await prisma.rule.update({
-    where: {
-      id: rule.id,
-    },
-    data: updateArgs,
-  })
-  return {}
-}
-
 function a11yProps(index: number) {
   return {
     id: `vertical-tab-${index}`,
@@ -77,7 +36,9 @@ function a11yProps(index: number) {
 }
 
 export const loader: LoaderFunction = async ({ params, request }) => {
-  const user = (await getUser(request))!
+  const user = await getUser(request)
+
+  if (!user) return { error: 'unauthorized' }
 
   const id = params.id
   const item = await prisma.rule.findFirst({
@@ -108,7 +69,7 @@ export default function RuleLayout() {
   }, [matches])
 
   return (
-    <div>
+    <div style={{ display: 'flex', height: '100%', flexDirection: 'column' }}>
       <Breadcrumbs>
         <Link component={NavLink} to="/app" underline="hover" color="inherit">
           YPBOT
@@ -125,61 +86,54 @@ export default function RuleLayout() {
           {rule.name}
         </Typography>
       </Breadcrumbs>
-      <ValidatedForm validator={validator} defaultValues={rule} method="post">
-        <Box sx={{ mt: 2 }}>
-          <Stack direction="row" alignItems="flex-end">
-            <Typography variant="h6">{rule.name}</Typography>
-            <Box sx={{ flexGrow: 1 }} />
-            <SubmitButton startIcon={<Save />} variant="outlined">
-              저장
-            </SubmitButton>
-          </Stack>
-          <Paper
-            sx={{ display: 'flex', height: 400, mt: 2 }}
-            variant="outlined"
+      <Box
+        sx={{ mt: 2, display: 'flex', flexDirection: 'column', flexGrow: 1 }}
+      >
+        <Stack direction="row" alignItems="flex-end">
+          <Typography variant="h6">{rule.name}</Typography>
+        </Stack>
+        <Paper sx={{ display: 'flex', flexGrow: 1, mt: 2 }} variant="outlined">
+          <Tabs
+            orientation="vertical"
+            value={currentTab}
+            sx={{ borderRight: 1, borderColor: 'divider' }}
           >
-            <Tabs
-              orientation="vertical"
-              value={currentTab}
-              sx={{ borderRight: 1, borderColor: 'divider' }}
-            >
-              <Tab
-                component={RouterLink}
-                to={`/app/rules/${rule.id}`}
-                label="메타데이터"
-                {...a11yProps(0)}
-              />
-              <Tab
-                component={RouterLink}
-                to={`/app/rules/${rule.id}/block`}
-                label="금지 규칙"
-                {...a11yProps(1)}
-              />
-              <Tab
-                component={RouterLink}
-                to={`/app/rules/${rule.id}/force`}
-                label="강제 규칙"
-                {...a11yProps(2)}
-              />
-              <Tab
-                component={RouterLink}
-                to={`/app/rules/${rule.id}/include`}
-                label="포함 규칙"
-                {...a11yProps(3)}
-              />
-              <Tab
-                component={RouterLink}
-                to={`/app/rules/${rule.id}/share`}
-                label="공유"
-                {...a11yProps(4)}
-              />
-            </Tabs>
-            <Box sx={{ flexGrow: 1, width: 0, p: 2 }}>
-              <Outlet />
-            </Box>
-          </Paper>
-        </Box>
-      </ValidatedForm>
+            <Tab
+              component={RouterLink}
+              to={`/app/rules/${rule.id}`}
+              label="메타데이터"
+              {...a11yProps(0)}
+            />
+            <Tab
+              component={RouterLink}
+              to={`/app/rules/${rule.id}/block`}
+              label="금지 규칙"
+              {...a11yProps(1)}
+            />
+            <Tab
+              component={RouterLink}
+              to={`/app/rules/${rule.id}/force`}
+              label="강제 규칙"
+              {...a11yProps(2)}
+            />
+            <Tab
+              component={RouterLink}
+              to={`/app/rules/${rule.id}/include`}
+              label="포함 규칙"
+              {...a11yProps(3)}
+            />
+            <Tab
+              component={RouterLink}
+              to={`/app/rules/${rule.id}/share`}
+              label="공유"
+              {...a11yProps(4)}
+            />
+          </Tabs>
+          <Box sx={{ flexGrow: 1, width: 0, p: 2 }}>
+            <Outlet />
+          </Box>
+        </Paper>
+      </Box>
     </div>
   )
 }

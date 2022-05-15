@@ -22,11 +22,13 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export default function App() {
   return (
-    <div>
+    <div style={{ height: '100vh' }}>
       <AppHeader />
-      <Container>
+      <Container
+        sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+      >
         <Toolbar />
-        <Box sx={{ mt: 4 }}>
+        <Box sx={{ py: 3, flexGrow: 1, height: 0, overflowY: 'auto' }}>
           <Outlet />
         </Box>
       </Container>

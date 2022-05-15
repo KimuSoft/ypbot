@@ -1,5 +1,6 @@
 import React from 'react'
+import { RuleElementEditor } from '~/components/rules/RuleElementEditor'
 
 export default function ForceSettings() {
-  return <div>block</div>
+  return <RuleElementEditor ruleType="White" />
 }
