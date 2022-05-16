@@ -11,9 +11,14 @@ import { NavLink, Outlet } from '@remix-run/react'
 import type { LoaderFunction } from '@remix-run/server-runtime'
 import { redirect } from '@remix-run/server-runtime'
 import { getGuildList } from '~/models/guild.server'
+import { getUser } from '~/session.server'
 import { useCurrentGuild } from '~/util/guilds'
 
 export const loader: LoaderFunction = async ({ params, request }) => {
+  const user = await getUser(request)
+
+  if (!user) return redirect('/app')
+
   const id = params.id
 
   const guilds = await getGuildList(request)

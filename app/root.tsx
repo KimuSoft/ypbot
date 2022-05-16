@@ -13,7 +13,6 @@ import {
   ScrollRestoration,
 } from '@remix-run/react'
 
-import '../node_modules/react-toastify/dist/ReactToastify.css'
 import { getUser } from './session.server'
 import type { YPUser } from './models/user.server'
 import { convertUser } from './models/user.server'
