@@ -1,4 +1,9 @@
-import { applicationCommand, Module } from '@pikokr/command.ts'
+import {
+  applicationCommand,
+  listener,
+  Module,
+  ownerOnly,
+} from '@pikokr/command.ts'
 import type { CommandInteraction } from 'discord.js'
 
 class Dev extends Module {
@@ -14,7 +19,9 @@ class Dev extends Module {
       description: 'reload',
     },
   })
+  @ownerOnly
   async reload(i: CommandInteraction) {
+    console.log(i)
     await i.deferReply()
     this.commandClient.registry
       .reloadAll()
