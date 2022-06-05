@@ -933,10 +933,10 @@
   resolved "https://registry.yarnpkg.com/@open-draft/until/-/until-1.0.3.tgz#db9cc719191a62e7d9200f6e7bab21c5b848adca"
   integrity sha512-Aq58f5HiWdyDlFffbbSjAlv596h/cOnt2DO1w3DOC7OJ5EHs0hd/nycJfiu9RJbT6Yk6F1knnRRXNSpxoIVZ9Q==
 
-"@pikokr/command.ts@^4.0.6":
-  version "4.0.6"
-  resolved "https://registry.yarnpkg.com/@pikokr/command.ts/-/command.ts-4.0.6.tgz#53fc45fa2dfb425962b6451f2346f5d725b78b3e"
-  integrity sha512-lK4n5f1dzOqkd+J4db+kUGdHMLQrh+XKXMfoBpQAjRViBw+RbS8smtKuok9Hzz4EbvIXz1P1u+N+R7drGknnSQ==
+"@pikokr/command.ts@^4.0.7":
+  version "4.0.7"
+  resolved "https://registry.yarnpkg.com/@pikokr/command.ts/-/command.ts-4.0.7.tgz#1ba740bf38edbc0426c0e6cfb87100fcb487edf3"
+  integrity sha512-zHHwCco1ERjTpuyY0vhDwsBPMgBT6BLh5yLqYKzgj7847N9wLqZ4V4XZb4Zgc4J3w3KBC4lIXOfh9pTs483m7w==
   dependencies:
     "@types/node" "^14.14.37"
     discord-api-types "^0.23.1"

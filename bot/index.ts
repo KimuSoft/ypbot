@@ -1,3 +1,4 @@
+import 'reflect-metadata'
 import 'dotenv/config'
 import type { PrismaClient } from '@prisma/client'
 import { client } from './bot'

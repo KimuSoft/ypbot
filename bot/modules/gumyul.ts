@@ -1,11 +1,10 @@
 import { listener, Module } from '@pikokr/command.ts'
 import type { Message } from 'discord.js'
 import hangul from 'hangul-js'
-import { prisma } from '~/db.server'
 
 class Gumyul extends Module {
   async getRuleRegData(channelId: string) {
-    const ypChannel = await prisma.channel.findUnique({
+    const ypChannel = await __db__.channel.findUnique({
       where: { id: channelId },
       include: {
         rules: {
