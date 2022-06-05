@@ -115,6 +115,7 @@ const RuleEditContent: React.FC<{
   close: () => void
 }> = ({ element, close }) => {
   const v = React.useContext(EditorContext)
+  const [isAdvanced, setIsAdvanced] = React.useState(false)
 
   return (
     <ValidatedForm
@@ -139,7 +140,7 @@ const RuleEditContent: React.FC<{
             id: data.id,
             name: data.name,
             isSeparation: data.isSeparation,
-            regex: data.regex || null,
+            regex: isAdvanced ? data.regex || null : data.name,
             ruleType: element.ruleType,
           },
         ])
@@ -157,16 +158,31 @@ const RuleEditContent: React.FC<{
             required
             fullWidth
           />
-          <ValidatedTextField
-            name="regex"
-            label="Regexp"
-            variant="standard"
-            fullWidth
-          />
+          {isAdvanced && (
+            <ValidatedTextField
+              name="regex"
+              label="정규 표현식"
+              variant="standard"
+              fullWidth
+            />
+          )}
           <FormControl>
             <FormControlLabel
               control={<ValidatedCheckbox name="isSeparation" />}
               label="자모 분리"
+            />
+          </FormControl>
+          <FormControl>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={isAdvanced}
+                  onChange={(e, v) => {
+                    setIsAdvanced(v)
+                  }}
+                />
+              }
+              label="고급 설정"
             />
           </FormControl>
         </Stack>
@@ -295,15 +311,17 @@ const RuleElementEditorRoot: React.FC<{ ruleType: RuleType }> = ({
     [create, setCreate, v.create, v.delete, v.edit]
   )
 
+  const [isAdvanced, setIsAdvanced] = React.useState(false)
+
   return (
     <Box sx={{ display: 'flex', height: '100%', gap: 2 }}>
       <Dialog open={createModalOpen} maxWidth="xs" fullWidth>
         <ValidatedForm
           validator={createValidator}
           defaultValues={{
-            value: 'test',
-            regex: '1234',
-            separate: true,
+            value: '',
+            regex: '',
+            separate: false,
           }}
           onSubmit={(data) => {
             setCreate([
@@ -313,7 +331,7 @@ const RuleElementEditorRoot: React.FC<{ ruleType: RuleType }> = ({
                 isSeparation: data.separate,
                 name: data.value,
                 ruleType,
-                regex: data.regex ?? null,
+                regex: isAdvanced ? data.regex || null : data.value,
               },
             ])
             setCreateModalOpen(false)
@@ -329,16 +347,31 @@ const RuleElementEditorRoot: React.FC<{ ruleType: RuleType }> = ({
                 required
                 fullWidth
               />
-              <ValidatedTextField
-                name="regex"
-                label="Regexp"
-                variant="standard"
-                fullWidth
-              />
+              {isAdvanced && (
+                <ValidatedTextField
+                  name="regex"
+                  label="정규 표현식"
+                  variant="standard"
+                  fullWidth
+                />
+              )}
               <FormControl>
                 <FormControlLabel
                   control={<ValidatedCheckbox name="separate" />}
                   label="자모 분리"
+                />
+              </FormControl>
+              <FormControl>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={isAdvanced}
+                      onChange={(e, v) => {
+                        setIsAdvanced(v)
+                      }}
+                    />
+                  }
+                  label="고급 설정"
                 />
               </FormControl>
             </Stack>

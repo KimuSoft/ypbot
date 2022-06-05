@@ -2,6 +2,11 @@ import { applicationCommand, Module } from '@pikokr/command.ts'
 import type { CommandInteraction } from 'discord.js'
 
 class Dev extends Module {
+  @listener('interactionCreate')
+  async dfnsdfwioefjeijfi() {
+    console.log('asdf')
+  }
+
   @applicationCommand({
     command: {
       type: 'CHAT_INPUT',

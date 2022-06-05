@@ -27,7 +27,7 @@ export async function getToken(user: User) {
         refresh_token: user.discordRefreshToken,
       })
     )
-    prisma.user.update({
+    await prisma.user.update({
       where: { id: user.id },
       data: {
         discordAccessToken: data.access_token,

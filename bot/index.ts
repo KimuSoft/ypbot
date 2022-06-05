@@ -17,6 +17,7 @@ declare global {
 }
 
 setImmediate(async () => {
+  console.log('asdf')
   require(BUILD_DIR)
 
   global.cts = new Bot(client)
