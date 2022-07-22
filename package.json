@@ -3,7 +3,8 @@
   "workspaces": [
     "bot",
     "frontend",
-    "server"
+    "server",
+    "shared"
   ],
   "scripts": {
     "format": "yarn workspaces run format"

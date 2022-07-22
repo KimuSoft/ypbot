@@ -1,0 +1,10 @@
+{
+    "exclude": [
+        "**/dist/**"
+    ],
+    "references": [
+        {
+            "path": "./shared"
+        }
+    ]
+}
