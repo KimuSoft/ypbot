@@ -2,7 +2,8 @@
   "private": true,
   "workspaces": [
     "bot",
-    "web"
+    "frontend",
+    "server"
   ],
   "scripts": {
     "format": "yarn workspaces run format"
