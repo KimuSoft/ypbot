@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "workspaces": [
+    "bot",
+    "web"
+  ],
+  "scripts": {
+    "format": "yarn workspaces run format"
+  }
+}
