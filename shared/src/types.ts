@@ -5,3 +5,10 @@ export type YPUser = {
   tag: string
   avatar: string
 }
+
+export type YPGuild = {
+  id: string
+  name: string
+
+  invited: boolean
+}

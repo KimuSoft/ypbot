@@ -1,8 +1,8 @@
 import { AuthenticationError } from "apollo-server"
-import { prisma, YPUser } from "shared"
+import { prisma, Rule, YPUser } from "shared"
 import { Resolver } from "../../../utils"
 
-export const getUserRules: Resolver<any, YPUser> = async (
+export const getUserRules: Resolver<Rule[], YPUser> = async (
   user,
   params,
   ctx
