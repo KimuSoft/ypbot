@@ -4,6 +4,7 @@
   "private": true,
   "devDependencies": {
     "@swc/core": "^1.2.218",
+    "@types/jsonwebtoken": "^8.5.8",
     "@types/node": "^18.0.6",
     "prettier": "^2.7.1",
     "ts-node": "^10.9.1",
@@ -17,9 +18,13 @@
   },
   "dependencies": {
     "apollo-server": "^3.10.0",
+    "axios": "^0.27.2",
+    "discord-api-types": "^0.36.3",
     "dotenv": "^16.0.1",
     "graphql": "^16.5.0",
+    "jsonwebtoken": "^8.5.1",
     "shared": "*",
+    "tlru": "^1.0.2",
     "tslog": "^3.3.3"
   }
 }
