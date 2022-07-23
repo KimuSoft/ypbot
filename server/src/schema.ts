@@ -46,6 +46,8 @@ export const typeDefs = gql`
     id: String!
     name: String!
     ruleType: RuleType!
+    separate: Boolean!
+    regex: String
   }
 
   enum RuleType {
@@ -66,9 +68,24 @@ export const typeDefs = gql`
     rule(id: String!): Rule
   }
 
+  input RuleElementCreateInfo {
+    name: String!
+    ruleType: RuleType!
+    regex: String!
+    separate: Boolean!
+  }
+
+  type RuleMutation {
+    updateMeta(name: String, description: String): Rule!
+
+    createElement(info: RuleElementCreateInfo!): RuleElement!
+  }
+
   type Mutation {
     login(code: String!): String!
 
     createRule(name: String!, description: String!): Rule!
+
+    rule(id: String!): RuleMutation!
   }
 `

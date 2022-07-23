@@ -1,3 +1,4 @@
+import { RuleType } from "@prisma/client"
 import { ChannelType } from "discord-api-types/v10"
 
 export type YPUser = {
@@ -20,4 +21,11 @@ export type YPChannel = {
   name: string
 
   type: ChannelType
+}
+
+export type RuleElementInfo = {
+  name: string
+  ruleType: RuleType
+  regex: string
+  separate: boolean
 }

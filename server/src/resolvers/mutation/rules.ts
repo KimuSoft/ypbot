@@ -24,3 +24,21 @@ export const createRule: Resolver<
 
   return rule
 }
+
+export const getRuleMutation: Resolver<
+  Rule | null,
+  unknown,
+  { id: string }
+> = async (parent, { id }, context) => {
+  if (!context.user)
+    throw new AuthenticationError("You must be logged in to do this operation")
+
+  const rule = await prisma.rule.findFirst({
+    where: {
+      id,
+      authorId: context.user.id,
+    },
+  })
+
+  return rule
+}
