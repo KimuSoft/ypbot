@@ -32,3 +32,35 @@ export const findRule: Resolver<Rule | null, unknown, { id: string }> = async (
 
   return rules
 }
+
+export const getSharedRules: Resolver<Omit<Rule, "shareCode">[]> = async (
+  parent,
+  params,
+  ctx
+) => {
+  if (!ctx.user)
+    throw new AuthenticationError(
+      "Authentication is required to perform this action"
+    )
+
+  return (
+    (
+      await prisma.user.findUnique({
+        where: { id: ctx.user.id },
+        select: {
+          sharedRules: {
+            select: {
+              shareCode: false,
+              authorId: true,
+              description: true,
+              id: true,
+              isOfficial: true,
+              name: true,
+              sharingEnabled: true,
+            },
+          },
+        },
+      })
+    )?.sharedRules ?? []
+  )
+}

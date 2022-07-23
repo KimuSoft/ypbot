@@ -2,7 +2,7 @@ import { Resolver } from "../../utils"
 import { guildResolvers } from "./guild"
 import { getGuildList } from "./guilds"
 import { ruleResolvers } from "./rule"
-import { findRule, getRuleList } from "./rules"
+import { findRule, getRuleList, getSharedRules } from "./rules"
 import { me, userResolvers } from "./users"
 
 export const queryResolvers = {
@@ -19,6 +19,7 @@ export const queryResolvers = {
     guilds: getGuildList,
     rules: getRuleList,
     rule: findRule,
+    sharedRules: getSharedRules,
   },
   User: userResolvers,
   Guild: guildResolvers,

@@ -12,9 +12,27 @@ export const addShared: Resolver<
       "You must be logged in to perform this action"
     )
 
-  const shareCode = await prisma.rule.findFirst({ where: {} })
+  const rule = await prisma.rule.findFirst({
+    where: {
+      shareCode: params.code,
+      sharingEnabled: true,
+    },
+  })
 
-  return null
+  if (!rule) return null
+
+  await prisma.user.update({
+    where: { id: ctx.user.id },
+    data: {
+      sharedRules: {
+        connect: {
+          id: rule.id,
+        },
+      },
+    },
+  })
+
+  return rule
 }
 
 export const removeShared: Resolver<boolean, unknown, { id: string }> = async (
@@ -32,7 +50,7 @@ export const removeShared: Resolver<boolean, unknown, { id: string }> = async (
       id: ctx.user.id,
     },
     data: {
-      rules: {
+      sharedRules: {
         disconnect: {
           id: params.id,
         },

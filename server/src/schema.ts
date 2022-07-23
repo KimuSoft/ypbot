@@ -69,6 +69,8 @@ export const typeDefs = gql`
 
     rules: [Rule!]!
 
+    sharedRules: [Rule!]!
+
     rule(id: String!): Rule
   }
 
