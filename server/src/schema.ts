@@ -11,6 +11,23 @@ export const typeDefs = gql`
     rules: [Rule!]!
   }
 
+  type Guild {
+    id: String!
+    name: String!
+    icon: String
+
+    invited: Boolean
+
+    channels: [Channel!]!
+  }
+
+  type Channel {
+    id: String!
+    name: String!
+
+    type: Int
+  }
+
   type Rule {
     id: String!
   }
@@ -19,6 +36,8 @@ export const typeDefs = gql`
     me: User
 
     loginUrl: String!
+
+    guilds: [Guild!]!
   }
 
   type Mutation {

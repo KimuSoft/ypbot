@@ -1,4 +1,6 @@
 import { Resolver } from "../../utils"
+import { guildResolvers } from "./guild"
+import { getGuildList } from "./guilds"
 import { me, userResolvers } from "./users"
 
 export const queryResolvers = {
@@ -12,6 +14,8 @@ export const queryResolvers = {
       )}&scope=${encodeURIComponent(
         "identify"
       )}&response_type=code`) as Resolver<string>,
+    guilds: getGuildList,
   },
   User: userResolvers,
+  Guild: guildResolvers,
 }

@@ -6,6 +6,7 @@ import {
 import { GraphQLFieldResolver } from "graphql"
 import { prisma, User, YPUser } from "shared"
 import { TLRU } from "tlru"
+import { logger } from "./logger"
 
 export const discordApi = axios.create({
   baseURL: "https://discord.com/api/v10",
@@ -15,6 +16,11 @@ discordApi.interceptors.response.use(
   (v) => v,
   (err: AxiosError) => {
     if (err.response?.status === 429) {
+      logger.silly(
+        `Discord API rate limited. Retrying after ${
+          err.response!.headers["retry-after"]
+        } second(s)`
+      )
       return new Promise((resolve) =>
         setTimeout(resolve, Number(err.response!.headers["retry-after"]) * 1000)
       ).then(() => discordApi.request(err.config))

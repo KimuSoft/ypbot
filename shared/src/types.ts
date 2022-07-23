@@ -1,3 +1,5 @@
+import { ChannelType } from "discord-api-types/v10"
+
 export type YPUser = {
   id: string
   username: string
@@ -11,4 +13,11 @@ export type YPGuild = {
   name: string
 
   invited: boolean
+}
+
+export type YPChannel = {
+  id: string
+  name: string
+
+  type: ChannelType
 }
