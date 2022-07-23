@@ -71,6 +71,8 @@ export const typeDefs = gql`
 
     sharedRules: [Rule!]!
 
+    officialRules: [Rule!]!
+
     rule(id: String!): Rule
   }
 
@@ -99,6 +101,8 @@ export const typeDefs = gql`
     element(id: String!): RuleElementMutation
 
     setSharable(value: Boolean!): Boolean!
+
+    setOfficial(value: Boolean!): Boolean!
   }
 
   type Mutation {

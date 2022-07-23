@@ -1,6 +1,6 @@
 import { createRuleElement } from "./createRuleElement"
 import { getRuleElementMutation } from "./getRuleElement"
-import { setRuleSharable } from "./share"
+import { setRuleOfficial, setRuleSharable } from "./share"
 import { updateRuleMeta } from "./updateMeta"
 
 export const ruleMutationResolvers = {
@@ -8,4 +8,5 @@ export const ruleMutationResolvers = {
   createElement: createRuleElement,
   element: getRuleElementMutation,
   setSharable: setRuleSharable,
+  setOfficial: setRuleOfficial,
 }

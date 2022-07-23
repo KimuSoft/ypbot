@@ -12,6 +12,7 @@ datasource db {
 
 model User {
   id                    String   @id
+  admin                 Boolean  @default(false)
   createdAt             DateTime @default(now())
   updatedAt             DateTime @updatedAt
   rules                 Rule[]

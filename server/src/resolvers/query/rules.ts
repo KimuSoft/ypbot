@@ -64,3 +64,22 @@ export const getSharedRules: Resolver<Omit<Rule, "shareCode">[]> = async (
     )?.sharedRules ?? []
   )
 }
+
+export const getOfficialRules: Resolver<
+  Omit<Rule, "shareCode">[]
+> = async () => {
+  return prisma.rule.findMany({
+    select: {
+      shareCode: false,
+      authorId: true,
+      description: true,
+      id: true,
+      isOfficial: true,
+      name: true,
+      sharingEnabled: true,
+    },
+    where: {
+      isOfficial: true,
+    },
+  })
+}
