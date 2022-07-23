@@ -36,7 +36,12 @@ export type UserContext = {
   user: User | null
 }
 
-export type Resolver<T, S = unknown> = GraphQLFieldResolver<S, UserContext, T>
+export type Resolver<T, S = unknown, A = unknown> = GraphQLFieldResolver<
+  S,
+  UserContext,
+  A,
+  T | Promise<T>
+>
 
 export const getToken = async (user: User) => {
   if (user.discordTokenExpiresAt.getTime() > Date.now()) {

@@ -7,8 +7,6 @@ export const typeDefs = gql`
     discriminator: String!
     tag: String!
     avatar: String!
-
-    rules: [Rule!]!
   }
 
   type Guild {
@@ -30,6 +28,7 @@ export const typeDefs = gql`
 
   type Rule {
     id: String!
+    name: String!
   }
 
   type Query {
@@ -38,9 +37,13 @@ export const typeDefs = gql`
     loginUrl: String!
 
     guilds: [Guild!]!
+
+    rules: [Rule!]!
   }
 
   type Mutation {
-    login(code: String!): String
+    login(code: String!): String!
+
+    createRule(name: String!, description: String!): Rule!
   }
 `
