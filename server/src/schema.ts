@@ -34,6 +34,10 @@ export const typeDefs = gql`
     elements: [RuleElement!]!
 
     counts: RuleCounts!
+
+    shareCode: String
+
+    sharingEnabled: Boolean!
   }
 
   type RuleCounts {
@@ -91,6 +95,8 @@ export const typeDefs = gql`
     createElement(info: RuleElementCreateInfo!): RuleElement!
 
     element(id: String!): RuleElementMutation
+
+    setSharable(value: Boolean!): Boolean!
   }
 
   type Mutation {
@@ -99,5 +105,9 @@ export const typeDefs = gql`
     createRule(name: String!, description: String!): Rule!
 
     rule(id: String!): RuleMutation
+
+    addShared(code: String!): Rule
+
+    removeShared(id: String!): Boolean
   }
 `

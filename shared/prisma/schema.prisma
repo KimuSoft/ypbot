@@ -28,16 +28,18 @@ model Channel {
 }
 
 model Rule {
-  id          String        @id @default(cuid()) // id
-  name        String
-  description String
-  authorId    String
-  author      User          @relation(fields: [authorId], references: [id])
-  sharedUser  User[]        @relation("_sharedRule")
-  elements    RuleElement[]
+  id             String        @id @default(cuid()) // id
+  shareCode      String        @default(uuid())
+  sharingEnabled Boolean       @default(false)
+  name           String
+  description    String
+  authorId       String
+  author         User          @relation(fields: [authorId], references: [id])
+  sharedUser     User[]        @relation("_sharedRule")
+  elements       RuleElement[]
   // channelIds String[]
-  channels    Channel[]     @relation("_ruleOnChannel")
-  isOfficial  Boolean       @default(false)
+  channels       Channel[]     @relation("_ruleOnChannel")
+  isOfficial     Boolean       @default(false)
 }
 
 model RuleElement {
