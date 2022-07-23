@@ -1,5 +1,6 @@
 import { login } from "./auth"
 import { ruleMutationResolvers } from "./rule"
+import { ruleElementMutationResolvers } from "./ruleElement"
 import { createRule, getRuleMutation } from "./rules"
 
 export const mutationResolvers = {
@@ -9,4 +10,5 @@ export const mutationResolvers = {
     rule: getRuleMutation,
   },
   RuleMutation: ruleMutationResolvers,
+  RuleElementMutation: ruleElementMutationResolvers,
 }

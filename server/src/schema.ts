@@ -75,10 +75,22 @@ export const typeDefs = gql`
     separate: Boolean!
   }
 
+  input RuleElementUpdateInfo {
+    name: String
+    regex: String
+    separate: Boolean
+  }
+
+  type RuleElementMutation {
+    update(info: RuleElementUpdateInfo!): RuleElement!
+  }
+
   type RuleMutation {
     updateMeta(name: String, description: String): Rule!
 
     createElement(info: RuleElementCreateInfo!): RuleElement!
+
+    element(id: String!): RuleElementMutation
   }
 
   type Mutation {
@@ -86,6 +98,6 @@ export const typeDefs = gql`
 
     createRule(name: String!, description: String!): Rule!
 
-    rule(id: String!): RuleMutation!
+    rule(id: String!): RuleMutation
   }
 `
