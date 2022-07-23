@@ -39,6 +39,8 @@ export const typeDefs = gql`
     guilds: [Guild!]!
 
     rules: [Rule!]!
+
+    rule(id: String!): Rule
   }
 
   type Mutation {
