@@ -49,7 +49,7 @@ model RuleElement {
   regex          String // 고급 옵션을 키지 않으면 name과 동일하게 지정
   includedRuleId String?
   // includedRule Rule? @relation(fields: [includedRuleId], references: [id], onDelete: Cascade)
-  isSeparation   Boolean  @default(false) // 자모 분리 옵션
+  separate       Boolean  @default(false) // 자모 분리 옵션
 }
 
 model Session {

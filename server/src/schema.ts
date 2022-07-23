@@ -29,6 +29,29 @@ export const typeDefs = gql`
   type Rule {
     id: String!
     name: String!
+    description: String!
+
+    elements: [RuleElement!]!
+
+    counts: RuleCounts!
+  }
+
+  type RuleCounts {
+    white: Int!
+    black: Int!
+    include: Int!
+  }
+
+  type RuleElement {
+    id: String!
+    name: String!
+    ruleType: RuleType!
+  }
+
+  enum RuleType {
+    Black
+    White
+    Include
   }
 
   type Query {
