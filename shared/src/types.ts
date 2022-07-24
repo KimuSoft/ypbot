@@ -13,6 +13,8 @@ export type YPGuild = {
   id: string
   name: string
 
+  icon?: string
+
   invited: boolean
 }
 

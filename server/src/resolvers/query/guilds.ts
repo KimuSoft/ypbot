@@ -114,3 +114,15 @@ export const getGuildList: Resolver<YPGuild[]> = async (
   const guilds = await getGuilds(ctx.user)
   return guilds.yp
 }
+
+export const getGuildById: Resolver<
+  FullGuild | null,
+  unknown,
+  { id: string }
+> = async (parent, params, ctx) => {
+  if (!ctx.user)
+    throw new AuthenticationError("You must be logged in to do this action")
+  const guild = await getGuild(ctx.user, params.id)
+
+  return guild
+}

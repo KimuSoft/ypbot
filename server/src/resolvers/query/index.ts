@@ -1,7 +1,7 @@
 import { Resolver } from "../../utils"
 import { channelResolvers } from "./channel"
 import { guildResolvers } from "./guild"
-import { getGuildList } from "./guilds"
+import { getGuildById, getGuildList } from "./guilds"
 import { ruleResolvers } from "./rule"
 import {
   findRule,
@@ -27,6 +27,7 @@ export const queryResolvers = {
     rule: findRule,
     sharedRules: getSharedRules,
     officialRules: getOfficialRules,
+    guild: getGuildById,
   },
   User: userResolvers,
   Guild: guildResolvers,

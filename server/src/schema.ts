@@ -73,6 +73,8 @@ export const typeDefs = gql`
 
     guilds: [Guild!]!
 
+    guild(id: String!): Guild
+
     rules: [Rule!]!
 
     sharedRules: [Rule!]!
