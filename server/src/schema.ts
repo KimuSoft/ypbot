@@ -112,8 +112,8 @@ export const typeDefs = gql`
   }
 
   type ChannelMutation {
-    addRule(ruleId: String!): Rule
-    removeRule(ruleId: String!): Boolean
+    addRule(id: String!): Rule
+    removeRule(id: String!): Boolean
   }
 
   type GuildMutation {

@@ -41,7 +41,13 @@ export const addRuleToChannel: Resolver<
         },
       },
     },
-    update: {},
+    update: {
+      rules: {
+        connect: {
+          id: rule.id,
+        },
+      },
+    },
     where: {
       id: parent.id,
     },
