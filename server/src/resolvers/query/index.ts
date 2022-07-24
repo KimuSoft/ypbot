@@ -1,4 +1,5 @@
 import { Resolver } from "../../utils"
+import { channelResolvers } from "./channel"
 import { guildResolvers } from "./guild"
 import { getGuildList } from "./guilds"
 import { ruleResolvers } from "./rule"
@@ -30,4 +31,5 @@ export const queryResolvers = {
   User: userResolvers,
   Guild: guildResolvers,
   Rule: ruleResolvers,
+  Channel: channelResolvers,
 }

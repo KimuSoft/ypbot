@@ -24,6 +24,8 @@ export const typeDefs = gql`
     name: String!
 
     type: Int
+
+    rules: [Rule!]!
   }
 
   type Rule {
