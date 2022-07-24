@@ -33,3 +33,9 @@ export type RuleElementInfo = {
   regex: string
   separate: boolean
 }
+
+export type RuleCounts = {
+  white: number
+  black: number
+  include: number
+}

@@ -20,9 +20,10 @@
   $: guild = $guildContext
 
   type Category = {
+    id: string
     name: string
     position: number
-    channels: YPChannel[]
+    channels: (YPChannel & { rules: Rule[] })[]
   }
 
   $: categories = ((): Category[] => {
@@ -34,14 +35,17 @@
     )
 
     return _.sortBy(
-      categories.map((x) => ({
-        name: x.name,
-        position: x.position,
-        channels: _.sortBy(
-          arr.filter((y) => y.parent === x.id),
-          'position'
-        ),
-      })),
+      categories
+        .map((x) => ({
+          id: x.id,
+          name: x.name,
+          position: x.position,
+          channels: _.sortBy(
+            arr.filter((y) => y.parent === x.id),
+            'position'
+          ),
+        }))
+        .filter((x) => x.channels.length),
       'position',
       'type'
     )
@@ -58,7 +62,7 @@
 <div class="mt-4">
   <div class="text-3xl font-bold">채널</div>
   <div>
-    {#each categories as category}
+    {#each categories as category (category.id)}
       <div class="mt-2">
         <div class="flex items-center gap-2 text-lg">
           <div>{category.name}</div>
