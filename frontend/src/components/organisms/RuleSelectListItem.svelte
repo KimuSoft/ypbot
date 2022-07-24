@@ -19,7 +19,12 @@
   class="bg-black/40 flex items-center gap-2 rounded-xl p-4 cursor-pointer ring-1 ring-white/20 hover:ring-blue-500 transition-all"
 >
   <div class="flex flex-col gap-2 flex-grow">
-    <div class="text-lg font-bold">{rule.name}</div>
+    <div>
+      <div class="text-lg font-bold">
+        {rule.name}
+      </div>
+      <div class="text-md text-white/60">{rule.description}</div>
+    </div>
     <div class="flex items-center gap-2">
       <img
         src={rule.author.avatar}
