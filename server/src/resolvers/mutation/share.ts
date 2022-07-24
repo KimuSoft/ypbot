@@ -21,6 +21,8 @@ export const addShared: Resolver<
 
   if (!rule) return null
 
+  if (rule.authorId === ctx.user.id) return null
+
   await prisma.user.update({
     where: { id: ctx.user.id },
     data: {
