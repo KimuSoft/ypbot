@@ -5,7 +5,7 @@ dotenv.config({
   override: true,
 })
 
-import { ApolloServer } from "apollo-server"
+import { ApolloServer } from "apollo-server-express"
 import { logger } from "./logger"
 import { resolvers } from "./resolvers"
 import { typeDefs } from "./schema"
@@ -13,6 +13,7 @@ import path from "path"
 import { prisma, User } from "shared"
 import jwt from "jsonwebtoken"
 import { jwtToken } from "./utils"
+import express from "express"
 
 const server = new ApolloServer({
   typeDefs,
@@ -40,9 +41,23 @@ const server = new ApolloServer({
   },
 })
 
+const app = express()
+
+app.use(express.static(path.join(__dirname, "../static")))
+
 const run = async () => {
-  const { url } = await server.listen(process.env.PORT || 4000)
-  logger.info(`Apollo server is ready at ${url}`)
+  await server.start()
+  server.applyMiddleware({ app })
+  await new Promise<void>((resolve) =>
+    app.listen(
+      process.env.PORT ? Number(process.env.PORT) : 4000,
+      "0.0.0.0",
+      resolve
+    )
+  )
+  logger.info(
+    `Apollo server is ready at http://localhost:${process.env.PORT || 4000}/`
+  )
 }
 
 run().then()
