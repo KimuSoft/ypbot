@@ -38,6 +38,8 @@ export const typeDefs = gql`
 
     elements: [RuleElement!]!
 
+    references: [Rule!]!
+
     counts: RuleCounts!
 
     shareCode: String
