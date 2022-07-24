@@ -22,10 +22,13 @@ export const getRuleCounts: Resolver<
         ruleType: RuleType.Black,
       },
     }),
-    include: await prisma.ruleElement.count({
+    include: await prisma.rule.count({
       where: {
-        ruleId: rule.id,
-        ruleType: RuleType.Include,
+        referencedBy: {
+          some: {
+            id: rule.id,
+          },
+        },
       },
     }),
   }
