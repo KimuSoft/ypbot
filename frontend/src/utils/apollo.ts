@@ -1,6 +1,5 @@
 import {
   ApolloClient,
-  gql,
   InMemoryCache,
   type NormalizedCacheObject,
 } from '@apollo/client/core'

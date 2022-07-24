@@ -23,6 +23,7 @@
 </script>
 
 <script lang="ts">
+  import '../stylesheets/app.css'
   import { browser } from '$app/env'
   import { getApollo } from '@/utils/apollo'
   import { writable } from 'svelte/store'
