@@ -1,10 +1,15 @@
 <script lang="ts">
   import { browser } from '$app/env'
+  import { goto } from '$app/navigation'
   import LoadingScreen from '@/components/molecules/LoadingScreen.svelte'
+  import { currentUser } from '@/stores'
   import { AlertSeverity, enqueueAlert } from '@/utils/alert'
+  import { tick } from 'svelte'
 
   import { getApollo } from '@/utils/apollo'
+  import { fetchUser } from '@/utils/user'
   import { gql } from '@apollo/client/core'
+  import type { YPUser } from 'shared'
 
   if (browser) {
     const params = new URLSearchParams(window.location.search)
@@ -25,7 +30,8 @@
         })
 
         if (data?.login) {
-          localStorage.token = data.login
+          localStorage.setItem('token', data.login)
+
           window.location.href = '/'
         }
       })().catch((e) => {
