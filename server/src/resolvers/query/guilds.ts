@@ -1,4 +1,5 @@
 import { AuthenticationError } from "apollo-server"
+import { AxiosResponse } from "axios"
 import type { Guild } from "bot"
 import { Snowflake } from "discord-api-types/globals"
 import {
@@ -12,29 +13,30 @@ import { TLRU } from "tlru"
 import { rpc } from "../../trpc"
 import { discordApi, getToken, Resolver } from "../../utils"
 
-const userGuildsCache = new TLRU<Snowflake, RESTAPIPartialCurrentUserGuild[]>({
+const userGuildsCache = new TLRU<
+  Snowflake,
+  Promise<AxiosResponse<RESTAPIPartialCurrentUserGuild[]>>
+>({
   maxAgeMs: 1000 * 30,
 })
 
 const botGuildsCache = new TLRU<Snowflake, Guild>({ maxAgeMs: 1000 * 30 })
 
 const getGuilds = async (user: User) => {
-  let userGuilds = userGuildsCache.get(user.id)
-  if (!userGuilds) {
-    userGuilds = (
-      await discordApi.get<RESTGetAPICurrentUserGuildsResult>(
-        "/users/@me/guilds",
-        {
-          headers: {
-            authorization: `Bearer ${await getToken(user)}`,
-          },
-        }
-      )
-    ).data
-    userGuildsCache.set(user.id, userGuilds)
+  let userGuildsPromise = userGuildsCache.get(user.id)
+  if (!userGuildsPromise) {
+    userGuildsPromise = discordApi.get<RESTGetAPICurrentUserGuildsResult>(
+      "/users/@me/guilds",
+      {
+        headers: {
+          authorization: `Bearer ${await getToken(user)}`,
+        },
+      }
+    )
+    userGuildsCache.set(user.id, userGuildsPromise)
   }
 
-  userGuilds = userGuilds.filter(
+  const userGuilds = (await userGuildsPromise.then((x) => x.data)).filter(
     (x) =>
       (BigInt(x.permissions) & PermissionFlagsBits.Administrator) ===
       PermissionFlagsBits.Administrator

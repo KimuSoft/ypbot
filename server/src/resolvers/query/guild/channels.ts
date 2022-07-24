@@ -8,7 +8,7 @@ export const getGuildChannels: Resolver<YPChannel[], YPGuild> = async (
   params,
   ctx
 ) => {
-  if (!ctx.user) return new AuthenticationError("Unauthorized")
+  if (!ctx.user) throw new AuthenticationError("Unauthorized")
 
   const guild = await getGuild(ctx.user, parent.id)
 
