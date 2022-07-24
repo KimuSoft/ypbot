@@ -3,14 +3,67 @@
   import FaAdd from 'svelte-icons/fa/FaPlus.svelte'
   import RuleAddDialog from './RuleAddDialog.svelte'
   import { fade } from 'svelte/transition'
+  import { getApollo } from '@/utils/apollo'
+  import { gql } from '@apollo/client/core'
+  import { page } from '$app/stores'
+  import { AlertSeverity, enqueueAlert } from '@/utils/alert'
 
   export let channel: YPChannel & { rules: Rule[] }
 
   let showAddDialog = false
 
-  const onSelect = (e: CustomEvent<{ id: string }>) => {
-    showAddDialog = false
-    console.log(e.detail)
+  const onSelect = async (e: CustomEvent<{ id: string }>) => {
+    try {
+      showAddDialog = false
+      if (channel.rules.find((x) => x.id === e.detail.id)) return
+
+      const { data } = await getApollo().mutate<{
+        guild?: {
+          channel?: {
+            addRule?: Rule
+          }
+        }
+      }>({
+        mutation: gql`
+          mutation AddRuleToChannel(
+            $guildId: String!
+            $channelId: String!
+            $ruleId: String!
+          ) {
+            guild(id: $guildId) {
+              channel(id: $channelId) {
+                addRule(id: $ruleId) {
+                  id
+                  name
+                }
+              }
+            }
+          }
+        `,
+        variables: {
+          guildId: $page.params.id,
+          channelId: channel.id,
+          ruleId: e.detail.id,
+        },
+      })
+
+      if (data?.guild?.channel?.addRule) {
+        channel = {
+          ...channel,
+          rules: [...channel.rules, data.guild.channel.addRule],
+        }
+      } else {
+        await Promise.reject()
+      }
+    } catch (e) {
+      console.log(e)
+      enqueueAlert({
+        title: '규칙 추가 실패',
+        description: '규칙 추가 중 문제가 발생했습니다.',
+        severity: AlertSeverity.Error,
+        time: 5000,
+      })
+    }
   }
 </script>
 

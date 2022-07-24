@@ -70,7 +70,7 @@
         </div>
         <div class="mt-2 flex flex-col gap-2">
           {#each category.channels as channel}
-            <ChannelListItem {channel} />
+            <ChannelListItem bind:channel />
           {/each}
         </div>
       </div>
