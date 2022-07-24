@@ -42,6 +42,8 @@ export const typeDefs = gql`
     sharingEnabled: Boolean!
 
     author: User!
+
+    isOfficial: Boolean!
   }
 
   type RuleCounts {
@@ -109,6 +111,15 @@ export const typeDefs = gql`
     setOfficial(value: Boolean!): Boolean!
   }
 
+  type ChannelMutation {
+    addRule(ruleId: String!): Rule
+    removeRule(ruleId: String!): Boolean
+  }
+
+  type GuildMutation {
+    channel(id: String!): ChannelMutation
+  }
+
   type Mutation {
     login(code: String!): String!
 
@@ -119,5 +130,7 @@ export const typeDefs = gql`
     addShared(code: String!): Rule
 
     removeShared(id: String!): Boolean
+
+    guild(id: String!): GuildMutation
   }
 `

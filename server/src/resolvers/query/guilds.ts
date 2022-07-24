@@ -13,6 +13,8 @@ import { TLRU } from "tlru"
 import { rpc } from "../../trpc"
 import { discordApi, getToken, Resolver } from "../../utils"
 
+export type FullGuild = RESTAPIPartialCurrentUserGuild & Guild & YPGuild
+
 const userGuildsCache = new TLRU<
   Snowflake,
   Promise<AxiosResponse<RESTAPIPartialCurrentUserGuild[]>>
@@ -79,9 +81,10 @@ const getGuilds = async (user: User) => {
         id: x.id,
         name: x.name,
         icon:
-          guild?.icon ?? x.icon
+          guild?.icon ??
+          (x.icon
             ? `https://cdn.discordapp.com/icons/${x.id}/${x.icon}.webp?size=512`
-            : null,
+            : null),
       }
     }) as YPGuild[],
   }
@@ -90,7 +93,7 @@ const getGuilds = async (user: User) => {
 export const getGuild = async (
   user: User,
   guildId: Snowflake
-): Promise<(RESTAPIPartialCurrentUserGuild & Guild & YPGuild) | null> => {
+): Promise<FullGuild | null> => {
   const guild = await getGuilds(user)
 
   const g = guild.bot.find((x) => x.id === guildId)

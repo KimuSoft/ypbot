@@ -1,4 +1,7 @@
 import { login } from "./auth"
+import { channelMutationResolvers } from "./channel"
+import { guildMutationResolvers } from "./guild"
+import { getGuildMutation } from "./guilds"
 import { ruleMutationResolvers } from "./rule"
 import { ruleElementMutationResolvers } from "./ruleElement"
 import { createRule, getRuleMutation } from "./rules"
@@ -11,7 +14,10 @@ export const mutationResolvers = {
     rule: getRuleMutation,
     addShared,
     removeShared,
+    guild: getGuildMutation,
   },
   RuleMutation: ruleMutationResolvers,
   RuleElementMutation: ruleElementMutationResolvers,
+  GuildMutation: guildMutationResolvers,
+  ChannelMutation: channelMutationResolvers,
 }

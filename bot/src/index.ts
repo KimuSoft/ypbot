@@ -26,6 +26,8 @@ export type Channel = {
 
   type: ChannelType
 
+  guild: string
+
   parent: string | null
 }
 
@@ -54,6 +56,7 @@ const rpc = trpc.router().query("guilds", {
                     name: x.name,
                     type: x.type,
                     parent: x.parentId,
+                    guild: g.id
                   })
               ),
               perms: Number(me.permissions.bitfield),
