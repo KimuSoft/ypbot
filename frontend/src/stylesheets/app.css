@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  @apply bg-slate-800 text-white;
+
+  font-family: 'NanumSquareRound', sans-serif;
+}
+
+body > div {
+  @apply w-screen h-screen overflow-y-auto overflow-x-hidden;
+}

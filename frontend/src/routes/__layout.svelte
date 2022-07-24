@@ -13,10 +13,16 @@
         query FetchUser {
           me {
             id
+            username
+            discriminator
+            tag
+            avatar
           }
         }
       `,
     })
+
+    currentUser.set(me)
 
     return { user: me }
   }
@@ -30,6 +36,10 @@
   import { setClient } from 'svelte-apollo'
   import type { YPUser } from 'shared'
   import { gql } from '@apollo/client/core'
+  import LoadingScreen from '@/components/molecules/LoadingScreen.svelte'
+  import Nav from '@/components/organisms/Nav.svelte'
+  import { currentUser } from '@/stores'
+  import AlertContainer from '@/components/organisms/AlertContainer.svelte'
 
   let loadingPromise: ReturnType<typeof fetchInitialData> | null = null
 
@@ -45,12 +55,19 @@
   }
 </script>
 
+<AlertContainer />
+
 {#if loadingPromise}
   {#await loadingPromise}
-    <div>Loading...</div>
+    <LoadingScreen />
   {:then}
-    <div>
-      <slot />
+    <div class="w-full h-full flex flex-col">
+      <div class="w-full">
+        <Nav />
+      </div>
+      <div class="flex-grow w-full">
+        <slot />
+      </div>
     </div>
   {/await}
 {/if}
