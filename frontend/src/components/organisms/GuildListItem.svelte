@@ -8,7 +8,7 @@
 
 <a
   href="/app/guilds/{guild.id}"
-  class="flex select-none items-center gap-[24px] p-4 hover:bg-black/20 rounded-xl cursor-pointer transition-all"
+  class="flex select-none items-center gap-[24px] p-4 ring-1 ring-white/20 hover:ring-blue-500 rounded-xl cursor-pointer transition-all"
 >
   <GuildIcon icon={guild.icon} name={guild.name} />
   <div
@@ -17,6 +17,6 @@
     {guild.name}
   </div>
   {#if !guild.invited}
-    <Button className="bg-red-500">초대하기</Button>
+    <Button class="bg-red-500">초대하기</Button>
   {/if}
 </a>
