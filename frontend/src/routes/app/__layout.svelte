@@ -47,10 +47,8 @@
   {#await prom}
     <LoadingScreen />
   {:then}
-    <div class="container mx-auto px-4">
-      <div class="mt-8">
-        <slot />
-      </div>
+    <div class="container h-full pt-8 mx-auto px-4">
+      <slot />
     </div>
   {/await}
 {:else}

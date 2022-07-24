@@ -6,10 +6,10 @@
 
 {#if !icon}
   <div
-    class="w-[64px] h-[64px] bg-slate-900 rounded-full overflow-hidden flex justify-center items-center text-2xl font-extrabold"
+    class="w-[48px] h-[48px] bg-slate-900 rounded-full overflow-hidden flex justify-center items-center text-lg font-extrabold"
   >
     {name[0]}
   </div>
 {:else}
-  <img src={icon} class="w-[64px] h-[64px] rounded-full" alt="Icon" />
+  <img src={icon} class="w-[48px] h-[48px] rounded-full" alt="Icon" />
 {/if}

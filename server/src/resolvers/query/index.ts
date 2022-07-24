@@ -22,6 +22,16 @@ export const queryResolvers = {
       )}&scope=${encodeURIComponent(
         "identify"
       )}&response_type=code`) as Resolver<string>,
+    inviteUrl: ((parent, params) =>
+      `https://discord.com/api/oauth2/authorize?client_id=${
+        process.env.DISCORD_CLIENT_ID
+      }&redirect_uri=${encodeURIComponent(
+        process.env.DISCORD_REDIRECT_URI!
+      )}&permissions=8&guild_id=${
+        params.guild
+      }&disable_guild_select=true&scope=${encodeURIComponent(
+        "bot applications.commands"
+      )}&response_type=code`) as Resolver<string, unknown, { guild: string }>,
     guilds: getGuildList,
     rules: getRuleList,
     rule: findRule,

@@ -27,7 +27,9 @@
   <div class="text-2xl font-extrabold">
     {alert.title}
   </div>
-  <div class="text-lg">
-    {alert.description}
-  </div>
+  {#if alert.description}
+    <div class="text-lg">
+      {alert.description}
+    </div>
+  {/if}
 </div>
