@@ -136,5 +136,7 @@ export const typeDefs = gql`
     removeShared(id: String!): Boolean
 
     guild(id: String!): GuildMutation
+
+    invite(code: String!): String
   }
 `

@@ -26,7 +26,7 @@ export const queryResolvers = {
       `https://discord.com/api/oauth2/authorize?client_id=${
         process.env.DISCORD_CLIENT_ID
       }&redirect_uri=${encodeURIComponent(
-        process.env.DISCORD_REDIRECT_URI!
+        process.env.DISCORD_INVITE_CALLBACK!
       )}&permissions=8&guild_id=${
         params.guild
       }&disable_guild_select=true&scope=${encodeURIComponent(
