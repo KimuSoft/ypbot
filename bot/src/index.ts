@@ -6,7 +6,7 @@ import fastify from "fastify"
 import { fastifyTRPCPlugin } from "@trpc/server/adapters/fastify"
 import { logger } from "./utils"
 import Cluster from "discord-hybrid-sharding"
-import { ChannelType } from "discord.js"
+import { ChannelType, TextChannel } from "discord.js"
 
 dotenv.config({
   path: path.join(__dirname, "../../.env"),
@@ -29,6 +29,8 @@ export type Channel = {
   guild: string
 
   parent: string | null
+
+  position: number
 }
 
 const rpc = trpc.router().query("guilds", {
@@ -49,15 +51,25 @@ const rpc = trpc.router().query("guilds", {
             return {
               id: g.id,
               name: g.name,
-              channels: g.channels.cache.map(
-                (x) =>
-                  ({
-                    id: x.id,
-                    name: x.name,
-                    type: x.type,
-                    parent: x.parentId,
-                    guild: g.id
-                  })
+              channels: g.channels.cache.filter(x => !${JSON.stringify([
+                ChannelType.GuildNewsThread,
+                ChannelType.GuildPublicThread,
+                ChannelType.GuildPrivateThread,
+              ])}.includes(x.type)).filter(x => ${JSON.stringify([
+        ChannelType.GuildCategory,
+        ChannelType.GuildForum,
+        ChannelType.GuildNews,
+        ChannelType.GuildText,
+        ChannelType.GuildVoice,
+      ])}.includes(x.type)).map(
+                (x) => ({
+                      id: x.id,
+                      name: x.name,
+                      type: x.type,
+                      parent: x.parentId,
+                      guild: g.id,
+                      position: x.rawPosition
+                    })
               ),
               perms: Number(me.permissions.bitfield),
               icon: g.iconURL({size: 512}),

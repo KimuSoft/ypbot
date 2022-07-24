@@ -14,6 +14,11 @@ const config = {
       '/graphql': 'http://localhost:4000',
     },
   },
+  optimizeDeps: {
+    esbuildOptions: {
+      target: 'es2020',
+    },
+  },
 }
 
 export default config

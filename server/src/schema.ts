@@ -25,6 +25,9 @@ export const typeDefs = gql`
 
     type: Int
 
+    parent: String
+    position: Int!
+
     rules: [Rule!]!
   }
 

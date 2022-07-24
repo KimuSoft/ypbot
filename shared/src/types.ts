@@ -23,6 +23,8 @@ export type YPChannel = {
   name: string
 
   type: ChannelType
+  parent: string | null
+  position: number
 }
 
 export type RuleElementInfo = {

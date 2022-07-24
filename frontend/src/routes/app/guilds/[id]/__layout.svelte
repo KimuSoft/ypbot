@@ -28,6 +28,18 @@
             name
             icon
             invited
+            channels {
+              id
+              name
+              type
+              parent
+              position
+
+              rules {
+                id
+                name
+              }
+            }
           }
         }
       `,
@@ -80,7 +92,6 @@
   {#await prom}
     <LoadingScreen />
   {:then}
-    {JSON.stringify($guild)}
     <slot />
   {:catch}
     <LoadingScreen />

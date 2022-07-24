@@ -13,6 +13,7 @@ export const getGuildChannels: Resolver<YPChannel[], YPGuild> = async (
   const guild = await getGuild(ctx.user, parent.id)
 
   if (!guild) return []
+  console.log(guild.channels.map((x) => x.position))
 
   return guild.channels.map(
     (x) =>
@@ -20,6 +21,8 @@ export const getGuildChannels: Resolver<YPChannel[], YPGuild> = async (
         name: x.name,
         id: x.id,
         type: x.type,
+        parent: x.parent,
+        position: x.position,
       } as YPChannel)
   )
 }
