@@ -1,4 +1,5 @@
 import dotenv from "dotenv"
+import path from "path"
 
 dotenv.config({
   path: path.join(__dirname, "../../.env"),
@@ -9,7 +10,6 @@ import { ApolloServer } from "apollo-server-express"
 import { logger } from "./logger"
 import { resolvers } from "./resolvers"
 import { typeDefs } from "./schema"
-import path from "path"
 import { prisma, User } from "shared"
 import jwt from "jsonwebtoken"
 import { jwtToken } from "./utils"
