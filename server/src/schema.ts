@@ -38,6 +38,8 @@ export const typeDefs = gql`
     shareCode: String
 
     sharingEnabled: Boolean!
+
+    author: User!
   }
 
   type RuleCounts {
