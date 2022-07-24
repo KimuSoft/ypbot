@@ -118,6 +118,9 @@ export const typeDefs = gql`
     setSharable(value: Boolean!): Boolean!
 
     setOfficial(value: Boolean!): Boolean!
+
+    addReference(id: String!): Rule
+    removeReference(id: String!): Boolean
   }
 
   type ChannelMutation {
