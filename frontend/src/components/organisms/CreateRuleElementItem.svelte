@@ -78,7 +78,7 @@
   }
 </script>
 
-<div class="ring-1 p-4 rounded-xl ring-white/20">
+<div class="ring-1 p-4 rounded-xl ring-green-500">
   <form on:submit={onSubmit}>
     <label class="flex gap-4 items-center">
       <div class="text-lg pl-2 w-24">이름</div>

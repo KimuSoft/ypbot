@@ -396,7 +396,7 @@
   <div class="text-3xl font-bold">규칙 내용 관리</div>
   <div class="flex flex-col gap-4 mt-4">
     {#each $ruleContext.elements as element}
-      <RuleElementItem {element} />
+      <RuleElementItem bind:element />
     {/each}
     {#each $createdItems as item}
       <CreateRuleElementItem {item} />
