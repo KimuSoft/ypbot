@@ -1,9 +1,43 @@
-import { Client } from "discord.js"
+import { applicationCommand, Extension, ownerOnly } from "@pikokr/command.ts"
+import {
+  ApplicationCommandType,
+  ChatInputCommandInteraction,
+  Client,
+} from "discord.js"
+import path from "path"
 import { YPClient } from "./structures/YPClient"
 import { logger } from "./utils"
 
+class DevModule extends Extension {
+  @ownerOnly
+  @applicationCommand({
+    type: ApplicationCommandType.ChatInput,
+    name: "reload",
+    description: "reload modules",
+    guilds: (process.env.DEV_GUILD || "").split(":"),
+  })
+  async reload(i: ChatInputCommandInteraction) {
+    await i.deferReply()
+
+    const results = await cts.cluster.broadcastEval(
+      "global.cts.registry.reloadModules()"
+    )
+
+    await i.editReply(
+      results
+        .map(
+          (result: any[], index) =>
+            `Cluster #${index} - Succeed: ${
+              result.filter((x) => x.result).length
+            } Error: ${result.filter((x) => !x.result).length}`
+        )
+        .join("\n")
+    )
+  }
+}
+
 export const client = new Client({
-  intents: ["MessageContent", "Guilds", "DirectMessages"],
+  intents: ["MessageContent", "Guilds", "DirectMessages", "GuildMessages"],
 })
 
 export const cts = new YPClient(client, logger)
@@ -15,9 +49,23 @@ const setGlobal = (key: string, value: unknown) => {
 setGlobal("cts", cts)
 
 const start = async () => {
+  await cts.enableApplicationCommandsExtension({
+    guilds: process.env.COMMAND_GUILDS
+      ? process.env.COMMAND_GUILDS.split(":")
+      : undefined,
+  })
+
+  await cts.registry.loadAllModulesInDirectory(path.join(__dirname, "modules"))
+
+  await cts.registry.registerModule(new DevModule())
+
   await client.login(process.env.DISCORD_BOT_TOKEN)
 
   logger.info(`Logged in as ${client.user!.tag}`)
+
+  await cts.fetchOwners()
+
+  await cts.getApplicationCommandsExtension()!.sync()
 }
 
 start().then()

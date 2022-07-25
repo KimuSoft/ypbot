@@ -6,7 +6,7 @@ import fastify from "fastify"
 import { fastifyTRPCPlugin } from "@trpc/server/adapters/fastify"
 import { logger } from "./utils"
 import Cluster from "discord-hybrid-sharding"
-import { ChannelType, TextChannel } from "discord.js"
+import { ChannelType } from "discord.js"
 
 dotenv.config({
   path: path.join(__dirname, "../../.env"),
