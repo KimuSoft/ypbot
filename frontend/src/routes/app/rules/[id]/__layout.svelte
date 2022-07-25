@@ -62,6 +62,7 @@
       variables: {
         id: $page.params.id,
       },
+      fetchPolicy: 'no-cache',
     })
 
     rule.set(data.rule)
