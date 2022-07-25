@@ -3,24 +3,31 @@
   import RuleSelectListItem from '@/components/organisms/RuleSelectListItem.svelte'
   import FaPlus from 'svelte-icons/fa/FaPlus.svelte'
 
-  import type { Rule, RuleCounts, YPUser } from 'shared'
+  import type { Rule, RuleCounts, YPUser, RuleType, RuleElement } from 'shared'
 
-  import { getContext } from 'svelte'
-  import type { Writable } from 'svelte/store'
+  import { getContext, setContext } from 'svelte'
+  import { writable, type Writable } from 'svelte/store'
   import { fade } from 'svelte/transition'
   import RuleAddDialog from '@/components/organisms/RuleAddDialog.svelte'
   import { getApollo } from '@/utils/apollo'
   import { gql } from '@apollo/client/core'
   import { AlertSeverity, enqueueAlert } from '@/utils/alert'
   import { goto } from '$app/navigation'
-  import { map } from 'lodash'
+  import CreateRuleElementItem from '@/components/organisms/CreateRuleElementItem.svelte'
+  import type { CreateRuleElementItemInput } from '@/utils/types'
+  import RuleElementItem from '@/components/organisms/RuleElementItem.svelte'
 
-  const ruleContext =
-    getContext<
-      Writable<
-        Rule & { references: (Rule & { author: YPUser; counts: RuleCounts })[] }
-      >
-    >('rule')
+  const ruleContext = getContext<
+    Writable<
+      Rule & {
+        references: (Rule & {
+          author: YPUser
+          counts: RuleCounts
+        })[]
+        elements: RuleElement[]
+      }
+    >
+  >('rule')
 
   let rule = { ...$ruleContext }
 
@@ -52,13 +59,33 @@
     }
   }
 
+  let createdItems = writable<CreateRuleElementItemInput[]>([])
+
+  setContext('createdItems', createdItems)
+
+  const createElement = () => {
+    createdItems.update((d) => [
+      ...d,
+      {
+        name: '',
+        ruleType: 'Black' as RuleType,
+        regex: '',
+        separate: false,
+      },
+    ])
+  }
+
   const onSubmit = async (e: SubmitEvent) => {
     e.preventDefault()
 
     const { data } = await getApollo().mutate<{
       rule?: {
         updateMeta?: Rule & {
-          references: (Rule & { author: YPUser; counts: RuleCounts })[]
+          references: (Rule & {
+            author: YPUser
+            counts: RuleCounts
+          })[]
+          elements: RuleElement[]
         }
       }
     }>({
@@ -157,7 +184,13 @@
       })
 
     const { data } = await getApollo().mutate<{
-      rule?: { addReference?: Rule & { author: YPUser; counts: RuleCounts } }
+      rule?: {
+        addReference?: Rule & {
+          author: YPUser
+          counts: RuleCounts
+          elements: RuleElement[]
+        }
+      }
     }>({
       mutation: gql`
         mutation Rule($ruleId: String!, $referenceId: String!) {
@@ -350,6 +383,26 @@
     {/each}
     <div
       on:click={() => (showReferenceAddDialog = true)}
+      class="flex justify-center items-center min-h-[60px] ring-1 transition-all cursor-pointer ring-white/20 hover:ring-blue-500 rounded-xl"
+    >
+      <div class="w-[28px] h-[28px]">
+        <FaPlus />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="mt-8">
+  <div class="text-3xl font-bold">규칙 내용 관리</div>
+  <div class="flex flex-col gap-4 mt-4">
+    {#each $ruleContext.elements as element}
+      <RuleElementItem {element} />
+    {/each}
+    {#each $createdItems as item}
+      <CreateRuleElementItem {item} />
+    {/each}
+    <div
+      on:click={() => createElement()}
       class="flex justify-center items-center min-h-[60px] ring-1 transition-all cursor-pointer ring-white/20 hover:ring-blue-500 rounded-xl"
     >
       <div class="w-[28px] h-[28px]">
