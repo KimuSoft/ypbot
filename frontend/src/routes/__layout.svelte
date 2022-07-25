@@ -24,6 +24,7 @@
   import { currentUser } from '@/stores'
   import AlertContainer from '@/components/organisms/AlertContainer.svelte'
   import { fetchUser } from '@/utils/user'
+  import { builtAt, commitId } from 'virtual:build-info'
 
   let loadingPromise: ReturnType<typeof fetchInitialData> | null = null
 
@@ -55,6 +56,17 @@
       </div>
       <div class="flex-grow w-full">
         <slot />
+      </div>
+
+      <div class="bg-black/20 p-4 flex items-center mt-8">
+        <div class="text-md">
+          YPBOT (version
+          <a
+            class="text-blue-500"
+            href="https://github.com/KimuSoft/ypbot/commit/{commitId}"
+            target="_blank">{commitId}</a
+          >)
+        </div>
       </div>
     </div>
   {/await}
