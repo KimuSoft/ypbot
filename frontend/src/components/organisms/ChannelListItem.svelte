@@ -26,7 +26,11 @@
   const onSelect = async (e: CustomEvent<{ id: string }>) => {
     try {
       showAddDialog = false
-      if (channel.rules.find((x) => x.id === e.detail.id)) return
+      if (channel.rules.find((x) => x.id === e.detail.id))
+        return enqueueAlert({
+          title: '이미 추가된 규칙입니다',
+          severity: AlertSeverity.Error,
+        })
 
       const { data } = await getApollo().mutate<{
         guild?: {

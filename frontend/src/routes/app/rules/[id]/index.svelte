@@ -12,7 +12,8 @@
   import { getApollo } from '@/utils/apollo'
   import { gql } from '@apollo/client/core'
   import { AlertSeverity, enqueueAlert } from '@/utils/alert'
-  import { argsToArgsConfig } from 'graphql/type/definition'
+  import { goto } from '$app/navigation'
+  import { map } from 'lodash'
 
   const ruleContext =
     getContext<
@@ -22,6 +23,33 @@
     >('rule')
 
   let rule = { ...$ruleContext }
+
+  const onDelete = async () => {
+    if (confirm('규칙을 삭제할까요? 되돌릴 수 없습니다.')) {
+      const { data } = await getApollo().mutate<{ rule?: { delete: boolean } }>(
+        {
+          mutation: gql`
+            mutation Rule($ruleId: String!) {
+              rule(id: $ruleId) {
+                delete
+              }
+            }
+          `,
+          variables: {
+            ruleId: rule.id,
+          },
+        }
+      )
+
+      if (data?.rule?.delete) {
+        enqueueAlert({
+          title: '규칙이 삭제되었습니다.',
+          severity: AlertSeverity.Success,
+        })
+        goto('/app')
+      }
+    }
+  }
 
   const onSubmit = async (e: SubmitEvent) => {
     e.preventDefault()
@@ -113,7 +141,17 @@
 
     const id = e.detail.id
 
-    if (id === rule.id || rule.references.find((x) => x.id === id)) return
+    if (rule.references.find((x) => x.id === id))
+      return enqueueAlert({
+        title: '이미 포함된 규칙입니다',
+        severity: AlertSeverity.Error,
+      })
+
+    if (rule.id === e.detail.id)
+      return enqueueAlert({
+        title: '이 규칙을 포함할 수 없습니다',
+        severity: AlertSeverity.Error,
+      })
 
     const { data } = await getApollo().mutate<{
       rule?: { addReference?: Rule & { author: YPUser; counts: RuleCounts } }
@@ -228,12 +266,20 @@
   >
     <RuleAddDialog
       on:select={onSelect}
+      excludedIds={[rule.id, ...rule.references.map((x) => x.id)]}
       on:close={() => (showReferenceAddDialog = false)}
     />
   </div>
 {/if}
 
-<div class="text-3xl font-bold">{rule.name}</div>
+<div class="flex items-end">
+  <div
+    class="text-3xl font-bold flex-grow w-0 text-ellipsis whitespace-nowrap overflow-hidden"
+  >
+    {rule.name}
+  </div>
+  <Button class="bg-red-500" on:click={onDelete}>삭제</Button>
+</div>
 
 <div class="grid md:grid-cols-2 gap-4">
   <form on:submit={onSubmit}>

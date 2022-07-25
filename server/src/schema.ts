@@ -120,7 +120,10 @@ export const typeDefs = gql`
     setOfficial(value: Boolean!): Boolean!
 
     addReference(id: String!): Rule
+
     removeReference(id: String!): Boolean
+
+    delete: Boolean!
   }
 
   type ChannelMutation {

@@ -1,4 +1,5 @@
 import { createRuleElement } from "./createRuleElement"
+import { deleteRule } from "./delete"
 import { getRuleElementMutation } from "./getRuleElement"
 import { addRuleReference, removeRuleReference } from "./reference"
 import { setRuleOfficial, setRuleSharable } from "./share"
@@ -12,4 +13,5 @@ export const ruleMutationResolvers = {
   setOfficial: setRuleOfficial,
   addReference: addRuleReference,
   removeReference: removeRuleReference,
+  delete: deleteRule,
 }

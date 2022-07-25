@@ -3,7 +3,7 @@
   import FaClose from 'svelte-icons/fa/FaTimes.svelte'
 
   import { writable, type Writable } from 'svelte/store'
-  import { createEventDispatcher } from 'svelte'
+  import { createEventDispatcher, onDestroy, onMount } from 'svelte'
   import LoadingScreen from '../molecules/LoadingScreen.svelte'
   import { getApollo } from '@/utils/apollo'
   import { gql } from '@apollo/client/core'
@@ -92,8 +92,11 @@
 
 <script lang="ts">
   import RuleSelectGroup from './RuleSelectGroup.svelte'
+  import { AlertSeverity, enqueueAlert } from '@/utils/alert'
 
   const dispatch = createEventDispatcher()
+
+  export let excludedIds: string[] = []
 
   const close = () => {
     dispatch('close')
@@ -101,7 +104,38 @@
 
   $: {
     if ($rulesPromise === null) {
-      rulesPromise.set(load())
+      const prom = load()
+      rulesPromise.set(prom)
+    }
+  }
+
+  let mounted = false
+
+  onMount(() => {
+    mounted = true
+  })
+
+  onDestroy(() => {
+    mounted = false
+  })
+
+  $: {
+    if (mounted && $rulesPromise) {
+      $rulesPromise.then((data) => {
+        const filter = (rules: Rule[]) =>
+          rules.filter((x) => !excludedIds.includes(x.id))
+        if (
+          !filter(data.my).length &&
+          !filter(data.official).length &&
+          !filter(data.shared).length
+        ) {
+          enqueueAlert({
+            title: '선택 가능한 규칙이 없습니다',
+            severity: AlertSeverity.Error,
+          })
+          close()
+        }
+      })
     }
   }
 </script>
@@ -129,13 +163,21 @@
         </div>
       {:then data}
         <div class="mt-4">
-          <RuleSelectGroup on:select title="내 규칙" rules={data.my} />
+          <RuleSelectGroup
+            on:select
+            title="내 규칙"
+            rules={data.my.filter((x) => !excludedIds.includes(x.id))}
+          />
           <RuleSelectGroup
             on:select
             title="공유받은 규칙"
-            rules={data.shared}
+            rules={data.shared.filter((x) => !excludedIds.includes(x.id))}
           />
-          <RuleSelectGroup on:select title="공식 규칙" rules={data.official} />
+          <RuleSelectGroup
+            on:select
+            title="공식 규칙"
+            rules={data.official.filter((x) => !excludedIds.includes(x.id))}
+          />
         </div>
       {/await}
     {/if}
