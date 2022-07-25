@@ -289,10 +289,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@pikokr/command.ts@^5.0.3":
-  version "5.0.3"
-  resolved "https://registry.yarnpkg.com/@pikokr/command.ts/-/command.ts-5.0.3.tgz#144f9f8541da320f250a43f6aa129891634dde68"
-  integrity sha512-0QuOA90fWxdPDioHRj6UccR2CxpthGA+GLmVGvSXWYapYWhhHUpr/tJQzN3R6WuD/ZIh9y0xGz78oj7C9xm3Sg==
+"@pikokr/command.ts@^5.0.4":
+  version "5.0.4"
+  resolved "https://registry.yarnpkg.com/@pikokr/command.ts/-/command.ts-5.0.4.tgz#df84ca3aca48455756b5e243881d3b53911cea14"
+  integrity sha512-ZUbg2AQB+AhSqca3+ewJ2KpSsCRqJLDN1exo/fMXMf96l7nMovoGYl2hPfIiZZl/YbPhbuDEVhKJJnNjAQ8tow==
   dependencies:
     "@types/node" "^16.0.0"
     chalk "4.1.2"
