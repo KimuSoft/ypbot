@@ -19,16 +19,16 @@
 </script>
 
 <div
-  class="p-4 bg-slate-900 ring max-w-[320px] w-[300px] {colors[
+  class="p-4 bg-slate-900 ring-1 max-w-[360px] w-screen {colors[
     alert.severity
   ]} rounded-lg pointer-events-auto cursor-pointer"
   on:click={close}
 >
-  <div class="text-2xl font-extrabold">
+  <div class="text-xl font-extrabold">
     {alert.title}
   </div>
   {#if alert.description}
-    <div class="text-lg">
+    <div class="text-dmg">
       {alert.description}
     </div>
   {/if}
