@@ -1,10 +1,17 @@
+<script lang="ts" context="module">
+  const ruleTypeStrings: Record<RuleType, string> = {
+    Black: '블랙리스트',
+    White: '화이트리스트',
+  }
+</script>
+
 <script lang="ts">
   import { AlertSeverity, enqueueAlert } from '@/utils/alert'
 
   import { getApollo } from '@/utils/apollo'
   import { gql } from '@apollo/client/core'
 
-  import type { Rule, RuleCounts, RuleElement, YPUser } from 'shared'
+  import type { Rule, RuleCounts, RuleElement, RuleType, YPUser } from 'shared'
   import { getContext } from 'svelte'
   import type { Writable } from 'svelte/store'
   import Button from '../atoms/Button.svelte'
@@ -150,6 +157,13 @@
         class="bg-transparent mt-1 ring-1 flex-grow rounded-full text-lg outline-none ring-white/20 focus:ring-blue-500 transition-all py-1 px-4"
       />
     </label>
+
+    <div class="flex gap-4 items-center mt-4">
+      <div class="text-lg pl-2 w-24">타입</div>
+      <div>
+        {ruleTypeStrings[element.ruleType]}
+      </div>
+    </div>
 
     <div class="flex gap-4">
       <Button type="submit" class="bg-blue-500 w-full text-center mt-4 py-2">

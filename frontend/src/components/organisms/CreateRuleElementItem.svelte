@@ -5,7 +5,7 @@
   import Button from '../atoms/Button.svelte'
   import { getApollo } from '@/utils/apollo'
   import { gql } from '@apollo/client/core'
-  import type { Rule, RuleCounts, RuleElement, YPUser } from 'shared'
+  import type { Rule, RuleCounts, RuleElement, RuleType, YPUser } from 'shared'
   import { AlertSeverity, enqueueAlert } from '@/utils/alert'
 
   export let item: CreateRuleElementItemInput
@@ -99,6 +99,30 @@
         class="bg-transparent mt-1 ring-1 flex-grow rounded-full text-lg outline-none ring-white/20 focus:ring-blue-500 transition-all py-1 px-4"
       />
     </label>
+
+    <div class="flex gap-4 items-center mt-4">
+      <div class="text-lg pl-2 w-24">타입</div>
+      <div class="flex gap-4 items-center">
+        <label class="flex gap-2 items-center">
+          <input
+            required
+            bind:group={item.ruleType}
+            value="Black"
+            type="radio"
+          />
+          <div>블랙리스트</div>
+        </label>
+        <label class="flex gap-2 items-center">
+          <input
+            required
+            bind:group={item.ruleType}
+            value="White"
+            type="radio"
+          />
+          <div>화이트리스트</div>
+        </label>
+      </div>
+    </div>
 
     <div class="flex gap-4">
       <Button type="submit" class="bg-blue-500 w-full text-center mt-4 py-2">
