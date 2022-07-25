@@ -158,6 +158,34 @@
     }
   }
 
+  const toggleSharing = async () => {
+    try {
+      await getApollo().mutate({
+        mutation: gql`
+          mutation Rule($ruleId: String!, $value: Boolean!) {
+            rule(id: $ruleId) {
+              setSharable(value: $value)
+            }
+          }
+        `,
+        variables: {
+          ruleId: rule.id,
+          value: !rule.sharingEnabled,
+        },
+      })
+
+      rule = { ...rule, sharingEnabled: !rule.sharingEnabled }
+
+      ruleContext.set(rule)
+    } catch (e) {
+      enqueueAlert({
+        title: '저장 실패',
+        severity: AlertSeverity.Error,
+        time: 5000,
+      })
+    }
+  }
+
   const removeReference = async (e: CustomEvent<{ id: string }>) => {
     const id = e.detail.id
 
@@ -254,7 +282,12 @@
         class="bg-transparent mt-1 ring-1 rounded-full text-lg outline-none ring-white/20 focus:ring-blue-500 transition-all py-1 px-4"
       />
     </label>
-    <Button class="bg-blue-500 w-full text-center mt-4 py-2">
+    <Button
+      class="{rule.sharingEnabled
+        ? 'bg-red-500'
+        : 'bg-blue-500'} w-full text-center mt-4 py-2"
+      on:click={toggleSharing}
+    >
       공유 {rule.sharingEnabled ? '비활성화' : '활성화'}
     </Button>
   </div>
