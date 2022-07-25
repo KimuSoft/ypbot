@@ -86,7 +86,47 @@
     >
   >('rule')
 
-  const deleteItem = async () => {}
+  const deleteItem = async () => {
+    try {
+      if (confirm('아이템을 삭제할까요? 되돌릴 수 없습니다.')) {
+        const { data } = await getApollo().mutate<{
+          rule?: { element?: { delete: boolean } }
+        }>({
+          mutation: gql`
+            mutation DeleteRuleElement($ruleId: String!, $elementId: String!) {
+              rule(id: $ruleId) {
+                element(id: $elementId) {
+                  delete
+                }
+              }
+            }
+          `,
+          variables: {
+            ruleId: $ruleContext.id,
+            elementId: element.id,
+          },
+        })
+
+        if (data?.rule?.element?.delete) {
+          ruleContext.update((d) => ({
+            ...d,
+            elements: d.elements.filter((x) => x !== element),
+          }))
+          enqueueAlert({
+            title: '삭제 성공',
+            severity: AlertSeverity.Success,
+            time: 5000,
+          })
+        }
+      }
+    } catch (e) {
+      enqueueAlert({
+        title: '삭제 실패',
+        severity: AlertSeverity.Error,
+        time: 5000,
+      })
+    }
+  }
 </script>
 
 <div class="ring-1 p-4 rounded-xl ring-white/20">

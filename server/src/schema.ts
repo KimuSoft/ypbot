@@ -106,6 +106,8 @@ export const typeDefs = gql`
 
   type RuleElementMutation {
     update(info: RuleElementUpdateInfo!): RuleElement!
+
+    delete: Boolean!
   }
 
   type RuleMutation {
