@@ -1,10 +1,10 @@
 {
   "private": true,
   "workspaces": [
+    "shared",
     "bot",
-    "frontend",
     "server",
-    "shared"
+    "frontend"
   ],
   "scripts": {
     "format": "yarn workspaces run format"
