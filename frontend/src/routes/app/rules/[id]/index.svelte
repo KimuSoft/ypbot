@@ -45,6 +45,7 @@
         enqueueAlert({
           title: '규칙이 삭제되었습니다.',
           severity: AlertSeverity.Success,
+          time: 5000,
         })
         goto('/app')
       }
@@ -145,12 +146,14 @@
       return enqueueAlert({
         title: '이미 포함된 규칙입니다',
         severity: AlertSeverity.Error,
+        time: 5000,
       })
 
     if (rule.id === e.detail.id)
       return enqueueAlert({
         title: '이 규칙을 포함할 수 없습니다',
         severity: AlertSeverity.Error,
+        time: 5000,
       })
 
     const { data } = await getApollo().mutate<{

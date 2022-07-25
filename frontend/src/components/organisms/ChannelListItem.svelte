@@ -30,6 +30,7 @@
         return enqueueAlert({
           title: '이미 추가된 규칙입니다',
           severity: AlertSeverity.Error,
+          time: 5000,
         })
 
       const { data } = await getApollo().mutate<{
@@ -151,6 +152,7 @@
     <RuleAddDialog
       on:select={onSelect}
       on:close={() => (showAddDialog = false)}
+      excludedIds={channel.rules.map((x) => x.id)}
     />
   </div>
 {/if}

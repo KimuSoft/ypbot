@@ -132,6 +132,7 @@
           enqueueAlert({
             title: '선택 가능한 규칙이 없습니다',
             severity: AlertSeverity.Error,
+            time: 5000,
           })
           close()
         }
