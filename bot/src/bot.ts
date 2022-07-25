@@ -8,6 +8,9 @@ import path from "path"
 import { YPClient } from "./structures/YPClient"
 import { logger } from "./utils"
 
+process.on("uncaughtException", logger.error.bind(logger))
+process.on("unhandledRejection", logger.error.bind(logger))
+
 class DevModule extends Extension {
   @ownerOnly
   @applicationCommand({
