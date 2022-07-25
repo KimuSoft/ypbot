@@ -248,7 +248,7 @@
         },
       })
 
-      rule = { ...rule, sharingEnabled: !rule.sharingEnabled }
+      rule = { ...$ruleContext, sharingEnabled: !rule.sharingEnabled }
 
       ruleContext.set(rule)
     } catch (e) {
