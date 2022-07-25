@@ -2,6 +2,8 @@
   const initialized = writable(false)
 
   const fetchInitialData = async () => {
+    await import('../utils/sentry')
+
     const me = await fetchUser()
 
     currentUser.set(me as unknown as YPUser)
@@ -36,6 +38,10 @@
     }
   }
 </script>
+
+<svelte:head>
+  <title>YPBOT</title>
+</svelte:head>
 
 <AlertContainer />
 

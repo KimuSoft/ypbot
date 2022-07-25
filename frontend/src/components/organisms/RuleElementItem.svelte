@@ -62,12 +62,14 @@
         enqueueAlert({
           title: '저장 되었습니다.',
           severity: AlertSeverity.Success,
+          time: 5000,
         })
       }
     } catch (e) {
       enqueueAlert({
         title: '저장 실패',
         severity: AlertSeverity.Error,
+        time: 5000,
       })
     }
   }
