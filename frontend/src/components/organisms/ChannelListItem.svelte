@@ -4,7 +4,7 @@
   import RuleAddDialog from './RuleAddDialog.svelte'
   import { fade } from 'svelte/transition'
   import { getApollo } from '@/utils/apollo'
-  import { gql } from '@apollo/client/core'
+  import { gql } from '@apollo/client/core/index.js'
   import { page } from '$app/stores'
   import { AlertSeverity, enqueueAlert } from '@/utils/alert'
   import RuleChip from '../molecules/RuleChip.svelte'

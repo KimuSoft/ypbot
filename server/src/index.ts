@@ -1,8 +1,14 @@
 import dotenv from "dotenv"
 import path from "path"
+import fs from "fs"
 
 dotenv.config({
   path: path.join(__dirname, "../../.env"),
+  override: true,
+})
+
+dotenv.config({
+  path: path.join(__dirname, "../../shared/.env"),
   override: true,
 })
 
@@ -48,6 +54,17 @@ app.use(express.static(path.join(__dirname, "../static")))
 const run = async () => {
   await server.start()
   server.applyMiddleware({ app })
+
+  const file = "frontend/build/handler.js"
+
+  if (fs.existsSync(path.join(__dirname, "../../frontend/build/handler.js"))) {
+    const { handler } = await eval(`import(${JSON.stringify(file)})`)
+
+    app.use(handler)
+
+    logger.info("registered frontend middleware")
+  }
+
   await new Promise<void>((resolve) =>
     app.listen(
       process.env.PORT ? Number(process.env.PORT) : 4000,

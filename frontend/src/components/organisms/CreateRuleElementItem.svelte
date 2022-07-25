@@ -4,7 +4,7 @@
   import { getContext } from 'svelte'
   import Button from '../atoms/Button.svelte'
   import { getApollo } from '@/utils/apollo'
-  import { gql } from '@apollo/client/core'
+  import { gql } from '@apollo/client/core/index.js'
   import type { Rule, RuleCounts, RuleElement, RuleType, YPUser } from 'shared'
   import { AlertSeverity, enqueueAlert } from '@/utils/alert'
 

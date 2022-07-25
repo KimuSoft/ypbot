@@ -3,7 +3,7 @@
   import { goto } from '$app/navigation'
   import LoadingScreen from '@/components/molecules/LoadingScreen.svelte'
   import { getApollo } from '@/utils/apollo'
-  import { gql } from '@apollo/client/core'
+  import { gql } from '@apollo/client/core/index.js'
   import type { YPGuild } from 'shared'
   import { setContext } from 'svelte'
   import { writable } from 'svelte/store'

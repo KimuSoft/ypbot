@@ -5,7 +5,7 @@
   import LoadingScreen from '@/components/molecules/LoadingScreen.svelte'
   import { AlertSeverity, enqueueAlert } from '@/utils/alert'
   import { getApollo } from '@/utils/apollo'
-  import { gql } from '@apollo/client/core'
+  import { gql } from '@apollo/client/core/index.js'
   import type { Rule, YPGuild } from 'shared'
   import { setContext, getContext } from 'svelte'
   import { writable, type Writable } from 'svelte/store'

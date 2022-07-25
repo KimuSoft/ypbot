@@ -8,7 +8,7 @@
   import Button from '@/components/atoms/Button.svelte'
   import RuleSelectGroup from '@/components/organisms/RuleSelectGroup.svelte'
   import { getApollo } from '@/utils/apollo'
-  import { gql } from '@apollo/client/core'
+  import { gql } from '@apollo/client/core/index.js'
   import LoadingSpinner from '@/components/atoms/LoadingSpinner.svelte'
   import { goto } from '$app/navigation'
 

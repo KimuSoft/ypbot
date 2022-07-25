@@ -8,7 +8,7 @@
 
   import { getApollo } from '@/utils/apollo'
   import { fetchUser } from '@/utils/user'
-  import { gql } from '@apollo/client/core'
+  import { gql } from '@apollo/client/core/index.js'
   import type { YPUser } from 'shared'
 
   if (browser) {

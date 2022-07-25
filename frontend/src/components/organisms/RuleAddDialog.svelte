@@ -6,7 +6,7 @@
   import { createEventDispatcher, onDestroy, onMount } from 'svelte'
   import LoadingScreen from '../molecules/LoadingScreen.svelte'
   import { getApollo } from '@/utils/apollo'
-  import { gql } from '@apollo/client/core'
+  import { gql } from '@apollo/client/core/index.js'
 
   type Rule = RuleBase & { author: YPUser; counts: RuleCounts }
 

@@ -10,7 +10,7 @@
   import { fade } from 'svelte/transition'
   import RuleAddDialog from '@/components/organisms/RuleAddDialog.svelte'
   import { getApollo } from '@/utils/apollo'
-  import { gql } from '@apollo/client/core'
+  import { gql } from '@apollo/client/core/index.js'
   import { AlertSeverity, enqueueAlert } from '@/utils/alert'
   import { goto } from '$app/navigation'
   import CreateRuleElementItem from '@/components/organisms/CreateRuleElementItem.svelte'

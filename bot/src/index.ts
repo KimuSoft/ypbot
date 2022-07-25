@@ -12,6 +12,11 @@ dotenv.config({
   path: path.join(__dirname, "../../.env"),
 })
 
+dotenv.config({
+  path: path.join(__dirname, "../../shared/.env"),
+  override: true,
+})
+
 export type Guild = {
   id: string
   name: string

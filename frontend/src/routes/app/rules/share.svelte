@@ -4,7 +4,7 @@
   import Button from '@/components/atoms/Button.svelte'
   import { AlertSeverity, enqueueAlert } from '@/utils/alert'
   import { getApollo } from '@/utils/apollo'
-  import { gql } from '@apollo/client/core'
+  import { gql } from '@apollo/client/core/index.js'
   import type { Rule } from 'shared'
   import { onMount } from 'svelte'
 

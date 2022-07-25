@@ -3,7 +3,7 @@
 
   import Button from '@/components/atoms/Button.svelte'
   import { getApollo } from '@/utils/apollo'
-  import { gql } from '@apollo/client/core'
+  import { gql } from '@apollo/client/core/index.js'
   import type { Rule } from 'shared'
 
   const onSubmit = async (e: SubmitEvent) => {

@@ -3,8 +3,8 @@ import {
   InMemoryCache,
   type NormalizedCacheObject,
   createHttpLink,
-} from '@apollo/client/core'
-import { setContext } from '@apollo/client/link/context'
+} from '@apollo/client/core/index.js'
+import { setContext } from '@apollo/client/link/context/index.js'
 
 let apollo: ApolloClient<NormalizedCacheObject> | null = null
 

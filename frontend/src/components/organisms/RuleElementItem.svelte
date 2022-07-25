@@ -9,7 +9,7 @@
   import { AlertSeverity, enqueueAlert } from '@/utils/alert'
 
   import { getApollo } from '@/utils/apollo'
-  import { gql } from '@apollo/client/core'
+  import { gql } from '@apollo/client/core/index.js'
 
   import type { Rule, RuleCounts, RuleElement, RuleType, YPUser } from 'shared'
   import { getContext } from 'svelte'
