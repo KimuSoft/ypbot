@@ -13,6 +13,7 @@ class CensorModule extends Extension {
   @listener({ event: "messageCreate" })
   async messageCreate(msg: Message) {
     if (msg.author.bot || msg.author.id === this.client.user?.id) return
+    if (!msg.content) return
 
     const originalContent = msg.content
       .normalize()
@@ -108,7 +109,7 @@ class CensorModule extends Extension {
         lastIndex = match.index + match[0].length
       }
 
-      if (originalContent !== content) {
+      if (originalContent !== newContent) {
         newContent += originalContent.slice(lastIndex)
         content += `\n-----------------------------------------------\n→ ${newContent}`
       }
