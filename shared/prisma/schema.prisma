@@ -46,15 +46,14 @@ model Rule {
 }
 
 model RuleElement {
-  id             String   @id @default(cuid())
-  ruleId         String
-  rule           Rule     @relation(fields: [ruleId], references: [id], onDelete: Cascade)
-  name           String
-  ruleType       RuleType
-  regex          String // 고급 옵션을 키지 않으면 name과 동일하게 지정
-  includedRuleId String?
+  id       String   @id @default(cuid())
+  ruleId   String
+  rule     Rule     @relation(fields: [ruleId], references: [id], onDelete: Cascade)
+  name     String
+  ruleType RuleType
+  regex    String // 고급 옵션을 키지 않으면 name과 동일하게 지정
   // includedRule Rule? @relation(fields: [includedRuleId], references: [id], onDelete: Cascade)
-  separate       Boolean  @default(false) // 자모 분리 옵션
+  separate Boolean  @default(false) // 자모 분리 옵션
 }
 
 model Session {
