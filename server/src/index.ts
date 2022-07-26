@@ -66,11 +66,7 @@ const run = async () => {
   }
 
   await new Promise<void>((resolve) =>
-    app.listen(
-      process.env.PORT ? Number(process.env.PORT) : 4000,
-      "0.0.0.0",
-      resolve
-    )
+    app.listen(process.env.PORT || 4000, resolve)
   )
   logger.info(
     `Apollo server is ready at http://localhost:${process.env.PORT || 4000}/`
