@@ -16,9 +16,10 @@
     "discord.js": "^14.0.3",
     "dotenv": "^16.0.1",
     "fastify": "^4.3.0",
+    "hangul-js": "^0.2.6",
+    "shared": "*",
     "tslog": "^3.3.3",
-    "zod": "^3.17.10",
-    "shared": "*"
+    "zod": "^3.17.10"
   },
   "scripts": {
     "format": "prettier -w .",
