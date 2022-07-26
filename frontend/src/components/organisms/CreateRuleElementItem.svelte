@@ -124,6 +124,16 @@
       </div>
     </div>
 
+    <div class="flex gap-4 items-center mt-4">
+      <div class="text-lg pl-2 w-24" />
+      <div class="flex gap-4 items-center">
+        <label class="flex gap-2 items-center">
+          <input required bind:checked={item.separate} type="checkbox" />
+          <div>자모 분리</div>
+        </label>
+      </div>
+    </div>
+
     <div class="flex gap-4">
       <Button type="submit" class="bg-blue-500 w-full text-center mt-4 py-2">
         추가하기
