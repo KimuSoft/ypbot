@@ -289,10 +289,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@pikokr/command.ts@^5.0.4":
-  version "5.0.4"
-  resolved "https://registry.yarnpkg.com/@pikokr/command.ts/-/command.ts-5.0.4.tgz#df84ca3aca48455756b5e243881d3b53911cea14"
-  integrity sha512-ZUbg2AQB+AhSqca3+ewJ2KpSsCRqJLDN1exo/fMXMf96l7nMovoGYl2hPfIiZZl/YbPhbuDEVhKJJnNjAQ8tow==
+"@pikokr/command.ts@^5.0.5":
+  version "5.0.5"
+  resolved "https://registry.yarnpkg.com/@pikokr/command.ts/-/command.ts-5.0.5.tgz#df05debec0b1530b169820192a15f84c7653bd84"
+  integrity sha512-WQW2JbXsJVHlBRpf8/Ul9bx/BQdUVX8R8lXNPyWQXh98HDAIcIliEQNwCCuaAH8Kv1eS2PaWH4CMpwQKoX6Hug==
   dependencies:
     "@types/node" "^16.0.0"
     chalk "4.1.2"
@@ -424,6 +424,20 @@
   dependencies:
     "@sentry/types" "7.7.0"
     "@sentry/utils" "7.7.0"
+    tslib "^1.9.3"
+
+"@sentry/node@^7.7.0":
+  version "7.7.0"
+  resolved "https://registry.yarnpkg.com/@sentry/node/-/node-7.7.0.tgz#d39e904968fcca8cb0a881dee81887a6abf3ad74"
+  integrity sha512-i62x23NHEhLe6CJ6l9E30uRCUMm0VMz9aUmmrjW+9uxS1mZhHTG2kpbU16ozyh9KTLswKDOSE75Z+MzQpGSQ/Q==
+  dependencies:
+    "@sentry/core" "7.7.0"
+    "@sentry/hub" "7.7.0"
+    "@sentry/types" "7.7.0"
+    "@sentry/utils" "7.7.0"
+    cookie "^0.4.1"
+    https-proxy-agent "^5.0.0"
+    lru_map "^0.3.3"
     tslib "^1.9.3"
 
 "@sentry/tracing@^7.7.0":
@@ -1314,6 +1328,11 @@ cookie@0.5.0, cookie@^0.5.0:
   version "0.5.0"
   resolved "https://registry.npmjs.org/cookie/-/cookie-0.5.0.tgz"
   integrity sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==
+
+cookie@^0.4.1:
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.4.2.tgz#0e41f24de5ecf317947c82fc789e06a884824432"
+  integrity sha512-aSWTXFzaKWkvHO1Ny/s+ePFpvKsPnjc551iI41v3ny/ow6tBG5Vd+FuqGNhh1LxOmVzOlGUriIlOaokOvhaStA==
 
 cors@^2.8.5:
   version "2.8.5"
@@ -2210,6 +2229,11 @@ lru-cache@^7.10.1:
   version "7.13.1"
   resolved "https://registry.npmjs.org/lru-cache/-/lru-cache-7.13.1.tgz"
   integrity sha512-CHqbAq7NFlW3RSnoWXLJBxCWaZVBrfa9UEHId2M3AW8iEBurbqduNexEUCGc3SHc6iCYXNJCDi903LajSVAEPQ==
+
+lru_map@^0.3.3:
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/lru_map/-/lru_map-0.3.3.tgz#b5c8351b9464cbd750335a79650a0ec0e56118dd"
+  integrity sha512-Pn9cox5CsMYngeDbmChANltQl+5pi6XmTrraMSzhPmMBbmgcxmqWry0U3PGapCU1yB4/LqCcom7qhHZiF/jGfQ==
 
 magic-string@^0.25.7:
   version "0.25.9"
