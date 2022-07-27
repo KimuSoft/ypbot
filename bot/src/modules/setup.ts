@@ -15,7 +15,7 @@ class SetupModule extends Extension {
     interface RuleElement {
       name: string
       regex: string
-      ruleType: "Black" | "White"
+      ruleType: string // "Black" | "White"
       separate?: boolean
     }
 
