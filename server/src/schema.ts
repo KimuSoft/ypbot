@@ -17,6 +17,8 @@ export const typeDefs = gql`
     invited: Boolean
 
     channels: [Channel!]!
+
+    alertChannel: Channel
   }
 
   type Channel {
@@ -135,6 +137,9 @@ export const typeDefs = gql`
 
   type GuildMutation {
     channel(id: String!): ChannelMutation
+
+    resetAlertChannel: Boolean!
+    setAlertChannel(id: String!): Boolean!
   }
 
   type Mutation {

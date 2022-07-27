@@ -1,6 +1,11 @@
 <script lang="ts">
+  import { page } from '$app/stores'
+
   import GuildIcon from '@/components/atoms/GuildIcon.svelte'
   import ChannelListItem from '@/components/organisms/ChannelListItem.svelte'
+  import { AlertSeverity, enqueueAlert } from '@/utils/alert'
+  import { getApollo } from '@/utils/apollo'
+  import { gql } from '@apollo/client/core'
   import { ChannelType } from 'discord-api-types/v10'
   import _ from 'lodash'
 
@@ -12,7 +17,10 @@
   const guildContext = getContext<
     Writable<
       YPGuild & {
-        channels: (YPChannel & { rules: Rule[] })[]
+        channels: (YPChannel & {
+          rules: Rule[]
+        })[]
+        alertChannel?: { id: string }
       }
     >
   >('guild')
@@ -50,6 +58,40 @@
       'type'
     )
   })()
+
+  const resetAlertChannel = async () => {
+    try {
+      const { data } = await getApollo().mutate<{
+        guild?: {
+          resetAlertChannel: boolean
+        }
+      }>({
+        mutation: gql`
+          mutation SetAlertChannel($guildId: String!) {
+            guild(id: $guildId) {
+              resetAlertChannel
+            }
+          }
+        `,
+        variables: {
+          guildId: $page.params.id,
+        },
+      })
+      if (data?.guild?.resetAlertChannel) {
+        guildContext.update((x) => ({
+          ...x,
+          alertChannel: undefined,
+        }))
+      }
+    } catch (e) {
+      console.error(e)
+      enqueueAlert({
+        title: '변경 실패',
+        description: '알림 채널 설정 중 오류가 발생했습니다',
+        severity: AlertSeverity.Error,
+      })
+    }
+  }
 </script>
 
 <div class="text-2xl font-bold mt-2 flex items-center gap-4">
@@ -60,7 +102,17 @@
 </div>
 
 <div class="mt-4">
-  <div class="text-3xl font-bold">채널</div>
+  <div class="flex items-end">
+    <div class="text-3xl font-bold flex-grow">채널</div>
+    {#if !!guild.alertChannel}
+      <div
+        on:click={resetAlertChannel}
+        class="bg-red-500 px-4 py-1 rounded-lg transition-all cursor-pointer select-none hover:brightness-90 active:brightness-75"
+      >
+        알림 채널 초기화
+      </div>
+    {/if}
+  </div>
   <div>
     {#each categories as category (category.id)}
       <div class="mt-2">
@@ -70,7 +122,10 @@
         </div>
         <div class="mt-2 flex flex-col gap-2">
           {#each category.channels as channel}
-            <ChannelListItem bind:channel />
+            <ChannelListItem
+              bind:channel
+              alertChannel={guild.alertChannel?.id}
+            />
           {/each}
         </div>
       </div>

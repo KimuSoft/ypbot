@@ -28,6 +28,9 @@
             name
             icon
             invited
+            alertChannel {
+              id
+            }
             channels {
               id
               name

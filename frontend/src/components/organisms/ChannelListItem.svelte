@@ -15,10 +15,50 @@
 
   let showAddDialog = false
 
+  export let alertChannel: string | undefined
+
+  $: setAlertChannel = async () => {
+    try {
+      const { data } = await getApollo().mutate<{
+        guild?: {
+          setAlertChannel: boolean
+        }
+      }>({
+        mutation: gql`
+          mutation SetAlertChannel($guildId: String!, $channelId: String!) {
+            guild(id: $guildId) {
+              setAlertChannel(id: $channelId)
+            }
+          }
+        `,
+        variables: {
+          guildId: $page.params.id,
+          channelId: channel.id,
+        },
+      })
+      if (data?.guild?.setAlertChannel) {
+        guild.update((x) => ({
+          ...x,
+          alertChannel: {
+            id: channel.id,
+          },
+        }))
+      }
+    } catch (e) {
+      console.error(e)
+      enqueueAlert({
+        title: '변경 실패',
+        description: '알림 채널 설정 중 오류가 발생했습니다',
+        severity: AlertSeverity.Error,
+      })
+    }
+  }
+
   const guild = getContext<
     Writable<
       YPGuild & {
         channels: (YPChannel & { rules: Rule[] })[]
+        alertChannel?: { id: string }
       }
     >
   >('guild')
@@ -134,6 +174,7 @@
         await Promise.reject()
       }
     } catch (e) {
+      console.error(e)
       enqueueAlert({
         title: '규칙 제거 실패',
         description: '규칙 제거 중 문제가 발생했습니다.',
@@ -159,10 +200,27 @@
 
 <div class="bg-black/40 p-4 rounded-xl">
   <div class="flex gap-2 items-center">
-    <div class="text-lg">
-      {channel.name}
+    <div class="flex gap-2">
+      <div class="text-lg leading-[22px]">
+        {channel.name}
+      </div>
+      {#if alertChannel === channel.id}
+        <div
+          class="bg-red-500 flex items-center text-sm justify-center px-2 rounded-lg leading-[0]"
+        >
+          알림 채널
+        </div>
+      {/if}
     </div>
     <div class="flex-grow" />
+    {#if alertChannel !== channel.id}
+      <div
+        on:click={setAlertChannel}
+        class="bg-blue-500 flex items-center text-sm justify-center px-2 rounded-lg py-1 hover:brightness-90 active:brightness-75 transition-all cursor-pointer select-none"
+      >
+        알림 채널로 설정
+      </div>
+    {/if}
     <div class="bg-red-500 rounded-full px-4 py-1">
       규칙 {channel.rules.length}개
     </div>
