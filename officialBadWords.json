@@ -1,0 +1,589 @@
+[
+  {
+    "name": "욕설 금지",
+    "description": "얘 아까 선생님 욕했어요! / 야! 그걸 왜 말해!",
+    "elements" : [
+      {
+        "name" : "씨발",
+        "regex" : "([씨쉬쒸시씺씹앂싯싸싰스ㅅへ人ㅆ⩘入八㉦㈆야∧취씌]|//^|//^ㅣ|ㅇㅑ|di|si|she|shi|se|tl|//^ㅣ).?[0-9이으ㅣieㅡ-]*(발|뱔|팔|벌|뻘|빨|뿰|붤|봘|뷀|벨|벩|풜|밦|밟|밠|밢|㈅|㉥|ㅂ|8|ㅃ|var|bar|val|bal|vul|bul|bel|qkf)|[쉬쒸씨](바|ba)|[시씨띠][바파][아ㅏ]*[알랄]|^[시씨ㅅㅆ][바ㅂ㈓]$[씹쓉씝십쉽][할알팔발핧팛팙팘핤붤벨밸]|tlqk|ㅽ|18[놈넘]",
+        "ruleType" : "Black"
+      },
+      {
+        "name" : "씨발 (초성 우회)",
+        "regex" : "[ㅅㅆㅉ]ㅣㅂㅏㄹ",
+        "separate": true
+      },
+      {
+        "name" : "씨부럴",
+        "regex": "[씨쉬쒸시스ㅅへ人야c][이으ㅣ]*[브부ㅂ][ㄹ럴]",
+        "ruleType" : "Black"
+      },
+      {
+        "name" : "지랄",
+        "regex": "(지|쥐|ㅈ|ㅈi|ㅈl|zi|g|야)이*(lal|ral|랄|ㄹ|룰)",
+        "ruleType" : "Black"
+      },
+      {
+        "name" : "개새끼",
+        "regex": "(개|dog)[샠색샊섺섹]|rotorl",
+        "ruleType" : "Black"
+      },
+      {
+        "name" : "병신",
+        "regex" : "[병ㅂ뼝삉㈅븽빙븅뷍뽕빵뽱퓽뿽](쉰|신|진|㈆|ㅅ|へ|人|shin|sin)|ㅄ|qudtls",
+        "ruleType" : "Black"
+      },
+      {
+        "name" : "간나새끼",
+        "regex": "[개쌍썅종존좆ㅈ]간나",
+        "ruleType" : "Black"
+      },
+      {
+        "name": "창년",
+        "regex": "창[녀년]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "~같은 년",
+        "regex": "(걸레|개)(같은)?[녀뇬ㄴ년]|..한[년뇬ㄴ]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "개같은 년",
+        "regex": "개같은[년]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "썅",
+        "regex": "썅",
+        "ruleType": "Black"
+      },
+      {
+        "name": "니취팔러마('씨발'의 우회 표현)",
+        "regex": "니취팔",
+        "ruleType": "Black"
+      },
+      {
+        "name": "당신의 어머니/아버지",
+        "regex": "[ㄴ니]?[애][미비]|[ㄴ느][금ㄱ][ㅁ마빠]?|늑음마|느개[미비]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "Fuck",
+        "regex": "[뻐퍼]킹|fuck|[뻑퍽]유|뻐큐",
+        "ruleType": "Black"
+      },
+      {
+        "name": "What the fuck",
+        "regex": "wtf|dafuq",
+        "ruleType": "Black"
+      },
+      {
+        "name": "상년",
+        "regex": "[상샹썅쌍ㅆ][년ㄴ]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "염병하다",
+        "regex": "(^|[^전감])[염엠옘얨앰]병",
+        "ruleType": "Black"
+      },
+      {
+        "name": "뒈지다",
+        "regex": "^(?!ㄷㄷㄷㅈ).*[뒤ㄷ][져진ㅈ질]|뒈[져지]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "뒈질?",
+        "regex": "^ㄷㅈ$",
+        "ruleType": "Black"
+      },
+      {
+        "name": "엠창",
+        "regex": "[엠앰]창",
+        "ruleType": "Black"
+      },
+      {
+        "name": "미친 놈/년",
+        "regex": "[미ㅁ][친ㅊ][놈년ㄴ]|[미ㅁ][친ㅊ쳤쳣첫쳐처](놈|년|녀석)",
+        "ruleType": "Black"
+      },
+      {
+        "name": "산을 표현하는 수화",
+        "regex": "(^ㅗ$|ㅗ{2,})|[\uD83D\uDD95┵凸⟂]|산을표현(하는|한)수화",
+        "ruleType": "Black"
+      },
+      {
+        "name": "좆까",
+        "regex": "[좆ㅈ][까ㄲ]|丕刀卜|^조까$",
+        "ruleType": "Black"
+      },
+      {
+        "name": "Shit",
+        "regex": "shit|쉣",
+        "ruleType": "Black"
+      },
+      {
+        "name": "등신",
+        "regex": "^등신",
+        "ruleType": "Black"
+      },
+      {
+        "name": "니미",
+        "regex": "^니미",
+        "ruleType": "Black"
+      },
+      {
+        "name": "~자식",
+        "regex": "..자식",
+        "ruleType": "Black"
+      },
+      {
+        "name": "개자식",
+        "regex": "개자식",
+        "ruleType": "Black"
+      },
+      {
+        "name": "호로자식",
+        "regex": "호로자식",
+        "ruleType": "Black"
+      },
+      {
+        "name": "Damn",
+        "regex": "damn",
+        "ruleType": "Black"
+      }
+    ]
+  },
+  {
+    "name": "거친 표현 금지",
+    "description": "거친 말과 욕설의 차이요? 그런 게 있을 리가 없잖아요!",
+    "elements": [
+      {
+        "name": "새끼",
+        "regex": "[쌔새세섀ㅅへ人쉐섺샊]ㅐ?(ㄲ|키|끼|ㄱㄱㅣ|ㄲㅣ|77ㅣ|귀)|[쉑쉨샠]|새꺄|색히",
+        "ruleType": "Black"
+      },
+      {
+        "name": "존나",
+        "regex": "[ㅈ존][ㄴ나]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "좆같다",
+        "regex": "[ㅈ좆奀]같",
+        "ruleType": "Black"
+      },
+      {
+        "name": "개같다",
+        "regex": "^(?!무지개같).*[개ㄱ]같",
+        "ruleType": "Black"
+      },
+      {
+        "name": "개소리",
+        "regex": "개(솔|소리)",
+        "ruleType": "Black"
+      },
+      {
+        "name": "개돼지",
+        "regex": "개돼지",
+        "ruleType": "Black"
+      },
+      {
+        "name": "개차반",
+        "regex": "개차반",
+        "ruleType": "Black"
+      },
+      {
+        "name": "꼰대",
+        "regex": "꼰대",
+        "ruleType": "Black"
+      },
+      {
+        "name": "꺼져",
+        "regex": "[^이][꺼끄ㄲ][ㅈ져질저]|rjwu",
+        "ruleType": "Black"
+      },
+      {
+        "name": "닥쳐",
+        "regex": "[닥닭닦ㄷ][쳐ㅊ처치]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "What the heck",
+        "regex": "whattheheck|wth",
+        "ruleType": "Black"
+      },
+      {
+        "name": "엿먹어",
+        "regex": "엿(이나)?[쳐처]?(먹어|먹던|드세요|드시던|머거)",
+        "ruleType": "Black"
+      },
+      {
+        "name": "느그",
+        "regex": "느그",
+        "ruleType": "Black"
+      },
+      {
+        "name": "아무리 귀엽게 말해도 욕은 욕입니다.",
+        "regex": "뽀큐|뻐뀨|뽀뀨|뽁유|[뽀포퍼빠뻐][뀨큐]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "나쁜 놈/년",
+        "regex": "나[쁜뿐][놈년ㄴ]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "네 다음 XX",
+        "regex": "네다음.{2,3}|ㄴㄷㅆ|^ㄴㄷ[ㄱ-ㅎ]$",
+        "ruleType": "Black"
+      },
+      {
+        "name": "멍청한 놈/년",
+        "regex": "멍[충청]한[놈년]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "애미",
+        "regex": "^응?.?애[미비]$",
+        "ruleType": "Black"
+      },
+      {
+        "name": "멍청하다",
+        "regex": "멍[충청][이아한]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "미치다",
+        "regex": "[미ㅁ][친ㅊ쳐처]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "말귀를 못 알아듣다",
+        "regex": "말귀.*못알아",
+        "ruleType": "Black"
+      },
+      {
+        "name": "좆망",
+        "regex": "[좆ㅈ]망",
+        "ruleType": "Black"
+      },
+      {
+        "name": "Shut up",
+        "regex": "shutup|shtup|셔럽|셧업",
+        "ruleType": "Black"
+      },
+      {
+        "name": "왜 사냐",
+        "regex": "왜사냐|왜살아|왜살냐",
+        "ruleType": "Black"
+      },
+      {
+        "name": "그런 걸 왜 하냐",
+        "regex": "왜하냐|왜해",
+        "ruleType": "Black"
+      },
+      {
+        "name": "꼴아보다",
+        "regex": "꼴아[보봐]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "망할",
+        "regex": "망할",
+        "ruleType": "Black"
+      },
+      {
+        "name": "망해라",
+        "regex": "망해(버려)?라",
+        "ruleType": "Black"
+      },
+      {
+        "name": "양아치",
+        "regex": "양아치",
+        "ruleType": "Black"
+      },
+      {
+        "name": "제기랄",
+        "regex": "제기랄|제길",
+        "ruleType": "Black"
+      },
+      {
+        "name": "눈 없냐",
+        "regex": "눈없냐|눈없어",
+        "ruleType": "Black"
+      },
+      {
+        "name": "좆밥",
+        "regex": "[좆ㅈ]밥",
+        "ruleType": "Black"
+      },
+      {
+        "name": "나대지 마",
+        "regex": "나[대댄](다|지마|지말)",
+        "ruleType": "Black"
+      },
+      {
+        "name": "빡대가리",
+        "regex": "빡대가리",
+        "ruleType": "Black"
+      },
+      {
+        "name": "바보",
+        "regex": "바보",
+        "ruleType": "Black"
+      },
+      {
+        "name": "당신은 사랑받기 위해 태어난 사람이에요!",
+        "regex": "자살할|죽고싶다|죽을까|죽어버릴까|죽을[것거]같",
+        "ruleType": "Black"
+      },
+      {
+        "name": "자살해라",
+        "regex": "자살해",
+        "ruleType": "Black"
+      },
+      {
+        "name": "죽어",
+        "regex": "[^나]죽어",
+        "ruleType": "Black"
+      },
+      {
+        "name": "어쩌라고",
+        "regex": "어쩌라고|어쩔$",
+        "ruleType": "Black"
+      },
+      {
+        "name": "대갈통",
+        "regex": "대갈통",
+        "ruleType": "Black"
+      },
+      {
+        "name": "거렁뱅이",
+        "regex": "거렁뱅이",
+        "ruleType": "Black"
+      },
+      {
+        "name": "젠장",
+        "regex": "[줸쥔쥉젠]장",
+        "ruleType": "Black"
+      }
+    ]
+  },
+  {
+    "name": "야한 말 금지",
+    "description": "야한 건 안 된다고 생각해요! 선생님!",
+    "elements": [
+      {
+        "name": "좆",
+        "regex": "좆奀",
+        "ruleType": "Black"
+      },
+      {
+        "name": "씹",
+        "regex": "[씹쓉][^어다]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "Suck",
+        "regex": "suck",
+        "ruleType": "Black"
+      },
+      {
+        "name": "암캐 / 수캐",
+        "regex": "[암수]캐",
+        "ruleType": "Black"
+      },
+      {
+        "name": "발정하다",
+        "regex": "발정[난했하]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "고자",
+        "regex": "곶아",
+        "ruleType": "Black"
+      },
+      {
+        "name": "잠지",
+        "regex": "[잠짬][지찌]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "자지",
+        "regex": "(^|[^용혼남여])[쥬ㅈ자][지ㅈ]([^마]|$)",
+        "ruleType": "Black"
+      },
+      {
+        "name": "보지",
+        "regex": "(^|[^나바])[ㅂ뷰보][ㅈ지]([^마않]|$)",
+        "ruleType": "Black"
+      },
+      {
+        "name": "E-Hentai",
+        "regex": "ehentai|[익이]헨",
+        "ruleType": "Black"
+      },
+      {
+        "name": "임신 최적화 몸매",
+        "regex": "임식최적화|임최몸",
+        "ruleType": "Black"
+      },
+      {
+        "name": "Hitomi.la",
+        "regex": "hitomi|[히꺼]토미",
+        "ruleType": "Black"
+      },
+      {
+        "name": "섹스",
+        "regex": "^(?!검색스).*[ㅅ人へ색쉑섹섺샊셲쒝쒞섁쎅쎾쎽쌕섻셐샠솈섘][스수ㅅへ人쓰쑤쓔]|[섻쉓]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "자위행위",
+        "regex": "자위|딸딸이|딸{2,}",
+        "ruleType": "Black"
+      },
+      {
+        "name": "불알",
+        "regex": "불알|부랄",
+        "ruleType": "Black"
+      },
+      {
+        "name": "오목할 요",
+        "regex": "凹",
+        "ruleType": "Black"
+      },
+      {
+        "name": "볼록할 철",
+        "regex": "凸",
+        "ruleType": "Black"
+      },
+      {
+        "name": "음탕한 손짓",
+        "regex": "\uD83D\uDC49\uD83D\uDC4C",
+        "ruleType": "Black"
+      },
+      {
+        "name": "스섹",
+        "regex": "[쑤쓔쓰스][색쉑섹섺샊셲쒝쒞섁쎅쎾쎽쌕]",
+        "ruleType": "Black"
+      }
+    ]
+  },
+  {
+    "name": "차별 및 혐오 금지",
+    "description": "위 아 더 월드!",
+    "elements": [
+      {
+        "name" : "쪽바리",
+        "regex": "쪽바리",
+        "ruleType": "Black"
+      },
+      {
+        "name": "짱깨",
+        "regex": "짱깨",
+        "ruleType": "Black"
+      },
+      {
+        "name": "착짱죽짱",
+        "regex": "착짱죽짱",
+        "ruleType": "Black"
+      },
+      {
+        "name": "Nigger",
+        "regex": "nigga|nigger",
+        "ruleType": "Black"
+      },
+      {
+        "name": "깜둥이",
+        "regex": "[깜껌]둥이",
+        "ruleType": "Black"
+      },
+      {
+        "name": "Ching Chang Chong",
+        "regex": "chingchangchong|칭챙총",
+        "ruleType": "Black"
+      },
+      {
+        "name": "김치녀",
+        "regex": "김치녀",
+        "ruleType": "Black"
+      },
+      {
+        "name": "된장녀",
+        "regex": "된장녀",
+        "ruleType": "Black"
+      },
+      {
+        "name": "보슬아치",
+        "regex": "보슬아치",
+        "ruleType": "Black"
+      },
+      {
+        "name": "개초딩",
+        "regex": "개초딩",
+        "ruleType": "Black"
+      }
+    ]
+  },
+  {
+    "bta": [
+      "[할핥핡햘햝햙][쯔즈][악약]",
+      "아흥",
+      "ㅗㅜㅑ",
+      "퍄",
+      "하아*(응읏악앍앙)",
+      "가버[렷려렸]",
+      "[할핥핡햘햝햙ㅎ][ㅉ짝쨕작착쟉쨝]"
+    ],
+    "jci": [
+      "고노무",
+      "노무[^자]",
+      "(따악|딱딱+)좋다",
+      "부엉이바위",
+      "(^|[^여싸치라배])운지([^법]|$)",
+      "틀니?딱+",
+      "야기분좋다",
+      "일베[충]?",
+      "메갈[련년]",
+      "한남충",
+      "노[쨩짱쟝]",
+      "김대중",
+      "응디",
+      "딱좋다",
+      "이명박",
+      "박근혜",
+      "최순실",
+      "(이기야)$",
+      "성?재기",
+      "이승만",
+      "윤보선",
+      "박정희",
+      "최규하",
+      "(전두환|전땅크|땅크)",
+      "노태우",
+      "(김영삼|김03)",
+      "김대중",
+      "중력일",
+      "중력절",
+      "김일성",
+      "김정일",
+      "김정은",
+      "김여정",
+      "진핑",
+      "도[널날]드[트도][럼람][프푸]",
+      "명박",
+      "[근ㄹ]혜",
+      "[문곰][졔쟤제재죄][인앙]([^거가]|$)",
+      "일간베스트",
+      "홍(준표|카콜라)",
+      "[좌우]파",
+      "바이든",
+      "극[좌우]",
+      "민주당",
+      "국민의힘"
+    ]
+  }
+]
