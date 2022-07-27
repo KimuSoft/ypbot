@@ -2,6 +2,7 @@ import {
   applicationCommand,
   Extension,
   listener,
+  moduleHook,
   option,
 } from "@pikokr/command.ts"
 import {
@@ -25,6 +26,9 @@ import {
 import hangul from "hangul-js"
 import { prisma, RuleType } from "shared"
 import { YPClient } from "../structures/YPClient"
+import fs from "fs"
+import path from "path"
+import { sqlDir } from "../utils"
 
 class CensorModule extends Extension {
   @listener({ event: "messageUpdate" })
@@ -170,6 +174,15 @@ class CensorModule extends Extension {
     ;(this.commandClient as YPClient).dokdo.run(msg)
   }
 
+  private findRuleSql!: string
+
+  @moduleHook("load")
+  async load() {
+    this.findRuleSql = (
+      await fs.promises.readFile(path.join(sqlDir, "findRule.sql"))
+    ).toString()
+  }
+
   @listener({ event: "messageCreate" })
   async messageCreate(msg: Message) {
     if (msg.author.bot || msg.author.id === this.client.user?.id) return
@@ -180,7 +193,7 @@ class CensorModule extends Extension {
       .normalize()
       .replace(/[!?@#$%^&*():;+-=~{}<>_\[\]|\\"',.\/`₩\s\t]/g, "")
 
-    const matches = await prisma.$queryRaw<
+    const matches = await prisma.$queryRawUnsafe<
       {
         separate: boolean
         id: string
@@ -190,36 +203,18 @@ class CensorModule extends Extension {
         ruleId: string
         ruleName: string
       }[]
-    >`
-    with rule_types
-      as (select el."separate",
-            el."id",
-            el."regex",
-            el."name",
-            el."ruleType",
-            el."ruleId",
-            case el."separate"
-              when TRUE then ${hangul.disassembleToString(originalContent)}
-              else ${originalContent}
-            end as  "_Input"
-          from   "RuleElement" as el)
-        select el.*, el."name" as "ruleName"
-        from rule_types el
-        right join "Rule" r on el."ruleId" = r."id"
-        where (
-          ("ruleType" = 'Black' :: "RuleType" and "_Input" ~* "regex") or 
-          ("ruleType" = 'White' :: "RuleType" and not "_Input" ~* "regex") ) and ((exists 
-          (select from "__ruleOnChannel" where "A" = ${
-            msg.channel.id
-          } and "B" = "ruleId"
-        )) or (
-          exists (select from "__ruleOnGuild" where "A" = ${
-            msg.guild.id
-          } and "B" = "ruleId")
-        )) limit 1;`
+    >(
+      this.findRuleSql,
+      msg.channel.id,
+      msg.guild.id,
+      hangul.disassembleToString(originalContent),
+      originalContent
+    )
 
     if (!matches.length) return
     if (!msg.deletable) return
+
+    console.log(matches)
 
     // 규칙을 위반한 메시지 삭제
     await msg.delete()
@@ -306,7 +301,7 @@ class CensorModule extends Extension {
     alertEmbed.setDescription(codeBlock("ansi", content))
     alertEmbed
       .setFooter({
-        text: `\`${rule.ruleName}\`을(를) ${
+        text: `\`${rule.name}\`을(를) ${
           rule.ruleType === "Black" ? "말했습니다." : "말하지 않았습니다."
         }`,
       })
