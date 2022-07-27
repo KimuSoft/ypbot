@@ -1,7 +1,7 @@
 import { applicationCommand, Extension } from "@pikokr/command.ts"
 import { ApplicationCommandType, ChatInputCommandInteraction } from "discord.js"
 import { prisma } from "shared"
-import officialBadWords from "../officialBadWords.json"
+import _officialRules from "../officialRules.json"
 
 class SetupModule extends Extension {
   @applicationCommand({
@@ -25,11 +25,11 @@ class SetupModule extends Extension {
       elements: RuleElement[]
     }
 
-    const officialBadWordsX: Rule[] = officialBadWords
+    const officialRules: Rule[] = _officialRules
 
     await prisma.rule.deleteMany({ where: { isOfficial: true } })
     await prisma.rule.createMany({
-      data: officialBadWordsX.map((rule) => {
+      data: officialRules.map((rule) => {
         return {
           name: rule.name,
           description: rule.description,
