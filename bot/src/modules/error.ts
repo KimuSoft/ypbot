@@ -15,6 +15,7 @@ class ErrorHandler extends Extension {
 
     await (i.deferred || i.replied ? i.editReply : i.reply).bind(i)({
       content: "",
+      components: [],
       embeds: [
         new EmbedBuilder()
           .setTitle("오류 발생")
