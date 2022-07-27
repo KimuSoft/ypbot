@@ -8,6 +8,8 @@ import {
   ActionRowBuilder,
   ApplicationCommandOptionType,
   ApplicationCommandType,
+  ButtonBuilder,
+  ButtonStyle,
   ChannelType,
   ChatInputCommandInteraction,
   codeBlock,
@@ -16,6 +18,7 @@ import {
   GuildBasedChannel,
   Interaction,
   Message,
+  MessageActionRowComponentBuilder,
   SelectMenuBuilder,
   TextBasedChannel,
 } from "discord.js"
@@ -130,6 +133,35 @@ class CensorModule extends Extension {
     if (i.customId !== "ruleList") return
 
     return i.deferUpdate()
+  }
+
+  @applicationCommand({
+    type: ApplicationCommandType.ChatInput,
+    name: "관리",
+    description: "관리 페이지로 이동합니다",
+    dmPermission: false,
+  })
+  async manage(i: ChatInputCommandInteraction) {
+    if (!i.guild) return
+    const member = await i.guild.members.fetch(i.user.id)
+
+    if (!member.permissions.has("Administrator"))
+      return i.reply({
+        content: "관리자만 사용 가능한 명령어에요!",
+        ephemeral: true,
+      })
+
+    return i.reply({
+      components: [
+        new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+          new ButtonBuilder()
+            .setURL(`${process.env.FRONTEND_BASE_URL}/app/guilds/${i.guildId}`)
+            .setStyle(ButtonStyle.Link)
+            .setLabel("관리페이지 링크")
+            .setEmoji("🔗")
+        ),
+      ],
+    })
   }
 
   @listener({ event: "messageCreate" })

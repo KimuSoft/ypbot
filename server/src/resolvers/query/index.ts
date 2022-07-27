@@ -27,7 +27,7 @@ export const queryResolvers = {
         process.env.DISCORD_CLIENT_ID
       }&redirect_uri=${encodeURIComponent(
         process.env.DISCORD_INVITE_CALLBACK!
-      )}&permissions=8&guild_id=${
+      )}&permissions=1634737716422&guild_id=${
         params.guild
       }&disable_guild_select=true&scope=${encodeURIComponent(
         "bot applications.commands"
