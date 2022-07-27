@@ -22,6 +22,14 @@ model User {
   discordTokenExpiresAt DateTime @default(now())
 }
 
+model Guild {
+    id                    String   @id
+    // channels              Channel[]
+    commonRules           Rule[]   @relation("_ruleOnGuild")
+    timeout               Int      @default(0)
+    alertChannelId        String
+}
+
 model Channel {
   id      String @id
   guildId String
@@ -40,6 +48,7 @@ model Rule {
   elements       RuleElement[]
   // channelIds String[]
   channels       Channel[]     @relation("_ruleOnChannel")
+  guilds         Guild[]       @relation("_ruleOnGuild")
   isOfficial     Boolean       @default(false)
   references     Rule[]        @relation("_ruleReferences")
   referencedBy   Rule[]        @relation("_ruleReferences")
