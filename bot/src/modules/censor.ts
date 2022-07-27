@@ -9,10 +9,14 @@ import {
   ApplicationCommandOptionType,
   ApplicationCommandType,
   Channel,
+  ChannelType,
+  ChatInputCommandInteraction,
   codeBlock,
   Colors,
   CommandInteraction,
   EmbedBuilder,
+  GuildBasedChannel,
+  Interaction,
   Message,
   SelectMenuBuilder,
 } from "discord.js"
@@ -27,39 +31,76 @@ class CensorModule extends Extension {
 
   @applicationCommand({
     type: ApplicationCommandType.ChatInput,
-    name: "알림채널설정",
-    description: "알림채널을 설정합니다.",
+    name: "알림채널",
+    description: "알림채널 설정",
+    dmPermission: false,
   })
   async setNotificationChannel(
-    i: CommandInteraction,
+    i: ChatInputCommandInteraction,
     @option({
-      type: ApplicationCommandOptionType.Channel,
-      name: "채널",
-      description: "알림 채널로 설정할 채널",
+      type: ApplicationCommandOptionType.Subcommand,
+      name: "설정",
+      description: "알림 채널을 설정합니다",
+      options: [
+        {
+          type: ApplicationCommandOptionType.Channel,
+          name: "채널",
+          description: "알림 채널로 설정할 채널",
+          required: true,
+          channel_types: [
+            ChannelType.GuildText,
+            ChannelType.GuildNews,
+            ChannelType.GuildVoice,
+          ],
+        },
+      ],
     })
-    channel: Channel
+    set: boolean,
+    @option({
+      type: ApplicationCommandOptionType.Subcommand,
+      name: "초기화",
+      description: "알림 채널 설정을 초기화합니다",
+    })
+    reset: boolean
   ) {
     if (!i.guildId) return
-    const ypGuild = prisma.guild.findUnique({ where: { id: i.guildId } })
-    if (!ypGuild)
-      await prisma.guild.create({
-        data: { id: i.guildId, alertChannelId: channel.id },
-      })
-    else
-      await prisma.guild.update({
+
+    if (set) {
+      const channel = i.options.getChannel("채널") as GuildBasedChannel
+      await prisma.guild.upsert({
         where: { id: i.guildId },
-        data: { alertChannelId: channel.id },
+        create: {
+          id: i.guildId,
+          alertChannelId: channel.id,
+        },
+        update: {
+          alertChannelId: channel.id,
+        },
       })
-    await i.reply("수정 완료!")
+      await i.reply("수정 완료!")
+    } else if (reset) {
+      await prisma.guild.updateMany({
+        where: {
+          id: i.guildId,
+        },
+        data: {
+          alertChannelId: null,
+        },
+      })
+      await i.reply("수정 완료!")
+    } else {
+      await i.reply("?")
+    }
   }
 
   @applicationCommand({
     type: ApplicationCommandType.ChatInput,
     name: "규칙",
     description: "이 채널에 적용된 규칙 목록을 보여줍니다.",
+    dmPermission: false,
   })
-  async tags(i: CommandInteraction) {
-    const ypChannel = prisma.channel.findUnique({
+  async tags(i: ChatInputCommandInteraction) {
+    const ypChannel = await prisma.channel.findUnique({
       where: { id: i.channelId },
       include: { rules: true },
     })
@@ -67,11 +108,13 @@ class CensorModule extends Extension {
 
     const select = new SelectMenuBuilder()
       .setOptions(
-        (ypChannel.rules as unknown as { name: string; id: string }[]).map(
-          (rule) => {
-            return { label: rule.name, value: rule.id }
+        ypChannel.rules.map((rule) => {
+          return {
+            label: rule.name,
+            description: rule.description,
+            value: rule.id,
           }
-        )
+        })
       )
       .setPlaceholder("이 채널의 규칙")
       .setCustomId("ruleList")
@@ -79,6 +122,15 @@ class CensorModule extends Extension {
     await i.reply({
       components: [new ActionRowBuilder().setComponents(select) as any],
     })
+  }
+
+  @listener({ event: "interactionCreate" })
+  async interaction(i: Interaction) {
+    if (!i.isSelectMenu()) return
+
+    if (i.customId !== "ruleList") return
+
+    return i.deferUpdate()
   }
 
   @listener({ event: "messageCreate" })

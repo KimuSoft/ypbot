@@ -23,11 +23,11 @@ model User {
 }
 
 model Guild {
-    id                    String   @id
-    // channels              Channel[]
-    commonRules           Rule[]   @relation("_ruleOnGuild")
-    timeout               Int      @default(0)
-    alertChannelId        String
+  id             String  @id
+  // channels              Channel[]
+  commonRules    Rule[]  @relation("_ruleOnGuild")
+  timeout        Int     @default(0)
+  alertChannelId String?
 }
 
 model Channel {
