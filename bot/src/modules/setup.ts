@@ -25,6 +25,8 @@ class SetupModule extends Extension {
       elements: RuleElement[]
     }
 
+    await i.deferReply()
+
     const officialRules: Rule[] = _officialRules
 
     await prisma.rule.deleteMany({ where: { isOfficial: true } })
@@ -39,7 +41,7 @@ class SetupModule extends Extension {
       }),
     })
 
-    await i.reply({
+    await i.editReply({
       content: "꺄앙",
     })
   }
