@@ -3,16 +3,20 @@
 
   import GuildIcon from '@/components/atoms/GuildIcon.svelte'
   import ChannelListItem from '@/components/organisms/ChannelListItem.svelte'
+  import RuleAddDialog from '@/components/organisms/RuleAddDialog.svelte'
+  import RuleSelectListItem from '@/components/organisms/RuleSelectListItem.svelte'
   import { AlertSeverity, enqueueAlert } from '@/utils/alert'
   import { getApollo } from '@/utils/apollo'
   import { gql } from '@apollo/client/core'
   import { ChannelType } from 'discord-api-types/v10'
   import _ from 'lodash'
 
-  import type { YPChannel, YPGuild, Rule } from 'shared'
+  import type { YPChannel, YPGuild, Rule, YPUser, RuleCounts } from 'shared'
 
   import { getContext } from 'svelte'
+  import FaPlus from 'svelte-icons/fa/FaPlus.svelte'
   import type { Writable } from 'svelte/store'
+  import { fade } from 'svelte/transition'
 
   const guildContext = getContext<
     Writable<
@@ -21,6 +25,7 @@
           rules: Rule[]
         })[]
         alertChannel?: { id: string }
+        commonRules: (Rule & { author: YPUser; counts: RuleCounts })[]
       }
     >
   >('guild')
@@ -92,12 +97,148 @@
       })
     }
   }
+
+  let showAddDialog = false
+
+  const onAddRule = async (e: CustomEvent<{ id: string }>) => {
+    try {
+      showAddDialog = false
+      if (guild.commonRules.find((x) => x.id === e.detail.id))
+        return enqueueAlert({
+          title: '이미 추가된 규칙입니다',
+          severity: AlertSeverity.Error,
+          time: 5000,
+        })
+
+      const { data } = await getApollo().mutate<{
+        guild?: {
+          addRule?: Rule & { author: YPUser; counts: RuleCounts }
+        }
+      }>({
+        mutation: gql`
+          mutation AddRuleToChannel($guildId: String!, $ruleId: String!) {
+            guild(id: $guildId) {
+              addRule(id: $ruleId) {
+                id
+                name
+                description
+                counts {
+                  black
+                  white
+                  include
+                }
+                shareCode
+                sharingEnabled
+                author {
+                  avatar
+                  id
+                  tag
+                }
+              }
+            }
+          }
+        `,
+        variables: {
+          guildId: $page.params.id,
+          ruleId: e.detail.id,
+        },
+      })
+
+      if (data?.guild?.addRule) {
+        guildContext.update((x) => ({
+          ...x,
+          commonRules: [...guild.commonRules, data.guild!.addRule!],
+        }))
+      } else {
+        await Promise.reject()
+      }
+    } catch (e) {
+      console.error(e)
+      enqueueAlert({
+        title: '규칙 추가 실패',
+        description: '규칙 추가 중 문제가 발생했습니다.',
+        severity: AlertSeverity.Error,
+        time: 5000,
+      })
+    }
+  }
+
+  $: onRemoveRule = async (e: CustomEvent<{ id: string }>) => {
+    try {
+      if (!guild.commonRules.find((x) => x.id === e.detail.id)) return
+
+      const { data } = await getApollo().mutate<{
+        guild?: {
+          removeRule?: boolean
+        }
+      }>({
+        mutation: gql`
+          mutation AddRuleToChannel($guildId: String!, $ruleId: String!) {
+            guild(id: $guildId) {
+              removeRule(id: $ruleId)
+            }
+          }
+        `,
+        variables: {
+          guildId: $page.params.id,
+          ruleId: e.detail.id,
+        },
+      })
+
+      if (data?.guild?.removeRule) {
+        guildContext.update((x) => ({
+          ...x,
+          commonRules: guild.commonRules.filter((x) => x.id !== e.detail.id),
+        }))
+      } else {
+        await Promise.reject()
+      }
+    } catch (e) {
+      console.error(e)
+      enqueueAlert({
+        title: '규칙 제거 실패',
+        description: '규칙 제거 중 문제가 발생했습니다.',
+        severity: AlertSeverity.Error,
+        time: 5000,
+      })
+    }
+  }
 </script>
+
+{#if showAddDialog}
+  <div
+    class="fixed left-0 top-0 w-full h-full bg-slate-900 z-[9999]"
+    transition:fade
+  >
+    <RuleAddDialog
+      on:select={onAddRule}
+      on:close={() => (showAddDialog = false)}
+      excludedIds={guild.commonRules.map((x) => x.id)}
+    />
+  </div>
+{/if}
 
 <div class="text-2xl font-bold mt-2 flex items-center gap-4">
   <GuildIcon name={guild.name} icon={guild.icon} />
   <div>
     {guild.name}
+  </div>
+</div>
+
+<div class="mt-4">
+  <div class="text-3xl font-bold flex-grow">서버 공통 규칙</div>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-4 gap-4">
+    {#each guild.commonRules as rule (rule.id)}
+      <RuleSelectListItem on:select={onRemoveRule} {rule} />
+    {/each}
+    <div
+      on:click={() => (showAddDialog = true)}
+      class="flex justify-center items-center min-h-[60px] ring-1 transition-all cursor-pointer ring-white/20 hover:ring-blue-500 rounded-xl"
+    >
+      <div class="w-[28px] h-[28px]">
+        <FaPlus />
+      </div>
+    </div>
   </div>
 </div>
 

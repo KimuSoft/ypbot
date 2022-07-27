@@ -170,11 +170,15 @@ class CensorModule extends Extension {
         right join "Rule" r on el."ruleId" = r."id"
         where (
           ("ruleType" = 'Black' :: "RuleType" and "_Input" ~* "regex") or 
-          ("ruleType" = 'White' :: "RuleType" and not "_Input" ~* "regex") ) and exists 
+          ("ruleType" = 'White' :: "RuleType" and not "_Input" ~* "regex") ) and ((exists 
           (select from "__ruleOnChannel" where "A" = ${
             msg.channel.id
           } and "B" = "ruleId"
-        ) limit 1;`
+        )) or (
+          exists (select from "__ruleOnGuild" where "A" = ${
+            msg.guild.id
+          } and "B" = "ruleId")
+        )) limit 1;`
 
     if (!matches.length) return
     if (!msg.deletable) return

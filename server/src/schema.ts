@@ -18,6 +18,8 @@ export const typeDefs = gql`
 
     channels: [Channel!]!
 
+    commonRules: [Rule!]!
+
     alertChannel: Channel
   }
 
@@ -140,6 +142,9 @@ export const typeDefs = gql`
 
     resetAlertChannel: Boolean!
     setAlertChannel(id: String!): Boolean!
+
+    addRule(id: String!): Rule
+    removeRule(id: String!): Boolean
   }
 
   type Mutation {

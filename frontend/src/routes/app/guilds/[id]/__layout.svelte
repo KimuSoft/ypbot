@@ -43,6 +43,24 @@
                 name
               }
             }
+
+            commonRules {
+              id
+              name
+              description
+              counts {
+                black
+                white
+                include
+              }
+              shareCode
+              sharingEnabled
+              author {
+                avatar
+                id
+                tag
+              }
+            }
           }
         }
       `,

@@ -118,7 +118,7 @@
         await Promise.reject()
       }
     } catch (e) {
-      console.log(e)
+      console.error(e)
       enqueueAlert({
         title: '규칙 추가 실패',
         description: '규칙 추가 중 문제가 발생했습니다.',

@@ -13,7 +13,6 @@ export const getAlertChannel: Resolver<YPChannel | null, YPGuild> = async (
   const guild = await getGuild(ctx.user, parent.id)
 
   if (!guild) return null
-  console.log(guild.channels.map((x) => x.position))
 
   const g = await prisma.guild.findUnique({
     where: { id: parent.id },
