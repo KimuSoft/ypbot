@@ -24,6 +24,7 @@ import {
 } from "discord.js"
 import hangul from "hangul-js"
 import { prisma, RuleType } from "shared"
+import { YPClient } from "../structures/YPClient"
 
 class CensorModule extends Extension {
   @listener({ event: "messageUpdate" })
@@ -162,6 +163,11 @@ class CensorModule extends Extension {
         ),
       ],
     })
+  }
+
+  @listener({ event: "messageCreate" })
+  async dokdo(msg: Message) {
+    ;(this.commandClient as YPClient).dokdo.run(msg)
   }
 
   @listener({ event: "messageCreate" })
