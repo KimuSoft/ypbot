@@ -25,6 +25,13 @@
   import AlertContainer from '@/components/organisms/AlertContainer.svelte'
   import { fetchUser } from '@/utils/user'
   import { builtAt, commitId } from 'virtual:build-info'
+  import { afterNavigate } from '$app/navigation'
+
+  afterNavigate(({ from }) => {
+    if (from && from.pathname !== '/login') {
+      localStorage.lastPath = from.href
+    }
+  })
 
   let loadingPromise: ReturnType<typeof fetchInitialData> | null = null
 
