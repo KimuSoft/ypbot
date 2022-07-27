@@ -5,3 +5,4 @@ dist
 build
 data
 postgres-data
+yarn-error.log
