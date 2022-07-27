@@ -19,6 +19,8 @@ import {
   Interaction,
   Message,
   SelectMenuBuilder,
+  TextBasedChannel,
+  TextChannel,
 } from "discord.js"
 import hangul from "hangul-js"
 import { prisma, RuleType } from "shared"
@@ -279,13 +281,27 @@ class CensorModule extends Extension {
     // if(!channelData.length) return
     // const alertChannelId = channelData[0].alertChannelId
 
-    await msg.channel.send(
-      {
-        content: `${msg.author}님이 ${msg.channel}에서 \`${rule.ruleName}\` 규칙을 위반하셨습니다.`,
-        embeds: [alertEmbed],
+    // 해당 서버의 알림 채널 정보 불러옴
+    let alertChannel: TextBasedChannel = msg.channel
+
+    if (msg.guild) {
+      let alertChannelData = await prisma.guild.findUnique({
+        where: { id: msg.guild.id },
+        select: { alertGuildId: true },
+      })
+      if (alertChannelData || alertChannelData.alertChannelId) {
+        const _alertChannel = await msg.guild.channels.fetch(
+          alertChannelData.alertChannelId
+        )
+        if (_alertChannel && _alertChannel.isTextBased())
+          alertChannel = _alertChannel
       }
-      // codeBlock("diff", matches.map((x) => `- ${x.ruleName}`).join("\n"))
-    )
+    }
+
+    await alertChannel.send({
+      content: `${msg.author}님이 ${msg.channel}에서 \`${rule.ruleName}\` 규칙을 위반하셨습니다.`,
+      embeds: [alertEmbed],
+    })
   }
 }
 
