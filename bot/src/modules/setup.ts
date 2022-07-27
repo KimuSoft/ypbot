@@ -1,7 +1,6 @@
 import { applicationCommand, Extension } from "@pikokr/command.ts"
 import { ApplicationCommandType, ChatInputCommandInteraction } from "discord.js"
 import { prisma } from "shared"
-// @ts-ignore
 import officialBadWords from "../officialBadWords.json"
 
 class SetupModule extends Extension {
@@ -10,6 +9,7 @@ class SetupModule extends Extension {
     name: "공식태그재설치",
     description: "호애액",
     dmPermission: false,
+    guilds: (process.env.DEV_GUILD || "").split(":"),
   })
   async officialTagInstall(i: ChatInputCommandInteraction) {
     interface RuleElement {
