@@ -96,7 +96,7 @@ class CensorModule extends Extension {
 
     content += normalizedContent.slice(lastIndex)
 
-    if (content === normalizedContent) {
+    if (content === normalizedContent && rule.ruleType === "Black") {
       let newContent: string = ""
       const regexMatches2 = originalContent.matchAll(regex)
       for (const match of regexMatches2) {
