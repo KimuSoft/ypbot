@@ -19,6 +19,7 @@ import {
   Interaction,
   Message,
   SelectMenuBuilder,
+  TextBasedChannel,
 } from "discord.js"
 import hangul from "hangul-js"
 import { prisma, RuleType } from "shared"
@@ -137,6 +138,7 @@ class CensorModule extends Extension {
   async messageCreate(msg: Message) {
     if (msg.author.bot || msg.author.id === this.client.user?.id) return
     if (!msg.content) return
+    if (!msg.guild) return
 
     const originalContent = msg.content
       .normalize()
@@ -279,7 +281,17 @@ class CensorModule extends Extension {
     // if(!channelData.length) return
     // const alertChannelId = channelData[0].alertChannelId
 
-    await msg.channel.send(
+    const g = await prisma.guild.findUnique({
+      where: { id: msg.guild.id },
+      select: { alertChannelId: true },
+    })
+
+    const ch =
+      (msg.guild.channels.cache.get(
+        g?.alertChannelId as string
+      ) as TextBasedChannel) ?? msg.channel
+
+    await ch.send(
       {
         content: `${msg.author}님이 ${msg.channel}에서 \`${rule.ruleName}\` 규칙을 위반하셨습니다.`,
         embeds: [alertEmbed],
