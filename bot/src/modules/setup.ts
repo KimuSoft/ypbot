@@ -1,6 +1,6 @@
 import { applicationCommand, Extension } from "@pikokr/command.ts"
 import { ApplicationCommandType, ChatInputCommandInteraction } from "discord.js"
-import { prisma } from "shared"
+import { prisma, RuleType } from "shared"
 import _officialRules from "../officialRules.json"
 
 class SetupModule extends Extension {
@@ -30,16 +30,27 @@ class SetupModule extends Extension {
     const officialRules: Rule[] = _officialRules
 
     await prisma.rule.deleteMany({ where: { isOfficial: true } })
-    await prisma.rule.createMany({
-      data: officialRules.map((rule) => {
-        return {
+
+    for (const rule of officialRules) {
+      await prisma.rule.create({
+        data: {
           name: rule.name,
           description: rule.description,
           authorId: i.user.id,
-          elements: { create: rule.elements },
-        }
-      }),
-    })
+          isOfficial: true,
+          elements: {
+            createMany: {
+              skipDuplicates: true,
+              data: rule.elements.map((x) => ({
+                name: x.name,
+                regex: x.regex,
+                ruleType: x.ruleType as RuleType,
+              })),
+            },
+          },
+        },
+      })
+    }
 
     await i.editReply({
       content: "꺄앙",

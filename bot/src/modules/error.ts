@@ -13,9 +13,7 @@ class ErrorHandler extends Extension {
   async onCommandError(e: Error, i: CommandInteraction) {
     const eventId = captureException(e)
 
-    await (i.deferred || i.replied ? i.editReply : i.reply).bind(i)({
-      content: "",
-      components: [],
+    await (i.deferred || i.replied ? i.followUp : i.reply).bind(i)({
       embeds: [
         new EmbedBuilder()
           .setTitle("오류 발생")
