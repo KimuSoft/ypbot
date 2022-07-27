@@ -1,13 +1,84 @@
-import { Extension, listener } from "@pikokr/command.ts"
-import { codeBlock, Colors, EmbedBuilder, Message } from "discord.js"
+import {
+  applicationCommand,
+  Extension,
+  listener,
+  option,
+} from "@pikokr/command.ts"
+import {
+  ActionRowBuilder,
+  ApplicationCommandOptionType,
+  ApplicationCommandType,
+  Channel,
+  codeBlock,
+  Colors,
+  CommandInteraction,
+  EmbedBuilder,
+  Message,
+  SelectMenuBuilder,
+} from "discord.js"
 import hangul from "hangul-js"
 import { prisma, RuleType } from "shared"
-import chalk from "chalk"
 
 class CensorModule extends Extension {
   @listener({ event: "messageUpdate" })
   async messageUpdate(oldMsg: Message, newMsg: Message) {
     return this.messageCreate(newMsg)
+  }
+
+  @applicationCommand({
+    type: ApplicationCommandType.ChatInput,
+    name: "알림채널설정",
+    description: "알림채널을 설정합니다.",
+  })
+  async setNotificationChannel(
+    i: CommandInteraction,
+    @option({
+      type: ApplicationCommandOptionType.Channel,
+      name: "채널",
+      description: "알림 채널로 설정할 채널",
+    })
+    channel: Channel
+  ) {
+    if (!i.guildId) return
+    const ypGuild = prisma.guild.findUnique({ where: { id: i.guildId } })
+    if (!ypGuild)
+      await prisma.guild.create({
+        data: { id: i.guildId, alertChannelId: channel.id },
+      })
+    else
+      await prisma.guild.update({
+        where: { id: i.guildId },
+        data: { alertChannelId: channel.id },
+      })
+    await i.reply("수정 완료!")
+  }
+
+  @applicationCommand({
+    type: ApplicationCommandType.ChatInput,
+    name: "규칙",
+    description: "이 채널에 적용된 규칙 목록을 보여줍니다.",
+  })
+  async tags(i: CommandInteraction) {
+    const ypChannel = prisma.channel.findUnique({
+      where: { id: i.channelId },
+      include: { rules: true },
+    })
+    if (!ypChannel) return i.reply("위브에 등록되지 않은 채널입니다.")
+
+    const select = new SelectMenuBuilder()
+      .setOptions(
+        (ypChannel.rules as unknown as { name: string; id: string }[]).map(
+          (rule) => {
+            return { label: rule.name, value: rule.id }
+          }
+        )
+      )
+      .setPlaceholder("이 채널의 규칙")
+      .setCustomId("ruleList")
+
+    await i.reply({
+      components: [new ActionRowBuilder().setComponents(select) as any],
+    })
   }
 
   @listener({ event: "messageCreate" })
