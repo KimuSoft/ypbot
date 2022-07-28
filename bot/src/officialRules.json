@@ -5,7 +5,7 @@
     "elements" : [
       {
         "name" : "씨발",
-        "regex" : "([씨쉬쒸시씺씹앂싯싸싰스슈쓔ㅅへ人ㅆ⩘入八㉦㈆야∧취씌]|//^|//^ㅣ|ㅇㅑ|di|si|she|shi|se|tl|//^ㅣ)[ㄱ-ㅎㅏ-ㅣ0-9이으ㅣieㅡ-]*(밠|밟|밣|밡|뿔|불|발|뱔|팔|벌|뻘|빨|뿰|붤|봘|뷀|벨|벩|풜|밦|밟|밠|밢|㈅|㉥|ㅂ|8|ㅃ|var|bar|val|bal|vul|bul|bel|qkf)|[쉬쒸씨](바|ba)|[시씨띠][바파][아ㅏ]*[알랄]|^[시씨ㅅㅆ][바ㅂ㈓]$[씹쓉씝십쉽][할알팔발핧팛팙팘핤붤벨밸]|tlqk|ㅽ|18[놈넘]|^[시씨]바$",
+        "regex" : "([시쉬스슈싯싰씨씻씼쒸씺씹앂싸쓔취씌야ㅅへ人ㅆ⩘入八㉦㈆∧]|//^|//^ㅣ|ㅇㅑ|di|si|she|shi|shu|syu|shyu|ya|se|tl|//^ㅣ)[ㄱ-ㅎㅏ-ㅣ0-9이으ㅣieㅡ-]*(밠|밟|밣|밡|뿔|불|발|뱔|팔|벌|뻘|빨|뿰|붤|봘|뷀|벨|벩|풜|밦|밟|밠|밢|㈅|㉥|ㅂ|8|ㅃ|var|bar|val|bal|vul|bul|bel|qkf)|[쉬쒸씨](바|ba)|[시씨띠][바파][아ㅏ]*[알랄]|^[시씨ㅅㅆ][바ㅂ㈓]$[씹쓉씝십쉽][할알팔발핧팛팙팘핤붤벨밸]|tlqk|ㅽ|18[놈넘]|^[시씨]바$",
         "ruleType" : "Black"
       },
       {
@@ -17,6 +17,11 @@
       {
         "name" : "씨발 (숫자 우회)",
         "regex" : "10할?[련년]|십팔련|18[련년]",
+        "ruleType" : "Black"
+      },
+      {
+        "name" : "개씨발",
+        "regex" : "개시바",
         "ruleType" : "Black"
       },
       {
@@ -47,6 +52,11 @@
       {
         "name" : "개새끼",
         "regex": "(개|dog)[샠색샊섺섹]|rotorl|[개ㄱ][새ㅅ][끼ㄲ]",
+        "ruleType" : "Black"
+      },
+      {
+        "name" : "당신이 2016년을 말하려 한 거라 믿어요",
+        "regex" : "병신년[^에]",
         "ruleType" : "Black"
       },
       {
@@ -107,17 +117,7 @@
       },
       {
         "name": "당신의 어머니/아버지",
-        "regex": "[ㄴ니]?[애][미비]|[ㄴ느][금ㄱ][ㅁ마빠]?|늑음마|느개[미비]}|니[앰앱]이|^느엄$",
-        "ruleType": "Black"
-      },
-      {
-        "name": "Fuck",
-        "regex": "[뻐퍼]킹|fu[ckx]k|[뻑퍽뻒퍾뿪풖뿩풕][유규]|뻐큐|fuc$",
-        "ruleType": "Black"
-      },
-      {
-        "name": "What the fuck",
-        "regex": "wtf|dafuq",
+        "regex": "[ㄴ니]?[애][미비]|느[금ㄱ][ㅁ마빠]?|ㄴㄱㅁ|늑음마|느개[미비]}|니[앰앱]이|^느엄$",
         "ruleType": "Black"
       },
       {
@@ -192,12 +192,7 @@
       },
       {
         "name": "호로자식",
-        "regex": "호로자식",
-        "ruleType": "Black"
-      },
-      {
-        "name": "Damn",
-        "regex": "damn",
+        "regex": "호로(자식|새끼)|^호로$",
         "ruleType": "Black"
       },
       {
@@ -214,6 +209,46 @@
         "name": "호구",
         "regex": "호구[냐잖는가]",
         "ruleType": "Black"
+      },
+      {
+        "name": "Fuck",
+        "regex": "[뻐퍼]킹|fu[ckx]k|[뻑퍽뻒퍾뿪풖뿩풕][유규]|뻐큐|fuc$",
+        "ruleType": "Black"
+      },
+      {
+        "name": "What the Fuck",
+        "regex": "wtf|dafuq",
+        "ruleType": "Black"
+      },
+      {
+        "name": "Damn",
+        "regex": "damn",
+        "ruleType": "Black"
+      },
+      {
+        "name": "Abomination",
+        "regex": "abomination",
+        "ruleType": "Black"
+      },
+      {
+        "name": "All Coppers Are Bastards",
+        "regex": "acab|allcoppers?arebastards?",
+        "ruleType": "Black"
+      },
+      {
+        "name": "All Coppers Are Bastards",
+        "regex": "acab|allcoppers?arebastards?",
+        "ruleType": "Black"
+      },
+      {
+        "name": "Bastard",
+        "regex": "bastard",
+        "ruleType": "Black"
+      },
+      {
+        "name": "Bitch",
+        "regex": "bitch",
+        "ruleType": "Black"
       }
     ]
   },
@@ -223,7 +258,7 @@
     "elements": [
       {
         "name": "새끼",
-        "regex": "[쌔새세섀ㅅへ人쉐섺샊]ㅐ?(ㄲ|키|끼|ㄱㄱㅣ|ㄲㅣ|77ㅣ|귀)|[쉑쉨샠]|새꺄|색히",
+        "regex": "[새세섀쉐섺샊샛셋쉣쒯쒰쌔ㅅへ人]ㅐ?(ㄲ|키|끼|ㄱㄱㅣ|ㄲㅣ|77ㅣ|귀)|[쉑쉨샠]|새꺄|색히",
         "ruleType": "Black"
       },
       {
@@ -233,7 +268,7 @@
       },
       {
         "name": "좆같다",
-        "regex": "[ㅈ좆奀]같",
+        "regex": "[ㅈ좆奀]같[다네]?",
         "ruleType": "Black"
       },
       {
@@ -550,6 +585,16 @@
         "name": "쓰레기",
         "regex": "허접[쓰스][레래]기",
         "ruleType": "Black"
+      },
+      {
+        "name": "버러지",
+        "regex": "버러지|벌어지",
+        "ruleType": "Black"
+      },
+      {
+        "name": "A hell of a ~",
+        "regex": "ahellofa",
+        "ruleType": "Black"
       }
     ]
   },
@@ -559,12 +604,12 @@
     "elements": [
       {
         "name": "좆",
-        "regex": "[좆奀]",
+        "regex": "[좆奀]|[^a-zA-Z]jot[^a-zA-Z]",
         "ruleType": "Black"
       },
       {
         "name": "씹",
-        "regex": "[씹쓉][^어다]|^[씹쓉]$",
+        "regex": "[씹쓉][^으어다]|^[씹쓉]$",
         "ruleType": "Black"
       },
       {
@@ -594,7 +639,7 @@
       },
       {
         "name": "자지",
-        "regex": "(^|[^용혼남여])[쥬ㅈ자][지ㅈ]([^마]|$)|말자지",
+        "regex": "(^|[^용혼남여])[쥬ㅈ자][지ㅈ]([^마말]|$)|말자지",
         "ruleType": "Black"
       },
       {
@@ -669,7 +714,7 @@
       },
       {
         "name": "음탕한 손짓",
-        "regex": "\uD83D\uDC49\uD83D\uDC4C",
+        "regex": "\uD83D\uDC49\uD83D\uDC4C|\uD83D\uDC4C\uD83D\uDC49",
         "ruleType": "Black"
       },
       {
@@ -805,6 +850,11 @@
       {
         "name": "벗어",
         "regex": "벗어",
+        "ruleType": "Black"
+      },
+      {
+        "name": "이상한 의미를 가져버린 슬픈 숫자",
+        "regex": "^69$|^74$",
         "ruleType": "Black"
       }
     ]
@@ -1027,7 +1077,7 @@
       },
       {
         "name": "일간베스트",
-        "regex": "일베[충]?|일간[베배]스트",
+        "regex": "일베[충]?|일간[베배]스트|ㅇㅂㅊ|^ㅇㅂ[ㅅㄲㄱ]+$",
         "ruleType": "Black"
       },
       {
@@ -1097,7 +1147,7 @@
       },
       {
         "name": "노무현",
-        "regex": "노무현",
+        "regex": "노무현|노코리타",
         "ruleType": "Black"
       },
       {
@@ -1112,7 +1162,7 @@
       },
       {
         "name": "문재인",
-        "regex": "[문곰][졔쟤제재죄][인앙][^거가데]",
+        "regex": "[문곰x그][졔쟤제재죄][인앙][^거가데]|mc재[앙인]|문크예거|문코리타|문켓몬(스터)?|문노스|문두환|문대중|문통[은는이가]",
         "ruleType": "Black"
       },
       {
@@ -1127,7 +1177,7 @@
       },
       {
         "name": "이재명",
-        "regex": "[찢찟이리][재제]명",
+        "regex": "[찢찟이리][재제]명|[찢찟]코리타",
         "ruleType": "Black"
       },
       {
@@ -1137,7 +1187,7 @@
       },
       {
         "name": "좌파",
-        "regex": "좌[파빨]",
+        "regex": "좌[파빨좀]",
         "ruleType": "Black"
       },
       {
@@ -1232,12 +1282,32 @@
       },
       {
         "name": "더불어민주당",
-        "regex": "민주당",
+        "regex": "민주당|더불어(공산당|만진당)",
+        "ruleType": "Black"
+      },
+      {
+        "name": "자유한국당",
+        "regex": "자유한국당|자한당",
         "ruleType": "Black"
       },
       {
         "name": "국민의힘",
-        "regex": "국민의힘|국힘",
+        "regex": "국민의[힘짐]|국힘",
+        "ruleType": "Black"
+      },
+      {
+        "name": "정의당",
+        "regex": "정의당",
+        "ruleType": "Black"
+      },
+      {
+        "name": "기본소득당",
+        "regex": "기본소득당",
+        "ruleType": "Black"
+      },
+      {
+        "name": "시대전환",
+        "regex": "시대전환",
         "ruleType": "Black"
       },
       {
@@ -1253,6 +1323,41 @@
       {
         "name": "혐오의 의미가 담겨버린 슬픈 손모양",
         "regex": "\uD83E\uDD0F",
+        "ruleType": "Black"
+      },
+      {
+        "name": "토착왜구",
+        "regex": "토착왜구",
+        "ruleType": "Black"
+      },
+      {
+        "name": "국가혁명당",
+        "regex": "국가혁명당",
+        "ruleType": "Black"
+      },
+      {
+        "name": "여성의당",
+        "regex": "여성의당",
+        "ruleType": "Black"
+      },
+      {
+        "name": "조선로동당",
+        "regex": "조선[노로]동당",
+        "ruleType": "Black"
+      },
+      {
+        "name": "조선사회민주당",
+        "regex": "조선사회민주당",
+        "ruleType": "Black"
+      },
+      {
+        "name": "천도교청우당",
+        "regex": "천도교청우당",
+        "ruleType": "Black"
+      },
+      {
+        "name": "재일본조선인총련합회",
+        "regex": "재일본?조선인총[련연]합회|조선총[령연]",
         "ruleType": "Black"
       }
     ]
