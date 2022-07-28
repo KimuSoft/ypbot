@@ -149,7 +149,7 @@ class CensorModule extends Extension {
         })
         .setTimestamp()
 
-      alertEmbed.setDescription(codeBlock("ansi", content))
+      alertEmbed.setDescription(codeBlock("ansi", content.replace(/`/g, "")))
       alertEmbed
         .setFooter({
           text: `\`${rule.name}\`을(를) ${
