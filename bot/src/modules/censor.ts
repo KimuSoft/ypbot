@@ -201,12 +201,13 @@ class CensorModule extends Extension {
   async messageCreate(msg: Message) {
     try {
       if (msg.author.bot || msg.author.id === this.client.user?.id) return
-      if (!msg.content) return
       if (!msg.guild) return
 
       const originalContent = msg.content
         .normalize()
         .replace(/[!?@#$%^&*():;+-=~{}<>_\[\]|\\"',.\/`₩\s\t]/g, "")
+
+      if (!originalContent) return
 
       const matches = await prisma.$queryRawUnsafe<
         {
@@ -335,6 +336,7 @@ class CensorModule extends Extension {
         embeds: [alertEmbed],
       })
     } catch (e) {
+      console.error(e)
       captureException(e)
     }
   }

@@ -22,7 +22,7 @@ _second as (
       from _first as f
       where f."id" = r."id"
     )
-    or exists (
+    and exists (
       select
       from "Rule" as r2
       where exists (
@@ -32,6 +32,9 @@ _second as (
             and _ref."B" = r2."id"
         )
     )
+  union all
+  select *
+  from _first
 ),
 _elements as (
   select "id",
@@ -39,6 +42,7 @@ _elements as (
     "ruleType",
     "regex",
     "separate",
+    "ruleId",
     (
       case
         "separate"
@@ -53,12 +57,14 @@ _elements as (
       where _s."id" = r."ruleId"
     )
 )
-select "id",
-  "name",
-  "ruleType",
-  "regex",
-  "separate"
+select r."id",
+  r."name",
+  r."ruleType",
+  r."regex",
+  r."separate",
+  rule."name" as "ruleName"
 from _elements as r
+  right join "Rule" rule on r."ruleId" = rule."id"
 where (
     (
       r."ruleType" = 'White'::"RuleType"
