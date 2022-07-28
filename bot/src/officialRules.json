@@ -5,7 +5,7 @@
     "elements" : [
       {
         "name" : "씨발",
-        "regex" : "([씨쉬쒸시씺씹앂싯싸싰스슈쓔ㅅへ人ㅆ⩘入八㉦㈆야∧취씌]|//^|//^ㅣ|ㅇㅑ|di|si|she|shi|se|tl|//^ㅣ).?[0-9이으ㅣieㅡ-]*(뿔|불|발|뱔|팔|벌|뻘|빨|뿰|붤|봘|뷀|벨|벩|풜|밦|밟|밠|밢|㈅|㉥|ㅂ|8|ㅃ|var|bar|val|bal|vul|bul|bel|qkf)|[쉬쒸씨](바|ba)|[시씨띠][바파][아ㅏ]*[알랄]|^[시씨ㅅㅆ][바ㅂ㈓]$[씹쓉씝십쉽][할알팔발핧팛팙팘핤붤벨밸]|tlqk|ㅽ|18[놈넘]|^[시씨]바$",
+        "regex" : "([씨쉬쒸시씺씹앂싯싸싰스슈쓔ㅅへ人ㅆ⩘入八㉦㈆야∧취씌]|//^|//^ㅣ|ㅇㅑ|di|si|she|shi|se|tl|//^ㅣ).?[0-9이으ㅣieㅡ-]*(밠|밟|밣|밡|뿔|불|발|뱔|팔|벌|뻘|빨|뿰|붤|봘|뷀|벨|벩|풜|밦|밟|밠|밢|㈅|㉥|ㅂ|8|ㅃ|var|bar|val|bal|vul|bul|bel|qkf)|[쉬쒸씨](바|ba)|[시씨띠][바파][아ㅏ]*[알랄]|^[시씨ㅅㅆ][바ㅂ㈓]$[씹쓉씝십쉽][할알팔발핧팛팙팘핤붤벨밸]|tlqk|ㅽ|18[놈넘]|^[시씨]바$",
         "ruleType" : "Black"
       },
       {
@@ -38,6 +38,12 @@
         "name" : "병신",
         "regex" : "[병ㅂ뼝삉㈅븽빙븅뷍뽕빵뽱퓽뿽](쉰|신|진|㈆|ㅅ|へ|人|shin|sin)|ㅄ|qudtls",
         "ruleType" : "Black"
+      },
+      {
+        "name" : "병신 (초성우회)",
+        "regex" : "ㅂㅕㅇㅅㅣㄴ",
+        "ruleType" : "Black",
+        "separate": true
       },
       {
         "name" : "간나새끼",
@@ -162,7 +168,7 @@
     ]
   },
   {
-    "name": "거친 표현 금지",
+    "name": "나쁜 말 금지",
     "description": "거친 말과 욕설의 차이요? 그런 게 있을 리가 없잖아요!",
     "elements": [
       {
@@ -384,6 +390,36 @@
         "name": "무뇌아",
         "regex": "무뇌아",
         "ruleType": "Black"
+      },
+      {
+        "name": "ㅅㄱ",
+        "regex": "^ㅅㄱ$",
+        "ruleType": "Black"
+      },
+      {
+        "name": "살인",
+        "regex": "[^화]살인",
+        "ruleType": "Black"
+      },
+      {
+        "name": "자살",
+        "regex": "^자살$",
+        "ruleType": "Black"
+      },
+      {
+        "name": "자해하다",
+        "regex": "자해[도할했]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "목매달다",
+        "regex": "목을?매달",
+        "ruleType": "Black"
+      },
+      {
+        "name": "돌아이",
+        "regex": "돌아이|[또도]라이",
+        "ruleType": "Black"
       }
     ]
   },
@@ -590,6 +626,41 @@
         "name": "꼴리다",
         "regex": "꼴[리려린][요다네]",
         "ruleType": "Black"
+      },
+      {
+        "name": "펠라치오",
+        "regex": "펠라",
+        "ruleType": "Black"
+      },
+      {
+        "name": "헤로인",
+        "regex": "헤로인",
+        "ruleType": "Black"
+      },
+      {
+        "name": "필로폰",
+        "regex": "필로폰|히로[퐁뽕]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "LSD",
+        "regex": "lsd[은는이가]|^lsd$",
+        "ruleType": "Black"
+      },
+      {
+        "name": "펜타닐",
+        "regex": "[팬펜]타닐",
+        "ruleType": "Black"
+      },
+      {
+        "name": "Sex (이모지 회피)",
+        "regex": "\uD83C\uDDF8\uD83C\uDDEA\uD83C\uDDFD",
+        "ruleType": "Black"
+      },
+      {
+        "name": "3단 합체",
+        "regex": "[3-9]단합체",
+        "ruleType": "Black"
       }
     ]
   },
@@ -711,6 +782,16 @@
       {
         "name": "의미심장한 이모지",
         "regex": "\uD83D\uDD1E",
+        "ruleType": "Black"
+      },
+      {
+        "name": "맘마통",
+        "regex": "맘마통",
+        "ruleType": "Black"
+      },
+      {
+        "name": "보빨",
+        "regex": "보빨",
         "ruleType": "Black"
       }
     ]
@@ -876,7 +957,7 @@
       },
       {
         "name": "좌파",
-        "regex": "좌파",
+        "regex": "좌[파빨]",
         "ruleType": "Black"
       },
       {
@@ -982,6 +1063,11 @@
       {
         "name": "새누리당",
         "regex": "새누리당",
+        "ruleType": "Black"
+      },
+      {
+        "name": "나치",
+        "regex": "나치[은는이가]|네오나치",
         "ruleType": "Black"
       }
     ]
