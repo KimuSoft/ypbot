@@ -62,11 +62,11 @@ from _elements as r
 where (
     (
       r."ruleType" = 'White'::"RuleType"
-      and r."regex" ~* "_Keyword"
+      and not r."regex" ~* "_Keyword"
     )
     or (
       r."ruleType" = 'Black'::"RuleType"
-      and not r."regex" ~* "_Keyword"
+      and r."regex" ~* "_Keyword"
     )
   )
 limit 1
