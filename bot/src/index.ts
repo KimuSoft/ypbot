@@ -38,11 +38,13 @@ export type Channel = {
   position: number
 }
 
-const rpc = trpc.router().query("guilds", {
-  input: z.array(z.string()),
-  resolve: async ({ input }) => {
-    const result = await manager.broadcastEval(
-      `const guilds = ${JSON.stringify(input)};Promise.all(
+const rpc = trpc
+  .router()
+  .query("guilds", {
+    input: z.array(z.string()),
+    resolve: async ({ input }) => {
+      const result = await manager.broadcastEval(
+        `const guilds = ${JSON.stringify(input)};Promise.all(
         guilds
           .map((x) => cts.discord.guilds.cache.get(x))
           .filter((x) => x)
@@ -61,12 +63,12 @@ const rpc = trpc.router().query("guilds", {
                 ChannelType.GuildPublicThread,
                 ChannelType.GuildPrivateThread,
               ])}.includes(x.type)).filter(x => ${JSON.stringify([
-        ChannelType.GuildCategory,
-        ChannelType.GuildForum,
-        ChannelType.GuildNews,
-        ChannelType.GuildText,
-        ChannelType.GuildVoice,
-      ])}.includes(x.type)).map(
+          ChannelType.GuildCategory,
+          ChannelType.GuildForum,
+          ChannelType.GuildNews,
+          ChannelType.GuildText,
+          ChannelType.GuildVoice,
+        ])}.includes(x.type)).map(
                 (x) => ({
                       id: x.id,
                       name: x.name,
@@ -81,11 +83,23 @@ const rpc = trpc.router().query("guilds", {
             }
           })
       )`
-    )
+      )
 
-    return result.reduce((a, b) => [...a, ...b]) as Guild[]
-  },
-})
+      return result.reduce((a, b) => [...a, ...b]) as Guild[]
+    },
+  })
+  .query("stats", {
+    resolve: async () => {
+      return {
+        guilds: (await manager.fetchClientValues("guilds.cache.size")).reduce(
+          (a, b) => a + b
+        ),
+        duplicate_users: (
+          await manager.fetchClientValues("users.cache.size")
+        ).reduce((a, b) => a + b),
+      }
+    },
+  })
 
 export type RPC = typeof rpc
 

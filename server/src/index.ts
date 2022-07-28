@@ -20,6 +20,8 @@ import { prisma, User } from "shared"
 import jwt from "jsonwebtoken"
 import { jwtToken } from "./utils"
 import express from "express"
+import cluster from "cluster"
+import { rpc } from "./trpc"
 
 const server = new ApolloServer({
   typeDefs,
@@ -50,6 +52,26 @@ const server = new ApolloServer({
 const app = express()
 
 app.use(express.static(path.join(__dirname, "../static")))
+
+app.get("/metrics", async (req, res) => {
+  const memoryUsage = Object.fromEntries(
+    Object.entries(process.memoryUsage()).map(([k, v]) => [
+      `server_memory_${k}`,
+      v,
+    ])
+  )
+
+  const metrics: Record<string, any> = {
+    ...(await rpc.query("stats")),
+    ...memoryUsage,
+  }
+
+  res.send(
+    Object.entries(metrics)
+      .map(([k, v]) => `ypbot_${k} ${v}`)
+      .join("\n")
+  )
+})
 
 const run = async () => {
   await server.start()
