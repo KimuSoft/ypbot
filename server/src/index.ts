@@ -57,7 +57,7 @@ const app = express()
 app.use(express.static(path.join(__dirname, "../static")))
 
 app.get("/metrics", async (req, res) => {
-  if (req.headers.authorization !== process.env.METRICS_TOKEN)
+  if (req.headers.authorization !== `Bearer ${process.env.METRICS_TOKEN}`)
     return res.sendStatus(401)
   try {
     const memoryUsage = Object.fromEntries(
