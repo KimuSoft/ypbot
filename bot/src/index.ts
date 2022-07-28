@@ -95,7 +95,9 @@ const rpc = trpc
           (a, b) => a + b
         ),
         duplicate_users: (
-          await manager.fetchClientValues("users.cache.size")
+          await manager.broadcastEval(
+            "cts.discord.guilds.cache.map(x=>x.memberCount).reduce((a,b)=>a+b)"
+          )
         ).reduce((a, b) => a + b),
       }
     },

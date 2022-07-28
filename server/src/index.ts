@@ -23,6 +23,9 @@ import express from "express"
 import cluster from "cluster"
 import { rpc } from "./trpc"
 
+process.on("uncaughtException", console.error)
+process.on("unhandledRejection", console.error)
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
@@ -54,23 +57,27 @@ const app = express()
 app.use(express.static(path.join(__dirname, "../static")))
 
 app.get("/metrics", async (req, res) => {
-  const memoryUsage = Object.fromEntries(
-    Object.entries(process.memoryUsage()).map(([k, v]) => [
-      `server_memory_${k}`,
-      v,
-    ])
-  )
+  try {
+    const memoryUsage = Object.fromEntries(
+      Object.entries(process.memoryUsage()).map(([k, v]) => [
+        `server_memory_${k}`,
+        v,
+      ])
+    )
 
-  const metrics: Record<string, any> = {
-    ...(await rpc.query("stats")),
-    ...memoryUsage,
+    const metrics: Record<string, any> = {
+      ...(await rpc.query("stats")),
+      ...memoryUsage,
+    }
+
+    res.send(
+      Object.entries(metrics)
+        .map(([k, v]) => `ypbot_${k} ${v}`)
+        .join("\n")
+    )
+  } catch (e) {
+    return res.send("")
   }
-
-  res.send(
-    Object.entries(metrics)
-      .map(([k, v]) => `ypbot_${k} ${v}`)
-      .join("\n")
-  )
 })
 
 const run = async () => {
