@@ -586,6 +586,11 @@
         "regex": "암컷타락|암타",
         "ruleType": "Black"
       },
+      {
+        "name": "꼴리다",
+        "regex": "꼴[리려린][요다네]",
+        "ruleType": "Black"
+      }
     ]
   },
   {
