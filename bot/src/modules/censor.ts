@@ -112,8 +112,14 @@ class CensorModule extends Extension {
     dmPermission: false,
   })
   async tags(i: ChatInputCommandInteraction) {
+    let channel = i.channel
+    if (!channel) return
+    if (channel.isThread()) channel = channel.parent
+    if (!channel) return
+    if (channel.isDMBased()) return i.reply("DM 안 받아요")
+
     const ypChannel = await prisma.channel.findUnique({
-      where: { id: i.channelId },
+      where: { id: channel.id },
       include: { rules: true },
     })
 
@@ -138,10 +144,11 @@ class CensorModule extends Extension {
             label: rule.name,
             description: rule.description,
             value: rule.id,
+            emoji: rule.isOfficial ? "📕" : "📙",
           }
         })
       )
-      .setPlaceholder("이 채널의 규칙")
+      .setPlaceholder(`⚖️ ${channel.name} 채널의 규칙`)
       .setCustomId("ruleList")
 
     await i.reply({
