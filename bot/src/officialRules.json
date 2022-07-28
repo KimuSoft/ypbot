@@ -5,7 +5,7 @@
     "elements" : [
       {
         "name" : "씨발",
-        "regex" : "([씨쉬쒸시씺씹앂싯싸싰스ㅅへ人ㅆ⩘入八㉦㈆야∧취씌]|//^|//^ㅣ|ㅇㅑ|di|si|she|shi|se|tl|//^ㅣ).?[0-9이으ㅣieㅡ-]*(발|뱔|팔|벌|뻘|빨|뿰|붤|봘|뷀|벨|벩|풜|밦|밟|밠|밢|㈅|㉥|ㅂ|8|ㅃ|var|bar|val|bal|vul|bul|bel|qkf)|[쉬쒸씨](바|ba)|[시씨띠][바파][아ㅏ]*[알랄]|^[시씨ㅅㅆ][바ㅂ㈓]$[씹쓉씝십쉽][할알팔발핧팛팙팘핤붤벨밸]|tlqk|ㅽ|18[놈넘]",
+        "regex" : "([씨쉬쒸시씺씹앂싯싸싰스ㅅへ人ㅆ⩘入八㉦㈆야∧취씌]|//^|//^ㅣ|ㅇㅑ|di|si|she|shi|se|tl|//^ㅣ).?[0-9이으ㅣieㅡ-]*(뿔|불|발|뱔|팔|벌|뻘|빨|뿰|붤|봘|뷀|벨|벩|풜|밦|밟|밠|밢|㈅|㉥|ㅂ|8|ㅃ|var|bar|val|bal|vul|bul|bel|qkf)|[쉬쒸씨](바|ba)|[시씨띠][바파][아ㅏ]*[알랄]|^[시씨ㅅㅆ][바ㅂ㈓]$[씹쓉씝십쉽][할알팔발핧팛팙팘핤붤벨밸]|tlqk|ㅽ|18[놈넘]|^[시씨]바$",
         "ruleType" : "Black"
       },
       {
@@ -13,6 +13,11 @@
         "regex" : "[ㅅㅆㅉ]ㅣㅂㅏㄹ",
         "ruleType" : "Black",
         "separate": true
+      },
+      {
+        "name": "시발년",
+        "regex": "시발련|[십씹쓉쉽]련",
+        "ruleType": "Black"
       },
       {
         "name" : "씨부럴",
@@ -26,7 +31,7 @@
       },
       {
         "name" : "개새끼",
-        "regex": "(개|dog)[샠색샊섺섹]|rotorl",
+        "regex": "(개|dog)[샠색샊섺섹]|rotorl|[개ㄱ][새ㅅ][끼ㄲ]",
         "ruleType" : "Black"
       },
       {
@@ -66,12 +71,12 @@
       },
       {
         "name": "당신의 어머니/아버지",
-        "regex": "[ㄴ니]?[애][미비]|[ㄴ느][금ㄱ][ㅁ마빠]?|늑음마|느개[미비]",
+        "regex": "[ㄴ니]?[애][미비]|[ㄴ느][금ㄱ][ㅁ마빠]?|늑음마|느개[미비]}|니[앰앱]이|^느엄$",
         "ruleType": "Black"
       },
       {
         "name": "Fuck",
-        "regex": "[뻐퍼]킹|fuck|[뻑퍽]유|뻐큐",
+        "regex": "[뻐퍼]킹|fu[ckx]k|[뻑퍽뻒퍾뿪풖뿩풕][유규]|뻐큐|fuc$",
         "ruleType": "Black"
       },
       {
@@ -116,7 +121,7 @@
       },
       {
         "name": "좆까",
-        "regex": "[좆ㅈ][까ㄲ]|丕刀卜|^조까$",
+        "regex": "[좆ㅈ][까ㄲ]|丕刀卜|^[조ㅈ][까ㄲ]$",
         "ruleType": "Black"
       },
       {
@@ -247,7 +252,7 @@
       },
       {
         "name": "애미",
-        "regex": "^응?.?애[미비]$",
+        "regex": "^응?.?애[미비]$|^[에애][미비]$|^[엠앰]이",
         "ruleType": "Black"
       },
       {
@@ -317,7 +322,7 @@
       },
       {
         "name": "좆밥",
-        "regex": "[좆ㅈ]밥",
+        "regex": "[좆좃죶죳ㅈ]밥",
         "ruleType": "Black"
       },
       {
@@ -332,7 +337,7 @@
       },
       {
         "name": "바보",
-        "regex": "바보",
+        "regex": "바보|ㅂr보",
         "ruleType": "Black"
       },
       {
@@ -369,6 +374,16 @@
         "name": "젠장",
         "regex": "[줸쥔쥉젠]장",
         "ruleType": "Black"
+      },
+      {
+        "name": "저능아",
+        "regex": "저능아",
+        "ruleType": "Black"
+      },
+      {
+        "name": "무뇌아",
+        "regex": "무뇌아",
+        "ruleType": "Black"
       }
     ]
   },
@@ -378,12 +393,12 @@
     "elements": [
       {
         "name": "좆",
-        "regex": "좆奀",
+        "regex": "[좆奀]",
         "ruleType": "Black"
       },
       {
         "name": "씹",
-        "regex": "[씹쓉][^어다]",
+        "regex": "[씹쓉][^어다]|^[씹쓉]$",
         "ruleType": "Black"
       },
       {
@@ -418,7 +433,7 @@
       },
       {
         "name": "보지",
-        "regex": "(^|[^나바])[ㅂ뷰보][ㅈ지]([^마않]|$)",
+        "regex": "(^|[^나바])[ㅂ뷰보][ㅈ지]([^마않]|$)|봊",
         "ruleType": "Black"
       },
       {
@@ -433,17 +448,32 @@
       },
       {
         "name": "Hitomi.la",
-        "regex": "hitomi|[히꺼]토미",
+        "regex": "hitomi|[히꺼][토또]미",
+        "ruleType": "Black"
+      },
+      {
+        "name": "hiyobi.me",
+        "regex": "hiyobi|히요비",
+        "ruleType": "Black"
+      },
+      {
+        "name": "Pornhub",
+        "regex": "pornhub|포르노허브|폰허브|폰헙",
         "ruleType": "Black"
       },
       {
         "name": "섹스",
-        "regex": "^(?!검색스).*[ㅅ人へ색쉑섹섺샊셲쒝쒞섁쎅쎾쎽쌕섻셐샠솈섘][스수ㅅへ人쓰쑤쓔]|[섻쉓]",
+        "regex": "^(?!검색스).*[ㅅ人へ색쉑섹섺샊셲쒝쒞섁쎅쎾쎽쌕섻셐샠솈섘짹쨱쨲][스수ㅅへ人쓰쑤쓔]|[섻쉓]|sex",
         "ruleType": "Black"
       },
       {
         "name": "자위행위",
-        "regex": "자위|딸딸이|딸{2,}",
+        "regex": "자위|딸딸이|딸{2,}|딸치기",
+        "ruleType": "Black"
+      },
+      {
+        "name": "발기하다",
+        "regex": "^발기$|발기[하했할한]",
         "ruleType": "Black"
       },
       {
@@ -462,6 +492,11 @@
         "ruleType": "Black"
       },
       {
+        "name": "붕탁",
+        "regex": "[붕븅][탁딱]",
+        "ruleType": "Black"
+      },
+      {
         "name": "음탕한 손짓",
         "regex": "\uD83D\uDC49\uD83D\uDC4C",
         "ruleType": "Black"
@@ -469,6 +504,56 @@
       {
         "name": "스섹",
         "regex": "[쑤쓔쓰스][색쉑섹섺샊셲쒝쒞섁쎅쎾쎽쌕]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "가슴",
+        "regex": "가슴|슴가",
+        "ruleType": "Black"
+      },
+      {
+        "name": "바이브레이터",
+        "regex": "바이브레이터",
+        "ruleType": "Black"
+      },
+      {
+        "name": "넣어줘",
+        "regex": "넣어줘",
+        "ruleType": "Black"
+      },
+      {
+        "name": "박다",
+        "regex": "박아[줘줄]|박을[게까]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "떡치다",
+        "regex": "떡[치칠][다래자]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "성교",
+        "regex": "성교",
+        "ruleType": "Black"
+      },
+      {
+        "name": "항문",
+        "regex": "항문",
+        "ruleType": "Black"
+      },
+      {
+        "name": "정액",
+        "regex": "정액[^제]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "귀두",
+        "regex": "[귀커]두",
+        "ruleType": "Black"
+      },
+      {
+        "name": "아헤가오",
+        "regex": "아헤가오",
         "ruleType": "Black"
       }
     ]
@@ -549,23 +634,43 @@
         "ruleType": "Black"
       },
       {
-        "name": "",
+        "name": "ㅗㅜㅑ",
         "regex": "ㅗㅜㅑ",
         "ruleType": "Black"
       },
       {
-        "name": "",
+        "name": "퍄 ('ㅗㅜㅑ'의 회피 표현)",
         "regex": "퍄",
         "ruleType": "Black"
       },
       {
-        "name": "",
+        "name": "어딜 그렇게 급하게 가세요",
         "regex": "가버[렷려렸]",
         "ruleType": "Black"
       },
       {
-        "name": "",
+        "name": "할짝",
         "regex": "[할핥핡햘햝햙ㅎ][ㅉ짝쨕작착쟉쨝]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "헤으응",
+        "regex": "헤[으ㅡ]*응",
+        "ruleType": "Black"
+      },
+      {
+        "name": "이상한 소리 모음집",
+        "regex": "뷰릇|푸[슈슛]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "엉덩이",
+        "regex": "[엉응][덩딩]이|응디",
+        "ruleType": "Black"
+      },
+      {
+        "name": "헨타이",
+        "regex": "헨타이",
         "ruleType": "Black"
       }
     ]
@@ -582,6 +687,11 @@
       {
         "name": "노무 (노무현 대통령 비하발언)",
         "regex": "노무[^자]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "MC무현 (노무현 대통령 비하발언)",
+        "regex": "mc무현",
         "ruleType": "Black"
       },
       {
@@ -605,8 +715,8 @@
         "ruleType": "Black"
       },
       {
-        "name": "일베",
-        "regex": "일베[충]?",
+        "name": "일간베스트",
+        "regex": "일베[충]?|일간[베배]스트",
         "ruleType": "Black"
       },
       {
@@ -622,6 +732,136 @@
       {
         "name": "노짱",
         "regex": "노[쨩짱쟝]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "이승만",
+        "regex": "이승만|승만이",
+        "ruleType": "Black"
+      },
+      {
+        "name": "윤보선",
+        "regex": "윤보선",
+        "ruleType": "Black"
+      },
+      {
+        "name": "박정희",
+        "regex": "박정희",
+        "ruleType": "Black"
+      },
+      {
+        "name": "최규하",
+        "regex": "최규하",
+        "ruleType": "Black"
+      },
+      {
+        "name": "전두환",
+        "regex": "전두환",
+        "ruleType": "Black"
+      },
+      {
+        "name": "노태우",
+        "regex": "노태우",
+        "ruleType": "Black"
+      },
+      {
+        "name": "김영삼",
+        "regex": "김[영0][삼3]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "김대중",
+        "regex": "김대중",
+        "ruleType": "Black"
+      },
+      {
+        "name": "노무현",
+        "regex": "노무현",
+        "ruleType": "Black"
+      },
+      {
+        "name": "이명박",
+        "regex": "이명박|^mb[은는이가]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "박근혜",
+        "regex": "박[근ㄹ]혜|박그네",
+        "ruleType": "Black"
+      },
+      {
+        "name": "문재인",
+        "regex": "문[재죄][인앙]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "윤석열",
+        "regex": "윤석[열렬]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "이재명",
+        "regex": "[이찢]재명",
+        "ruleType": "Black"
+      },
+      {
+        "name": "탄핵",
+        "regex": "탄핵",
+        "ruleType": "Black"
+      },
+      {
+        "name": "히틀러",
+        "regex": "히틀러|아돌프|adolfhitler",
+        "ruleType": "Black"
+      },
+      {
+        "name": "욱일기",
+        "regex": "욱일(승천)?기",
+        "ruleType": "Black"
+      },
+      {
+        "name": "허경영",
+        "regex": "허경영",
+        "ruleType": "Black"
+      },
+      {
+        "name": "심상정",
+        "regex": "심상정",
+        "ruleType": "Black"
+      },
+      {
+        "name": "자위대",
+        "regex": "자위대",
+        "ruleType": "Black"
+      },
+      {
+        "name": "하켄크로이츠",
+        "regex": "하켄크로이츠",
+        "ruleType": "Black"
+      },
+      {
+        "name": "북쪽에 있는 그 사람들",
+        "regex": "김일성|김정[일은]|김여정",
+        "ruleType": "Black"
+      },
+      {
+        "name": "신천지",
+        "regex": "신천지",
+        "ruleType": "Black"
+      },
+      {
+        "name": "빨갱이",
+        "regex": "빨갱이",
+        "ruleType": "Black"
+      },
+      {
+        "name": "종북",
+        "regex": "종북",
+        "ruleType": "Black"
+      },
+      {
+        "name": "시진핑",
+        "regex": "시진핑+",
         "ruleType": "Black"
       }
     ]
