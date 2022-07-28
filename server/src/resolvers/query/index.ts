@@ -20,7 +20,7 @@ export const queryResolvers = {
       }&redirect_uri=${encodeURIComponent(
         process.env.DISCORD_REDIRECT_URI!
       )}&scope=${encodeURIComponent(
-        "identify"
+        "identify guilds"
       )}&response_type=code`) as Resolver<string>,
     inviteUrl: ((parent, params) =>
       `https://discord.com/api/oauth2/authorize?client_id=${
