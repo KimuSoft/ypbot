@@ -15,6 +15,11 @@
         "separate": true
       },
       {
+        "name" : "씨발 (숫자 우회)",
+        "regex" : "10할?[련년]|십팔련|18[련년]",
+        "ruleType" : "Black"
+      },
+      {
         "name": "시발년",
         "regex": "시발련|[십씹쓉쉽]련",
         "ruleType": "Black"
@@ -22,6 +27,16 @@
       {
         "name" : "씨부럴",
         "regex": "[씨쉬쒸시스ㅅへ人야c][이으ㅣ]*[브부ㅂ][ㄹ럴]",
+        "ruleType" : "Black"
+      },
+      {
+        "name" : "머저리",
+        "regex": "머저리",
+        "ruleType" : "Black"
+      },
+      {
+        "name" : "기분 나쁜 X의 반복",
+        "regex": "[#x]{3,}|야이[#x]{2,}",
         "ruleType" : "Black"
       },
       {
@@ -40,6 +55,11 @@
         "ruleType" : "Black"
       },
       {
+        "name" : "병신 (우회)",
+        "regex" : "벼어*ㅓ*엉신|뷰우*ㅜ*웅신",
+        "ruleType" : "Black"
+      },
+      {
         "name" : "병신 (초성우회)",
         "regex" : "ㅂㅕㅇㅅㅣㄴ",
         "ruleType" : "Black",
@@ -51,8 +71,18 @@
         "ruleType" : "Black"
       },
       {
+        "name" : "거지",
+        "regex": "거지냐|거지새끼|거지[놈년]",
+        "ruleType" : "Black"
+      },
+      {
         "name": "창년",
         "regex": "창[녀년]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "~년",
+        "regex": "(걸레|벌레|쓰레기)년",
         "ruleType": "Black"
       },
       {
@@ -102,12 +132,17 @@
       },
       {
         "name": "뒈지다",
-        "regex": "^(?!ㄷㄷㄷㅈ).*[뒤ㄷ][져진ㅈ질]|뒈[져지]",
+        "regex": "^(?!ㄷㄷㄷㅈ).*[뒤디ㄷ][져진ㅈ질졌]|뒈[져지]",
         "ruleType": "Black"
       },
       {
         "name": "뒈질?",
         "regex": "^ㄷㅈ$",
+        "ruleType": "Black"
+      },
+      {
+        "name": "질내사정",
+        "regex": "질내[사싸]정|질싸|^질사$",
         "ruleType": "Black"
       },
       {
@@ -132,7 +167,7 @@
       },
       {
         "name": "Shit",
-        "regex": "shit|쉣",
+        "regex": "shit|쉣쒯",
         "ruleType": "Black"
       },
       {
@@ -440,6 +475,56 @@
         "name": "펜타닐",
         "regex": "[팬펜]타닐",
         "ruleType": "Black"
+      },
+      {
+        "name": "덜떨어지다",
+        "regex": "덜떨어[지진졌]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "고자",
+        "regex": "^고자",
+        "ruleType": "Black"
+      },
+      {
+        "name": "싸가지",
+        "regex": "싸가지",
+        "ruleType": "Black"
+      },
+      {
+        "name": "거지깽깽이",
+        "regex": "[거그]지깽+이",
+        "ruleType": "Black"
+      },
+      {
+        "name": "객사하다",
+        "regex": "객사해",
+        "ruleType": "Black"
+      },
+      {
+        "name": "벙어리",
+        "regex": "벙어리",
+        "ruleType": "Black"
+      },
+      {
+        "name": "떨거지",
+        "regex": "떨거지",
+        "ruleType": "Black"
+      },
+      {
+        "name": "똘마니",
+        "regex": "똘마니",
+        "ruleType": "Black"
+      },
+      {
+        "name": "똘추",
+        "regex": "똘추",
+        "ruleType": "Black"
+      },
+      {
+        "name": "망나니",
+        "regex": "망나니",
+        "ruleType": "Black"
       }
     ]
   },
@@ -489,7 +574,7 @@
       },
       {
         "name": "보지",
-        "regex": "(^|[^나바])[ㅂ뷰보][ㅈ지]([^마않]|$)|봊",
+        "regex": "(^|[^나바])[ㅂ뷰보][ㅈ지]([^마말않]|$)|봊",
         "ruleType": "Black"
       },
       {
@@ -519,7 +604,12 @@
       },
       {
         "name": "섹스",
-        "regex": "^(?!검색스).*[ㅅ人へ색쉑섹섺샊셲쒝쒞섁쎅쎾쎽쌕섻셐샠솈섘짹쨱쨲][스수ㅅへ人쓰쑤쓔]|[섻쉓]|sex",
+        "regex": "^(?!검색스).*[ㅅ人へ색쉑섹섺샊셲쒝쒞섁쎅쎾쎽쌕섻셐샠솈섘짹쨱쨲][스수ㅅへ人쓰쯔쑤쓔]|[섻쉓]|sex",
+        "ruleType": "Black"
+      },
+      {
+        "name": "섹스 (회피)",
+        "regex": "섹s",
         "ruleType": "Black"
       },
       {
@@ -676,6 +766,21 @@
         "name": "NTR",
         "regex": "ntr[하할은는이가]|^ntr$",
         "ruleType": "Black"
+      },
+      {
+        "name": "딜도",
+        "regex": "딜도",
+        "ruleType": "Black"
+      },
+      {
+        "name": "가위치기",
+        "regex": "가위치기",
+        "ruleType": "Black"
+      },
+      {
+        "name": "벗어",
+        "regex": "벗어",
+        "ruleType": "Black"
       }
     ]
   },
@@ -737,6 +842,11 @@
         "name": "틀니딱딱충",
         "regex" :"틀니?딱+",
         "ruleType": "Black"
+      },
+      {
+        "name": "똥꼬충",
+        "regex" :"똥꼬충",
+        "ruleType": "Black"
       }
     ]
   },
@@ -776,7 +886,7 @@
       },
       {
         "name": "헤으응",
-        "regex": "헤[으ㅡㅔㅖ]*응",
+        "regex": "[헤해][으ㅡㅔㅖ]*응",
         "ruleType": "Black"
       },
       {
@@ -801,12 +911,27 @@
       },
       {
         "name": "맘마통",
-        "regex": "맘마통",
+        "regex": "맘마통|빨통",
         "ruleType": "Black"
       },
       {
         "name": "보빨",
         "regex": "보빨",
+        "ruleType": "Black"
+      },
+      {
+        "name": "사이코",
+        "regex": "[사싸]이코[^노]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "모쏠아다",
+        "regex": "모쏠아다",
+        "ruleType": "Black"
+      },
+      {
+        "name": "아다",
+        "regex": "^아다$",
         "ruleType": "Black"
       }
     ]
@@ -1083,6 +1208,22 @@
       {
         "name": "나치",
         "regex": "나치[은는이가]|네오나치",
+        "ruleType": "Black"
+      }
+    ]
+  },
+  {
+    "name": "URL 금지",
+    "description": "인터넷 사이트 URL을 올리는 것을 금지합니다",
+    "elements": [
+      {
+        "name": "HTTP URL",
+        "regex": "http://[^ ]+",
+        "ruleType": "Black"
+      },
+      {
+        "name": "HTTPS URL",
+        "regex": "https://[^ ]+",
         "ruleType": "Black"
       }
     ]
