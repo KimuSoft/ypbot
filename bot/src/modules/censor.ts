@@ -24,7 +24,7 @@ import {
   TextBasedChannel,
 } from "discord.js"
 import hangul from "hangul-js"
-import { prisma, RuleType } from "shared"
+import { prisma, Rule, RuleType } from "shared"
 import { YPClient } from "../structures/YPClient"
 import fs from "fs"
 import path from "path"
@@ -111,11 +111,24 @@ class CensorModule extends Extension {
       where: { id: i.channelId },
       include: { rules: true },
     })
-    if (!ypChannel) return i.reply("위브에 등록되지 않은 채널입니다.")
+
+    const ypGuild = await prisma.guild.findUnique({
+      where: { id: i.guildId! },
+      include: { commonRules: true },
+    })
+
+    if (!ypChannel?.rules.length && !ypGuild?.commonRules.length)
+      return i.reply("위브에 등록되지 않은 채널입니다.")
+
+    const rules: Rule[] = []
+
+    if (ypChannel?.rules) rules.push(...ypChannel.rules)
+
+    if (ypGuild?.commonRules) rules.push(...ypGuild.commonRules)
 
     const select = new SelectMenuBuilder()
       .setOptions(
-        ypChannel.rules.map((rule) => {
+        rules.map((rule) => {
           return {
             label: rule.name,
             description: rule.description,

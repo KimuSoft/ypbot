@@ -10,8 +10,12 @@ import { logger } from "./utils"
 import * as Sentry from "@sentry/node"
 import "@sentry/tracing"
 
-process.on("uncaughtException", logger.error.bind(logger))
-process.on("unhandledRejection", logger.error.bind(logger))
+process.on("uncaughtException", (err) => {
+  logger.error(err)
+})
+process.on("unhandledRejection", (err) => {
+  logger.error(err)
+})
 
 if (process.env.BOT_SENTRY_DSN) {
   Sentry.init({
