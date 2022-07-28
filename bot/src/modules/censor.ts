@@ -17,6 +17,7 @@ import {
   Colors,
   EmbedBuilder,
   GuildBasedChannel,
+  GuildMember,
   Interaction,
   Message,
   MessageActionRowComponentBuilder,
@@ -71,7 +72,10 @@ class CensorModule extends Extension {
     })
     reset: boolean
   ) {
-    if (!i.guildId) return
+    if (!i.guildId || !i.member) return
+
+    if (!(i.member as GuildMember).permissions.has("Administrator"))
+      return i.reply("?")
 
     if (set) {
       const channel = i.options.getChannel("채널") as GuildBasedChannel
