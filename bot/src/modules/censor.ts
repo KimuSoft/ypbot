@@ -230,6 +230,8 @@ class CensorModule extends Extension {
       if (!matches.length) return
       if (!msg.deletable) return
 
+      stats.censorCount++
+
       // 규칙을 위반한 메시지 삭제
       await msg.delete()
 

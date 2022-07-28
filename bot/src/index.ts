@@ -99,6 +99,11 @@ const rpc = trpc
             "cts.discord.guilds.cache.map(x=>x.memberCount).reduce((a,b)=>a+b)"
           )
         ).reduce((a, b) => a + b),
+        censorCount: (
+          await manager.broadcastEval(
+            "const count = stats.censorCounts; stats.censorCount = 0; count"
+          )
+        ).reduce((a, b) => a + b),
       }
     },
   })

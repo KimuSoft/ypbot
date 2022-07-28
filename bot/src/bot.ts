@@ -10,6 +10,10 @@ import { logger } from "./utils"
 import * as Sentry from "@sentry/node"
 import "@sentry/tracing"
 
+declare global {
+  const stats: { censorCount: number }
+}
+
 process.on("uncaughtException", (err) => {
   logger.error(err)
 })
@@ -61,6 +65,8 @@ export const cts = new YPClient(client, logger)
 const setGlobal = (key: string, value: unknown) => {
   ;(global as Record<string, unknown>)[key] = value
 }
+
+setGlobal("stats", { censorCount: 0 })
 
 setGlobal("cts", cts)
 
