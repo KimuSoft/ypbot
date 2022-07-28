@@ -101,7 +101,7 @@ const rpc = trpc
         ).reduce((a, b) => a + b),
         censorCount: (
           await manager.broadcastEval(
-            "const count = stats.censorCounts; stats.censorCount = 0; count"
+            "const count = global.stats.censorCounts; global.stats.censorCount = 0; count"
           )
         ).reduce((a, b) => a + b),
       }

@@ -10,10 +10,6 @@ import { logger } from "./utils"
 import * as Sentry from "@sentry/node"
 import "@sentry/tracing"
 
-declare global {
-  const stats: { censorCount: number }
-}
-
 process.on("uncaughtException", (err) => {
   logger.error(err)
 })
