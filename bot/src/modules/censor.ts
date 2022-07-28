@@ -272,19 +272,22 @@ class CensorModule extends Extension {
 
       if (content === normalizedContent && rule.ruleType === "Black") {
         let newContent: string = ""
-        const regexMatches2 = originalContent.matchAll(regex)
+        const c = rule.separate
+          ? hangul.disassembleToString(originalContent)
+          : originalContent
+        const regexMatches2 = c.matchAll(regex)
         for (const match of regexMatches2) {
           if (match.index === undefined || match.input === undefined) return
 
-          newContent += originalContent.slice(lastIndex, match.index)
+          newContent += c.slice(lastIndex, match.index)
 
           newContent += `\u001b[31m${match[0]}\u001b[0m`
 
           lastIndex = match.index + match[0].length
         }
 
-        if (originalContent !== newContent) {
-          newContent += originalContent.slice(lastIndex)
+        if (c !== newContent) {
+          newContent += c.slice(lastIndex)
           content += `\n-----------------------------------------------\n→ ${newContent}`
         }
       }

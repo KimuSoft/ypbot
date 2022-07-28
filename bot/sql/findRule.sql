@@ -56,23 +56,32 @@ _elements as (
       from "_second" as _s
       where _s."id" = r."ruleId"
     )
+),
+_matches as (
+  select r."id",
+    r."name",
+    r."ruleType",
+    r."regex",
+    r."separate",
+    r."ruleId",
+    r."_Keyword" ~* r."regex" as "_Match"
+  from _elements as r
 )
-select r."id",
-  r."name",
+select r."name",
   r."ruleType",
   r."regex",
   r."separate",
   rule."name" as "ruleName"
-from _elements as r
+from _matches as r
   right join "Rule" rule on r."ruleId" = rule."id"
 where (
     (
       r."ruleType" = 'White'::"RuleType"
-      and not r."regex" ~* "_Keyword"
+      and not "_Match"
     )
     or (
       r."ruleType" = 'Black'::"RuleType"
-      and r."regex" ~* "_Keyword"
+      and "_Match"
     )
   )
 limit 1
