@@ -213,6 +213,10 @@ class CensorModule extends Extension {
 
       if (!originalContent) return
 
+      let chn = msg.channel.id
+
+      if (msg.channel.isThread()) chn = msg.channel.parentId!
+
       const matches = await prisma.$queryRawUnsafe<
         {
           separate: boolean
@@ -225,7 +229,7 @@ class CensorModule extends Extension {
         }[]
       >(
         this.findRuleSql,
-        msg.channel.id,
+        chn,
         msg.guild.id,
         hangul.disassembleToString(originalContent),
         originalContent
