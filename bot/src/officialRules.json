@@ -1434,5 +1434,48 @@
         "ruleType": "Black"
       }
     ]
+  },
+  {
+    "name": "반말 금지",
+    "description": "반말을 금지합니다.",
+    "elements": [
+      {
+        "name": "음슴체",
+        "regex": "ㅁ$",
+        "ruleType": "Black",
+        "separate": true
+      },
+      {
+        "name": "평서형 해라체",
+        "regex": "ㄴ(ㅡㄴ)?(ㄷㅏㄴ)?ㄷㅏ$",
+        "ruleType": "Black",
+        "separate": true
+      },
+      {
+        "name": "평서형 해라체",
+        "regex": "이?란다$|[이었겠]거니$|더라$|으?리라$|으?리로다$|으?렷다$",
+        "ruleType": "Black"
+      },
+      {
+        "name": "명령형 해라체",
+        "regex": "[가-힣]어라$|으?라$|도록$",
+        "ruleType": "Black"
+      },
+      {
+        "name": "의문형 해라체",
+        "regex": "[냐니누던디남]$|으?[랴련]$|이?람$|자면서$",
+        "ruleType": "Black"
+      },
+      {
+        "name": "청유형 해라체",
+        "regex": "자(꾸나)?$|으?렴$|으?려무나$",
+        "ruleType": "Black"
+      },
+      {
+        "name": "확인형 해라체",
+        "regex": "이?라니까$",
+        "ruleType": "Black"
+      }
+    ]
   }
 ]
