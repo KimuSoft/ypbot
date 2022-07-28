@@ -82,7 +82,7 @@
       },
       {
         "name": "~년",
-        "regex": "(걸레|벌레|쓰레기)년",
+        "regex": "(걸레|벌레|[쓰스]레기)년",
         "ruleType": "Black"
       },
       {
@@ -198,6 +198,21 @@
       {
         "name": "Damn",
         "regex": "damn",
+        "ruleType": "Black"
+      },
+      {
+        "name": "우라질",
+        "regex": "우라질",
+        "ruleType": "Black"
+      },
+      {
+        "name": "찐따",
+        "regex": "찐따",
+        "ruleType": "Black"
+      },
+      {
+        "name": "호구",
+        "regex": "호구[냐잖는가]",
         "ruleType": "Black"
       }
     ]
@@ -525,6 +540,16 @@
         "name": "망나니",
         "regex": "망나니",
         "ruleType": "Black"
+      },
+      {
+        "name": "잡놈",
+        "regex": "잡놈",
+        "ruleType": "Black"
+      },
+      {
+        "name": "쓰레기",
+        "regex": "허접[쓰스][레래]기",
+        "ruleType": "Black"
       }
     ]
   },
@@ -847,6 +872,16 @@
         "name": "똥꼬충",
         "regex" :"똥꼬충",
         "ruleType": "Black"
+      },
+      {
+        "name": "잡종",
+        "regex" :"잡종",
+        "ruleType": "Black"
+      },
+      {
+        "name": "호모",
+        "regex" :"호모",
+        "ruleType": "Black"
       }
     ]
   },
@@ -997,7 +1032,7 @@
       },
       {
         "name": "최순실",
-        "regex": "최순실",
+        "regex": "최순실|순시리",
         "ruleType": "Black"
       },
       {
@@ -1062,12 +1097,12 @@
       },
       {
         "name": "이명박",
-        "regex": "이?명박|^mb[은는이가]",
+        "regex": "이?명박|^mb[은는이가]|^가카$",
         "ruleType": "Black"
       },
       {
         "name": "박근혜",
-        "regex": "박?[근ㄹ]혜|박그네",
+        "regex": "박?[근ㄹ]혜|[박닭]그네",
         "ruleType": "Black"
       },
       {
@@ -1082,12 +1117,12 @@
       },
       {
         "name": "윤석열",
-        "regex": "윤석[열렬]",
+        "regex": "윤석[열렬]|윤항문|윤[짜춘][장왕]|간석열|윤재명|윤틀러|윤두환|폰석열|준석열",
         "ruleType": "Black"
       },
       {
-        "name": "윤석열",
-        "regex": "윤석[열렬]",
+        "name": "이재명",
+        "regex": "[찢찟이리][재제]명",
         "ruleType": "Black"
       },
       {
