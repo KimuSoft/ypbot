@@ -32,7 +32,7 @@
     "graphql": "16.5.0",
     "jsonwebtoken": "8.5.1",
     "lodash": "4.17.21",
-    "node-fetch": "2.6.7",
+    "node-fetch": "3.2.9",
     "shared": "*",
     "tlru": "1.0.2",
     "tslog": "3.3.3",
