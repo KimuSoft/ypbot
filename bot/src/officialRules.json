@@ -420,6 +420,26 @@
         "name": "돌아이",
         "regex": "돌아이|[또도]라이",
         "ruleType": "Black"
+      },
+      {
+        "name": "헤로인",
+        "regex": "헤로인",
+        "ruleType": "Black"
+      },
+      {
+        "name": "필로폰",
+        "regex": "필로폰|히로[퐁뽕]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "LSD",
+        "regex": "lsd[은는이가]|^lsd$",
+        "ruleType": "Black"
+      },
+      {
+        "name": "펜타닐",
+        "regex": "[팬펜]타닐",
+        "ruleType": "Black"
       }
     ]
   },
@@ -594,7 +614,7 @@
       },
       {
         "name": "당신의 체위 방식은 궁금하지 않습니다",
-        "regex": "정상위|기승위|후배위|[쓰스]리[썸섬]|항문성교|스마타",
+        "regex": "정상위|역상위|기승위|후배위|[쓰스]리[썸섬]|항문성교|스마타",
         "ruleType": "Black"
       },
       {
@@ -633,26 +653,6 @@
         "ruleType": "Black"
       },
       {
-        "name": "헤로인",
-        "regex": "헤로인",
-        "ruleType": "Black"
-      },
-      {
-        "name": "필로폰",
-        "regex": "필로폰|히로[퐁뽕]",
-        "ruleType": "Black"
-      },
-      {
-        "name": "LSD",
-        "regex": "lsd[은는이가]|^lsd$",
-        "ruleType": "Black"
-      },
-      {
-        "name": "펜타닐",
-        "regex": "[팬펜]타닐",
-        "ruleType": "Black"
-      },
-      {
         "name": "Sex (이모지 회피)",
         "regex": "\uD83C\uDDF8\uD83C\uDDEA\uD83C\uDDFD",
         "ruleType": "Black"
@@ -660,6 +660,16 @@
       {
         "name": "3단 합체",
         "regex": "[3-9]단합체",
+        "ruleType": "Black"
+      },
+      {
+        "name": "육변기",
+        "regex": "육변기",
+        "ruleType": "Black"
+      },
+      {
+        "name": "성노예",
+        "regex": "[성육]노예",
         "ruleType": "Black"
       }
     ]
