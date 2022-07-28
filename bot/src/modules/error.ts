@@ -5,8 +5,10 @@ import {
   CommandInteraction,
   EmbedBuilder,
   inlineCode,
+  Message,
 } from "discord.js"
 import { logger } from "../utils"
+import { YPClient } from "../structures/YPClient"
 
 class ErrorHandler extends Extension {
   @listener({ event: "applicationCommandInvokeError", emitter: "cts" })
@@ -24,6 +26,11 @@ class ErrorHandler extends Extension {
     })
 
     logger.error(e)
+  }
+
+  @listener({ event: "messageCreate" })
+  async dokdo(msg: Message) {
+    ;(this.commandClient as YPClient).dokdo.run(msg).then()
   }
 }
 
