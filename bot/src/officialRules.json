@@ -671,6 +671,11 @@
         "name": "성노예",
         "regex": "[성육]노예",
         "ruleType": "Black"
+      },
+      {
+        "name": "NTR",
+        "regex": "ntr[하할은는이가]|^ntr$",
+        "ruleType": "Black"
       }
     ]
   },
