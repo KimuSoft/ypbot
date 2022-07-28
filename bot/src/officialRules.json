@@ -5,12 +5,12 @@
     "elements" : [
       {
         "name" : "씨발",
-        "regex" : "([씨쉬쒸시씺씹앂싯싸싰스ㅅへ人ㅆ⩘入八㉦㈆야∧취씌]|//^|//^ㅣ|ㅇㅑ|di|si|she|shi|se|tl|//^ㅣ).?[0-9이으ㅣieㅡ-]*(뿔|불|발|뱔|팔|벌|뻘|빨|뿰|붤|봘|뷀|벨|벩|풜|밦|밟|밠|밢|㈅|㉥|ㅂ|8|ㅃ|var|bar|val|bal|vul|bul|bel|qkf)|[쉬쒸씨](바|ba)|[시씨띠][바파][아ㅏ]*[알랄]|^[시씨ㅅㅆ][바ㅂ㈓]$[씹쓉씝십쉽][할알팔발핧팛팙팘핤붤벨밸]|tlqk|ㅽ|18[놈넘]|^[시씨]바$",
+        "regex" : "([씨쉬쒸시씺씹앂싯싸싰스슈쓔ㅅへ人ㅆ⩘入八㉦㈆야∧취씌]|//^|//^ㅣ|ㅇㅑ|di|si|she|shi|se|tl|//^ㅣ).?[0-9이으ㅣieㅡ-]*(뿔|불|발|뱔|팔|벌|뻘|빨|뿰|붤|봘|뷀|벨|벩|풜|밦|밟|밠|밢|㈅|㉥|ㅂ|8|ㅃ|var|bar|val|bal|vul|bul|bel|qkf)|[쉬쒸씨](바|ba)|[시씨띠][바파][아ㅏ]*[알랄]|^[시씨ㅅㅆ][바ㅂ㈓]$[씹쓉씝십쉽][할알팔발핧팛팙팘핤붤벨밸]|tlqk|ㅽ|18[놈넘]|^[시씨]바$",
         "ruleType" : "Black"
       },
       {
         "name" : "씨발 (초성 우회)",
-        "regex" : "[ㅅㅆㅉ]ㅣㅂㅏㄹ",
+        "regex" : "[ㅅㅆㅉ]ㅣ[ㅂㅃ]ㅏㄹ",
         "ruleType" : "Black",
         "separate": true
       },
@@ -428,7 +428,7 @@
       },
       {
         "name": "자지",
-        "regex": "(^|[^용혼남여])[쥬ㅈ자][지ㅈ]([^마]|$)",
+        "regex": "(^|[^용혼남여])[쥬ㅈ자][지ㅈ]([^마]|$)|말자지",
         "ruleType": "Black"
       },
       {
@@ -523,7 +523,7 @@
       },
       {
         "name": "박다",
-        "regex": "박아[줘줄]|박을[게까]",
+        "regex": "박아[줘줄]|박을[게까수]",
         "ruleType": "Black"
       },
       {
@@ -555,7 +555,37 @@
         "name": "아헤가오",
         "regex": "아헤가오",
         "ruleType": "Black"
-      }
+      },
+      {
+        "name": "당신의 체위 방식은 궁금하지 않습니다",
+        "regex": "정상위|기승위|후배위|[쓰스]리[썸섬]|항문성교|스마타",
+        "ruleType": "Black"
+      },
+      {
+        "name": "쓰리썸",
+        "regex": "[스쓰]리[섬썸]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "커닐링구스",
+        "regex": "커닐링구스",
+        "ruleType": "Black"
+      },
+      {
+        "name": "딸내미 시리즈",
+        "regex": "[대금벽]딸",
+        "ruleType": "Black"
+      },
+      {
+        "name": "복상사",
+        "regex": "복상사",
+        "ruleType": "Black"
+      },
+      {
+        "name": "암컷타락",
+        "regex": "암컷타락|암타",
+        "ruleType": "Black"
+      },
     ]
   },
   {
@@ -670,7 +700,12 @@
       },
       {
         "name": "헨타이",
-        "regex": "헨타이",
+        "regex": "헨타이|hentai",
+        "ruleType": "Black"
+      },
+      {
+        "name": "의미심장한 이모지",
+        "regex": "\uD83D\uDD1E",
         "ruleType": "Black"
       }
     ]
@@ -715,6 +750,16 @@
         "ruleType": "Black"
       },
       {
+        "name": "이기야",
+        "regex": "이기야$",
+        "ruleType": "Black"
+      },
+      {
+        "name": "재기하다",
+        "regex": "성?재기",
+        "ruleType": "Black"
+      },
+      {
         "name": "일간베스트",
         "regex": "일베[충]?|일간[베배]스트",
         "ruleType": "Black"
@@ -722,6 +767,11 @@
       {
         "name": "메갈리아",
         "regex": "메갈[련년]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "최순실",
+        "regex": "최순실",
         "ruleType": "Black"
       },
       {
@@ -756,7 +806,7 @@
       },
       {
         "name": "전두환",
-        "regex": "전두환",
+        "regex": "전두환|전[땅탱땡떙]크",
         "ruleType": "Black"
       },
       {
@@ -775,23 +825,33 @@
         "ruleType": "Black"
       },
       {
+        "name": "중력일",
+        "regex": "중력[절일]",
+        "ruleType": "Black"
+      },
+      {
         "name": "노무현",
         "regex": "노무현",
         "ruleType": "Black"
       },
       {
         "name": "이명박",
-        "regex": "이명박|^mb[은는이가]",
+        "regex": "이?명박|^mb[은는이가]",
         "ruleType": "Black"
       },
       {
         "name": "박근혜",
-        "regex": "박[근ㄹ]혜|박그네",
+        "regex": "박?[근ㄹ]혜|박그네",
         "ruleType": "Black"
       },
       {
         "name": "문재인",
-        "regex": "문[재죄][인앙]",
+        "regex": "[문곰][졔쟤제재죄][인앙][^거가데]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "조 바이든",
+        "regex": "조?바이든",
         "ruleType": "Black"
       },
       {
@@ -800,8 +860,33 @@
         "ruleType": "Black"
       },
       {
-        "name": "이재명",
-        "regex": "[이찢]재명",
+        "name": "윤석열",
+        "regex": "윤석[열렬]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "홍준표",
+        "regex": "홍준표|홍카콜라",
+        "ruleType": "Black"
+      },
+      {
+        "name": "좌파",
+        "regex": "좌파",
+        "ruleType": "Black"
+      },
+      {
+        "name": "우파",
+        "regex": "우파냐",
+        "ruleType": "Black"
+      },
+      {
+        "name": "극우",
+        "regex": "극우",
+        "ruleType": "Black"
+      },
+      {
+        "name": "극좌",
+        "regex": "극좌",
         "ruleType": "Black"
       },
       {
@@ -861,7 +946,37 @@
       },
       {
         "name": "시진핑",
-        "regex": "시진핑+",
+        "regex": "시?진핑+",
+        "ruleType": "Black"
+      },
+      {
+        "name": "도널드 트럼프",
+        "regex": "도[널날]드[트도][럼람][프푸]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "반자이",
+        "regex": "반자이",
+        "ruleType": "Black"
+      },
+      {
+        "name": "일왕",
+        "regex": "천황|[덴텐]노",
+        "ruleType": "Black"
+      },
+      {
+        "name": "더불어민주당",
+        "regex": "민주당",
+        "ruleType": "Black"
+      },
+      {
+        "name": "국민의힘",
+        "regex": "국민의힘|국힘",
+        "ruleType": "Black"
+      },
+      {
+        "name": "새누리당",
+        "regex": "새누리당",
         "ruleType": "Black"
       }
     ]
