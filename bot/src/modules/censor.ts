@@ -205,7 +205,7 @@ class CensorModule extends Extension {
 
       const originalContent = msg.content
         .normalize()
-        .replace(/[!?@#$%^&*():;+-=~{}<>_\[\]|\\"',.\/`₩\s\t]/g, "")
+        .replace(/[!?@#$%^&*():;+-=~{}<>_\[\]|\\"',.\/`₩\s\t\d]/g, "")
 
       if (!originalContent) return
 
