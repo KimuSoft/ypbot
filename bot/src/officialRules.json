@@ -882,6 +882,11 @@
         "name": "호모",
         "regex" :"호모",
         "ruleType": "Black"
+      },
+      {
+        "name": "혐오의 의미가 담겨버린 슬픈 손모양",
+        "regex": "\uD83E\uDD0F",
+        "ruleType": "Black"
       }
     ]
   },
@@ -1243,6 +1248,11 @@
       {
         "name": "나치",
         "regex": "나치[은는이가]|네오나치",
+        "ruleType": "Black"
+      },
+      {
+        "name": "혐오의 의미가 담겨버린 슬픈 손모양",
+        "regex": "\uD83E\uDD0F",
         "ruleType": "Black"
       }
     ]
