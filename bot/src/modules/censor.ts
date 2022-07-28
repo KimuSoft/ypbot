@@ -31,10 +31,10 @@ class CensorModule extends Extension {
 
       const originalContent = msg.content
         .normalize()
-        .replace(/[!?@#$%^&*():;+-=~{}<>_\[\]|\\"',.\/`₩\s\t\d\u2000-\u2FFF]/g, "")
-
-      // regex checking symbol character such as ☆★○●◇◆□※◎◇←♨
-      if (originalContent.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g)) {
+        .replace(
+          /[!?@#$%^&*():;+-=~{}<>_\[\]|\\"',.\/`₩\s\t\d\u2000-\u2FFF\u200B\u115F\u1160\u3164\uFFA0\u2800]/g,
+          ""
+        )
 
       if (!originalContent) return
 
