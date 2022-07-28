@@ -26,6 +26,8 @@ discordApi.interceptors.response.use(
       ).then(() => discordApi.request(err.config))
     }
 
+    logger.error(err)
+
     return Promise.reject(err)
   }
 )
