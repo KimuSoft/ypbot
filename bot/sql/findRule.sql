@@ -19,12 +19,7 @@ _second as (
   from "Rule" as r
   where exists (
       select
-      from _first as f
-      where f."id" = r."id"
-    )
-    and exists (
-      select
-      from "Rule" as r2
+      from _first as r2
       where exists (
           select
           from "__ruleReferences" as "_ref"

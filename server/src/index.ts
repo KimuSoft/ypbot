@@ -20,7 +20,6 @@ import { prisma, User } from "shared"
 import jwt from "jsonwebtoken"
 import { jwtToken } from "./utils"
 import express from "express"
-import cluster from "cluster"
 import { rpc } from "./trpc"
 
 process.on("uncaughtException", console.error)
