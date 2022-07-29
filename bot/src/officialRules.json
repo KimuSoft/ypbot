@@ -251,6 +251,11 @@
         "ruleType": "Black"
       },
       {
+        "name": "Asshole",
+        "regex": "asshole",
+        "ruleType": "Black"
+      },
+      {
         "name": "세종대왕님 오늘도 정의로운 검열을 허락해주세요.",
         "regex": "[ㄱ-ㅎㅏ-ㅣ]{1,2}ㅄ[ㄱ-ㅎㅏ-ㅣ]{1,2}ㅄ",
         "ruleType": "Black",
@@ -325,7 +330,7 @@
       },
       {
         "name": "엿먹어",
-        "regex": "엿(이나)?[쳐처]?(먹어|먹던|드세요|드시던|머거)",
+        "regex": "엿(이나)?[쳐처]?(먹|드세요|드시던|머거)",
         "ruleType": "Black"
       },
       {
@@ -622,6 +627,11 @@
         "name": "A hell of a ~",
         "regex": "ahellofa",
         "ruleType": "Black"
+      },
+      {
+        "name": "Idiot",
+        "regex": "idiot",
+        "ruleType": "Black"
       }
     ]
   },
@@ -888,6 +898,11 @@
         "name": "이상한 의미를 가져버린 슬픈 숫자",
         "regex": "^69$|^74$",
         "ruleType": "Black"
+      },
+      {
+        "name": "페니스",
+        "regex": "[페패]니스|penis",
+        "ruleType": "Black"
       }
     ]
   },
@@ -977,13 +992,13 @@
     "description": "변태는 안돼요",
     "elements": [
       {
-        "name": "",
+        "name": "할짝",
         "regex": "[할핥핡햘햝햙][쯔즈][악약]",
         "ruleType": "Black"
       },
       {
-        "name": "",
-        "regex": "아흥|하아*(응읏악앍앙)",
+        "name": "이상한 신음",
+        "regex": "아흥|하[아으우]*(응읏악앍앙)",
         "ruleType": "Black"
       },
       {
