@@ -80,7 +80,7 @@ class RuleModule extends Extension {
       .setFooter({ text: "제작자 : " + rule.authorId })
       .setColor(rule.isOfficial ? Colors.Red : Colors.Gold)
 
-    await i.editReply({ embeds: [embed] })
+    await i.update({ embeds: [embed] })
   }
 }
 
