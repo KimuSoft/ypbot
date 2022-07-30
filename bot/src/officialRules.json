@@ -257,15 +257,20 @@
       },
       {
         "name": "세종대왕님 오늘도 정의로운 검열을 허락해주세요.",
-        "regex": "[ㄱ-ㅎㅏ-ㅣ]{1,2}ㅄ[ㄱ-ㅎㅏ-ㅣ]{1,2}ㅄ",
+        "regex": "[ㄱ-ㅎㅏ-ㅣ]{1,3}ㅄ[ㄱ-ㅎㅏ-ㅣ]{1,3}ㅄ",
         "ruleType": "Black",
         "separate": true
       },
       {
         "name": "왜 이렇게 복잡하게 말씀하시는 거죠?",
-        "regex": "([ㄱ-ㅎㅏ-ㅣ]{1,2}[ㄲㄸㅃㅆㅉㄳㄵㄶㄺㄻㄼㄽㄾㄿㅀ]){3,}",
+        "regex": "([ㄱ-ㅎㅏ-ㅣ]{1,3}[ㄲㄸㅃㅆㅉㄳㄵㄶㄺㄻㄼㄽㄾㄿㅀ]){3,}",
         "ruleType": "Black",
         "separate": true
+      },
+      {
+        "name": "육시랄",
+        "regex": "육시[랄럴]",
+        "ruleType": "Black"
       }
     ]
   },
@@ -632,6 +637,11 @@
         "name": "Idiot",
         "regex": "idiot",
         "ruleType": "Black"
+      },
+      {
+        "name": "매춘부",
+        "regex": "매춘부?",
+        "ruleType": "Black"
       }
     ]
   },
@@ -903,6 +913,26 @@
         "name": "페니스",
         "regex": "[페패]니스|penis",
         "ruleType": "Black"
+      },
+      {
+        "name": "러브젤",
+        "regex": "러브젤",
+        "ruleType": "Black"
+      },
+      {
+        "name": "리얼돌",
+        "regex": "리얼돌",
+        "ruleType": "Black"
+      },
+      {
+        "name": "강간하다",
+        "regex": "강간($|[해하할이은])",
+        "ruleType": "Black"
+      },
+      {
+        "name": "따먹다",
+        "regex": "따먹어[버줄]",
+        "ruleType": "Black"
       }
     ]
   },
@@ -983,6 +1013,16 @@
       {
         "name": "혐오의 의미가 담겨버린 슬픈 손모양",
         "regex": "\uD83E\uDD0F",
+        "ruleType": "Black"
+      },
+      {
+        "name": "전라도 비하발언",
+        "regex": "ㅈ라[남북]?도|멍청[남북]?도|전라디언",
+        "ruleType": "Black"
+      },
+      {
+        "name": "경상도 비하발언",
+        "regex": "경상디언",
         "ruleType": "Black"
       }
     ]
@@ -1134,7 +1174,7 @@
       },
       {
         "name": "일간베스트",
-        "regex": "일베[충]?|일간[베배]스트|ㅇㅂㅊ|^ㅇㅂ[ㅅㄲㄱ]+$",
+        "regex": "일베[충]?|일간[베배]스트|ㅇㅂㅊ|^ㅇㅂ[ㅅㄲㅊㄱ]+$|^일배$|^ㅇㅂ$",
         "ruleType": "Black"
       },
       {
@@ -1219,7 +1259,7 @@
       },
       {
         "name": "문재인",
-        "regex": "[문곰x그][졔쟤제재죄][인앙]([^거가데]|$)|mc재[앙인]|문크예거|문코리타|문켓몬(스터)?|문노스|문두환|문대중|문통[은는이가]",
+        "regex": "[문곰x그][졔쟤제재죄][인앙]([^거가데]|$)|mc재[앙인]|문크예거|문코리타|문켓몬(스터)?|문노스|문두환|문대중|문통[은는이가]|moonjaein",
         "ruleType": "Black"
       },
       {
@@ -1229,7 +1269,7 @@
       },
       {
         "name": "윤석열",
-        "regex": "윤석[열렬]|윤항문|윤[짜춘][장왕]|간석열|윤재명|윤틀러|윤두환|폰석열|준석열",
+        "regex": "윤석[열렬]|윤항문|윤[짜춘][장왕]|간석열|윤재명|윤틀러|윤두환|폰석열|준석열|윤도리",
         "ruleType": "Black"
       },
       {
@@ -1348,13 +1388,18 @@
         "ruleType": "Black"
       },
       {
+        "name": "노동당",
+        "regex": "노동당",
+        "ruleType": "Black"
+      },
+      {
         "name": "자유한국당",
         "regex": "자유한국당|자한당",
         "ruleType": "Black"
       },
       {
         "name": "국민의힘",
-        "regex": "국민의[힘짐]|국힘",
+        "regex": "국민의[힘짐]|국[힘짐]",
         "ruleType": "Black"
       },
       {
@@ -1430,6 +1475,36 @@
       {
         "name": "적폐",
         "regex": "적폐들",
+        "ruleType": "Black"
+      },
+      {
+        "name": "메갈리아",
+        "regex": "메갈([^로]$)|메갈리아",
+        "ruleType": "Black"
+      },
+      {
+        "name": "여성시대",
+        "regex": "여성시대|여시[는가도나]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "페미니즘",
+        "regex": "페미(니즘)?",
+        "ruleType": "Black"
+      },
+      {
+        "name": "성차별",
+        "regex": "성차별",
+        "ruleType": "Black"
+      },
+      {
+        "name": "성인지감수성",
+        "regex": "성차별",
+        "ruleType": "Black"
+      },
+      {
+        "name": "남녀 혐오",
+        "regex": "[남녀여]성혐오",
         "ruleType": "Black"
       }
     ]
