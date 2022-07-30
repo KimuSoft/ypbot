@@ -4,7 +4,7 @@ import { Resolver } from "../../../utils"
 
 export const removeRuleFromChannel: Resolver<
   boolean,
-  YPChannel & Channel,
+  YPChannel & Omit<Channel, "type">,
   { id: string }
 > = async (parent, { id }) => {
   await prisma.channel.update({

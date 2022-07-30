@@ -4,7 +4,7 @@ import { Resolver } from "../../../utils"
 
 export const addRuleToChannel: Resolver<
   Rule | null,
-  YPChannel & Channel,
+  YPChannel & Omit<Channel, "type">,
   { id: string }
 > = async (parent, { id }, { user }) => {
   if (!user) return null
