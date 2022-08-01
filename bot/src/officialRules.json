@@ -1053,7 +1053,7 @@
       },
       {
         "name": "이상한 신음",
-        "regex": "아흥|하[아으우]*(응읏악앍앙)",
+        "regex": "아흥|하[아으우]*(응읏악앍앙)|(하악)+",
         "ruleType": "Black"
       },
       {
@@ -1134,6 +1134,11 @@
       {
         "name": "순수하지 못한 하트",
         "regex": "❤\uD83D\uDC95",
+        "ruleType": "Black"
+      },
+      {
+        "name": "무슨 냄새를 맡으시는 거죠",
+        "regex": "(킁카?)+",
         "ruleType": "Black"
       }
     ]
@@ -1368,6 +1373,11 @@
         "ruleType": "Black"
       },
       {
+        "name": "이만희",
+        "regex": "[이개]만희",
+        "ruleType": "Black"
+      },
+      {
         "name": "빨갱이",
         "regex": "빨갱이",
         "ruleType": "Black"
@@ -1439,7 +1449,7 @@
       },
       {
         "name": "나치",
-        "regex": "나치[은는이가]|네오나치",
+        "regex": "나치([은는이가]|$)|네오나치",
         "ruleType": "Black"
       },
       {
@@ -1680,6 +1690,16 @@
       {
         "name": "정치적 올바름",
         "regex": "정치적 올바름",
+        "ruleType": "Black"
+      },
+      {
+        "name": "박원순 (제35-37대 서울특별시장)",
+        "regex": "박원순",
+        "ruleType": "Black"
+      },
+      {
+        "name": "보리스 존슨 (영국 제77대 총리)",
+        "regex": "보리스존슨",
         "ruleType": "Black"
       }
     ]
