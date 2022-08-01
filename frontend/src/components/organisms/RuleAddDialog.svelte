@@ -176,6 +176,7 @@
           />
           <RuleSelectGroup
             on:select
+            hideAuthor
             title="공식 규칙"
             rules={data.official.filter((x) => !excludedIds.includes(x.id))}
           />

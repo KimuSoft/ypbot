@@ -5,6 +5,8 @@
   export let title: string
 
   export let rules: (Rule & { author: YPUser; counts: RuleCounts })[]
+
+  export let hideAuthor = false
 </script>
 
 {#if rules.length}
@@ -15,7 +17,7 @@
     </div>
     <div class="mt-2 gap-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       {#each rules as rule}
-        <RuleSelectListItem on:select {rule} />
+        <RuleSelectListItem {hideAuthor} on:select {rule} />
       {/each}
     </div>
   </div>

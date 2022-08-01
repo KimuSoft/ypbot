@@ -157,7 +157,7 @@
           title="공유받은 규칙"
           rules={rules.shared}
         />
-        <RuleSelectGroup title="공식 규칙" rules={rules.official} />
+        <RuleSelectGroup hideAuthor title="공식 규칙" rules={rules.official} />
       </div>
     {/await}
   {:else}

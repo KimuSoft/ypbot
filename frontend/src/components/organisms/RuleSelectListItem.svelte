@@ -7,6 +7,8 @@
 
   export let rule: Rule & { author: YPUser; counts: RuleCounts }
 
+  export let hideAuthor = false
+
   const dispatch = createEventDispatcher()
 
   $: onClick = () => {
@@ -25,16 +27,18 @@
       </div>
       <div class="text-md text-white/60">{rule.description}</div>
     </div>
-    <div class="flex items-center gap-2">
-      <img
-        src={rule.author.avatar}
-        alt="Avatar"
-        class="w-[28px] h-[28px] rounded-full"
-      />
-      <div class="text-lg">{rule.author.tag}</div>
-    </div>
+    {#if !hideAuthor}
+      <div class="flex items-center gap-2">
+        <img
+          src={rule.author.avatar}
+          alt="Avatar"
+          class="w-[28px] h-[28px] rounded-full"
+        />
+        <div class="text-lg">{rule.author.tag}</div>
+      </div>
+    {/if}
   </div>
-  <div class="text-right flex flex-col gap-2">
+  <div class="text-right flex flex-col gap-2 items-end">
     <div class="flex gap-2 items-center">
       <div class="leading-[16px]">
         {rule.counts.white}
