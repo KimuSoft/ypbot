@@ -51,7 +51,7 @@
       },
       {
         "name" : "개새끼",
-        "regex": "(개|dog)[샠색샊섺섹]|rotorl|[개ㄱ][새ㅅ][끼ㄲ]",
+        "regex": "(개|dog)[샠색샊섺섹]|rotorl|[개ㄱ][새ㅅ][끼ㄲ]|^개[새색샊]$|새[개객갞걖]끼",
         "ruleType" : "Black"
       },
       {
@@ -1039,6 +1039,11 @@
         "name": "트위터 짹짹이",
         "regex": "트[짹쨱]이",
         "ruleType": "Black"
+      },
+      {
+        "name": "냄져",
+        "regex": "냄[져저]",
+        "ruleType": "Black"
       }
     ]
   },
@@ -1569,7 +1574,7 @@
       },
       {
         "name": "천안문",
-        "regex": "천안문|톈안[먼문]",
+        "regex": "천안문|[톈탠텐]안[먼문]",
         "ruleType": "Black"
       },
       {
@@ -1701,6 +1706,36 @@
         "name": "보리스 존슨 (영국 제77대 총리)",
         "regex": "보리스존슨",
         "ruleType": "Black"
+      },
+      {
+        "name": "미러링",
+        "regex": "미러링",
+        "ruleType": "Black"
+      },
+      {
+        "name": "탈코르셋",
+        "regex": "탈코(르셋)?",
+        "ruleType": "Black"
+      },
+      {
+        "name": "조선민주주의인민공화국",
+        "regex": "북조선|북한|[부쿡]카니스탄|조선민주주의인민공화국",
+        "ruleType": "Black"
+      },
+      {
+        "name": "북괴",
+        "regex": "북괴",
+        "ruleType": "Black"
+      },
+      {
+        "name": "탈북",
+        "regex": "탈북([^민]|$)",
+        "ruleType": "Black"
+      },
+      {
+        "name": "월북",
+        "regex": "월북",
+        "ruleType": "Black"
       }
     ]
   },
@@ -1760,6 +1795,79 @@
         "name": "확인형 해라체",
         "regex": "이?라니까$",
         "ruleType": "Black"
+      },
+      {
+        "name": "평서형 해체",
+        "regex": "어$|이?야$|지$|이?라지$|거든$|거들랑$|데$|[다자고]고$",
+        "ruleType": "Black"
+      },
+      {
+        "name": "평서형 해체",
+        "regex": "ㄴ(ㅡㄴ)?ㄷㅏㅈㅣ$|(ㅇㅡ)?ㄹ밖에",
+        "ruleType": "Black",
+        "separate": true
+      },
+      {
+        "name": "명령형 해체",
+        "regex": "어$|지$|으?라고$",
+        "ruleType": "Black"
+      },
+      {
+        "name": "의문형 해체",
+        "regex": "어$|이?야$|지$|게$|으?려나$|이?라면서$",
+        "ruleType": "Black"
+      },
+      {
+        "name": "의문형 해체",
+        "regex": "[ㅇㄴ]ㅡㄴ(ㅈㅣ|ㄷㅔ)$|(ㅇㅡ)?ㄹ(ㄲㅏ|ㄹㅐ)$|(ㅇㅡ)?ㄹㄱㅓㄴㅏ$|ㄴㄷㅏㅁㅕㄴㅅㅓ$",
+        "ruleType": "Black",
+        "separate": true
+      }
+    ]
+  },
+  {
+    "name": "냥냥체",
+    "description": "이 채널에는 고양이만 서식한다냥!",
+    "elements": [
+      {
+        "name": "냥냥체",
+        "regex": "냥$|냐[아ㅏ]*앙$",
+        "ruleType": "White"
+      }
+    ]
+  },
+  {
+    "name": "멍멍체",
+    "description": "이 채널에는 댕댕이만 서식한다멍!",
+    "elements": [
+      {
+        "name": "멍멍체",
+        "regex": "멍$|머[어ㅓ]*엉$|^[월댕왈]+$",
+        "ruleType": "White"
+      }
+    ]
+  },
+  {
+    "name": "멈뭄미체",
+    "description": "미 채널은 돔그라미를 허묨하지 많습니다!",
+    "elements": [
+      {
+        "name": "돔그라미",
+        "regex": "ㅇ",
+        "ruleType": "Black",
+        "separate": true
+      }
+    ]
+  },
+  {
+    "name": "엉엉이체",
+    "description": "이 채널은 네오를 허용하지 않습니다!",
+    "elements": [
+      {
+        "name": "네오",
+        "regex": "ㅁ",
+        "ruleType": "Black",
+        "separate": true
       }
     ]
   }
