@@ -1,4 +1,4 @@
-import { applicationCommand, Extension } from "@pikokr/command.ts"
+import { applicationCommand, Extension, ownerOnly } from "@pikokr/command.ts"
 import { ApplicationCommandType, ChatInputCommandInteraction } from "discord.js"
 import { prisma, RuleType } from "shared"
 import _officialRules from "../officialRules.json"
@@ -11,6 +11,7 @@ class SetupModule extends Extension {
     dmPermission: false,
     guilds: (process.env.DEV_GUILD || "").split(":"),
   })
+  @ownerOnly
   async officialTagInstall(i: ChatInputCommandInteraction) {
     interface RuleElement {
       name: string
