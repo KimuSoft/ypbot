@@ -61,7 +61,11 @@ class CensorModule extends Extension {
         // U+FFA0 반쪽 한글 필러
         // U+2800 점자 패턴 공백
         // U+17B5 크메르어 모음 고유의 Aa
-        .replace(/[\s\t\d\u200B\u115F\u1160\u3164\uFFA0\u2800\u17B5]/g, "")
+        // U+1CBB, U+1CBC Georgian Extended: 빈 셀
+        .replace(
+          /[\s\t\d\u200B\u115F\u1160\u3164\uFFA0\u2800\u17B5\u1CBB\u1CBC]/g,
+          ""
+        )
 
       if (!originalContent) return
 
