@@ -5,7 +5,7 @@
     "elements" : [
       {
         "name" : "씨발",
-        "regex" : "([시쉬스슈싯싰씨씻씼쒸씺씹앂싸쓔취씌야ㅅへ人ㅆ⩘入八㉦㈆∧]|//^|//^ㅣ|ㅇㅑ|di|si|she|shi|shu|syu|shyu|ya|se|tl|//^ㅣ)[ㄱ-ㅎㅏ-ㅣ0-9이으ㅣieㅡ-]*(밠|밟|밣|밡|뿔|불|발|뱔|팔|펄|벌|뻘|빨|뿰|붤|봘|뷀|벨|벩|풜|밦|밟|밠|밢|㈅|㉥|ㅂ|8|ㅃ|var|bar|val|bal|vul|bul|bel|qkf)|[쉬쒸씨](바|ba)|[시씨띠][바파][아ㅏ]*[알랄]|^[시씨ㅅㅆ][바ㅂ㈓]$[씹쓉씝십쉽][할알팔발핧팛팙팘핤붤벨밸]|tlqk|ㅽ|18[놈넘]|^[시씨]바$",
+        "regex" : "([시쉬스슈싯싰씨씻씼쒸씺씹앂싸쓔취씌야ㅅへ人ㅆ⩘入八㉦㈆∧]|//^|//^ㅣ|ㅇㅑ|di|si|she|shi|shu|syu|shyu|ya|se|tl|//^ㅣ)[ㄱ-ㅎㅏ-ㅣ0-9이으ㅣieㅡ-]*(빠|밠|밟|밣|밡|뿔|불|발|뱔|팔|펄|벌|뻘|빨|뿰|붤|봘|뷀|벨|벩|풜|밦|밟|밠|밢|㈅|㉥|ㅂ|8|ㅃ|var|bar|val|bal|vul|bul|bel|qkf)|[쉬쒸씨](바|ba)|[시씨띠][바파][아ㅏ]*[알랄]|^[시씨스ㅅㅆ][바ㅂ㈓]$|[씹쓉씝십쉽][할알팔발핧팛팙팘핤붤벨밸]|tlqk|ㅽ|18[놈넘]",
         "ruleType" : "Black"
       },
       {
@@ -335,7 +335,12 @@
       },
       {
         "name": "엿먹어",
-        "regex": "엿(이나)?[쳐처]?(먹|드세요|드시던|머거)",
+        "regex": "엿(이나)?(많이|마니)?[쳐처]?(먹|드세요|드시던|머거)",
+        "ruleType": "Black"
+      },
+      {
+        "name": "의도가 불순한 엿",
+        "regex": "^엿$",
         "ruleType": "Black"
       },
       {
@@ -345,7 +350,7 @@
       },
       {
         "name": "아무리 귀엽게 말해도 욕은 욕입니다.",
-        "regex": "뽀큐|뻐뀨|뽀뀨|뽁유|[뽀포퍼빠뻐][뀨큐]",
+        "regex": "뽀큐|뻐뀨|뽀뀨|뽁유|[뽀포퍼빠뻐][뀨큐]|^보큐$",
         "ruleType": "Black"
       },
       {
@@ -642,6 +647,11 @@
         "name": "매춘부",
         "regex": "매춘부?",
         "ruleType": "Black"
+      },
+      {
+        "name": "이러면 모를 줄 알았나요?",
+        "regex": "લસશ|નુલુંગ",
+        "ruleType": "Black"
       }
     ]
   },
@@ -721,7 +731,7 @@
       },
       {
         "name": "섹스",
-        "regex": "^(?!검색스).*[ㅅ人へ색쉑섹섺샊셲쒝쒞섁쎅쎾쎽쌕섻셐샠솈섘짹쨱쨲][스수ㅅへ人쓰쯔쑤쓔]|[섻쉓]|sex",
+        "regex": "^(?!검색스).*[ㅅ人へ색쉑섹섺샊셲쒝쒞섁쎅쎾쎽쌕섻셐샠솈섘짹쨱쨲][스수ㅅへ人쓰쯔쑤쓔]|[섻쉓]|sex|^야[스쓰]$",
         "ruleType": "Black"
       },
       {
@@ -796,7 +806,7 @@
       },
       {
         "name": "떡치다",
-        "regex": "떡[치칠][다래자]",
+        "regex": "떡[치칠][다래자]|떡치기",
         "ruleType": "Black"
       },
       {
@@ -1024,6 +1034,11 @@
         "name": "경상도 비하발언",
         "regex": "경상디언",
         "ruleType": "Black"
+      },
+      {
+        "name": "트위터 짹짹이",
+        "regex": "트[짹쨱]이",
+        "ruleType": "Black"
       }
     ]
   },
@@ -1179,7 +1194,7 @@
       },
       {
         "name": "메갈리아",
-        "regex": "메갈[련년]",
+        "regex": "메갈리아|메갈([^로]|$)",
         "ruleType": "Black"
       },
       {
@@ -1199,7 +1214,7 @@
       },
       {
         "name": "이승만",
-        "regex": "이승만|승만이",
+        "regex": "[이런]승만|승만이",
         "ruleType": "Black"
       },
       {
@@ -1428,6 +1443,11 @@
         "ruleType": "Black"
       },
       {
+        "name": "나치즘",
+        "regex": "나치즘",
+        "ruleType": "Black"
+      },
+      {
         "name": "혐오의 의미가 담겨버린 슬픈 손모양",
         "regex": "\uD83E\uDD0F",
         "ruleType": "Black"
@@ -1484,12 +1504,17 @@
       },
       {
         "name": "여성시대",
-        "regex": "여성시대|여시[는가도나]",
+        "regex": "여성시대|여시([는가도나]|$)",
+        "ruleType": "Black"
+      },
+      {
+        "name": "워마드",
+        "regex": "워[마x][드x]",
         "ruleType": "Black"
       },
       {
         "name": "페미니즘",
-        "regex": "페미(니즘)?",
+        "regex": "[페패폐]미(니즘)?",
         "ruleType": "Black"
       },
       {
@@ -1505,6 +1530,156 @@
       {
         "name": "남녀 혐오",
         "regex": "[남녀여]성혐오",
+        "ruleType": "Black"
+      },
+      {
+        "name": "I purchase a ball",
+        "regex": "공산당",
+        "ruleType": "Black"
+      },
+      {
+        "name": "스탈린",
+        "regex": "스탈린",
+        "ruleType": "Black"
+      },
+      {
+        "name": "버락 오바마",
+        "regex": "오바마",
+        "ruleType": "Black"
+      },
+      {
+        "name": "티베트 독립",
+        "regex": "프리(티베트|티벳)|(티베트|티벳)독립",
+        "ruleType": "Black"
+      },
+      {
+        "name": "홍콩 독립",
+        "regex": "프리(향항|홍콩)|(향항|홍콩)(독립|광복)|(광복(홍콩|향항))?시대혁명",
+        "ruleType": "Black"
+      },
+      {
+        "name": "천안문",
+        "regex": "천안문|톈안[먼문]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "빌 클린턴",
+        "regex": "빌클린턴",
+        "ruleType": "Black"
+      },
+      {
+        "name": "힐러리 클린턴",
+        "regex": "힐러리(클린턴)?",
+        "ruleType": "Black"
+      },
+      {
+        "name": "미하일 세르게예비치 고르바초프",
+        "regex": "고르바초프",
+        "ruleType": "Black"
+      },
+      {
+        "name": "블라디미르 레닌",
+        "regex": "레닌",
+        "ruleType": "Black"
+      },
+      {
+        "name": "블라디미르 푸틴",
+        "regex": "푸틴",
+        "ruleType": "Black"
+      },
+      {
+        "name": "보리스 옐친",
+        "regex": "옐친",
+        "ruleType": "Black"
+      },
+      {
+        "name": "볼로디미르 젤렌스키",
+        "regex": "젤렌스키",
+        "ruleType": "Black"
+      },
+      {
+        "name": "마오쩌둥",
+        "regex": "마오쩌둥",
+        "ruleType": "Black"
+      },
+      {
+        "name": "아베 신조",
+        "regex": "아베",
+        "ruleType": "Black"
+      },
+      {
+        "name": "한한령",
+        "regex": "한한령",
+        "ruleType": "Black"
+      },
+      {
+        "name": "중국몽",
+        "regex": "중국몽",
+        "ruleType": "Black"
+      },
+      {
+        "name": "THAAD",
+        "regex": "thaad|^사드([은는이가배]|$)",
+        "ruleType": "Black"
+      },
+      {
+        "name": "파시즘",
+        "regex": "파시즘|결속주의",
+        "ruleType": "Black"
+      },
+      {
+        "name": "여성가족부",
+        "regex": "여성가족부|[여ㅈ]가부",
+        "ruleType": "Black"
+      },
+      {
+        "name": "세금 낭비",
+        "regex": "세금(낭비|도둑|루팡)",
+        "ruleType": "Black"
+      },
+      {
+        "name": "민족 볼셰비즘",
+        "regex": "민족볼셰비즘|나츠볼",
+        "ruleType": "Black"
+      },
+      {
+        "name": "이라크 전쟁",
+        "regex": "이라크전쟁?",
+        "ruleType": "Black"
+      },
+      {
+        "name": "걸프 전쟁",
+        "regex": "걸프전쟁?",
+        "ruleType": "Black"
+      },
+      {
+        "name": "러시아의 우크라이나 침공",
+        "regex": "우크라이나(습격|전쟁|기습|침공)",
+        "ruleType": "Black"
+      },
+      {
+        "name": "시리아 내전",
+        "regex": "시리아내전",
+        "ruleType": "Black"
+      },
+      {
+        "name": "블랙워싱",
+        "regex": "블랙워[싱시]|blackwash(ing)?",
+        "ruleType": "Black"
+      },
+      {
+        "name": "화이트워싱",
+        "regex": "화이트워[싱시]|whitewash(ing)?",
+        "ruleType": "Black"
+      },
+      {
+        "name": "옐로워싱",
+        "regex": "옐로워[싱시]|blackwash(ing)?",
+        "ruleType": "Black"
+      },
+      {
+        "name": "정치적 올바름",
+        "regex": "정치적 올바름",
         "ruleType": "Black"
       }
     ]
