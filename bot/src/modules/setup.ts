@@ -1,7 +1,7 @@
 import { applicationCommand, Extension, ownerOnly } from "@pikokr/command.ts"
 import { ApplicationCommandType, ChatInputCommandInteraction } from "discord.js"
 import { prisma, RuleType } from "shared"
-import _officialRules from "../officialRules.json"
+import axios from "axios"
 
 class SetupModule extends Extension {
   @applicationCommand({
@@ -28,7 +28,9 @@ class SetupModule extends Extension {
 
     await i.deferReply()
 
-    const officialRules: Rule[] = _officialRules
+    const { data: officialRules } = await axios.get<Rule[]>(
+      "https://raw.githubusercontent.com/KimuSoft/ypbot/main/bot/src/officialRules.json"
+    )
 
     await prisma.rule.deleteMany({
       where: {
