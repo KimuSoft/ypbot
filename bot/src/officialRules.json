@@ -2259,6 +2259,17 @@
     ]
   },
   {
+    "name": "러시아어 금지",
+    "description": "러시아워",
+    "elements": [
+      {
+        "name": "키릴 문자",
+        "regex": "[\\u0400-\\u04FF]+",
+        "ruleType": "Black"
+      }
+    ]
+  },
+  {
     "name": "중국어 금지",
     "description": "나는 베이징의 천안문을 사랑해",
     "elements": [
