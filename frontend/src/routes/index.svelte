@@ -24,7 +24,7 @@
         >
           <a href="/app">
             <Button class="bg-red-500 lg:text-2xl lg:px-4 lg:py-2 rounded-md">
-              봇 초대하기
+              서버 관리하기
             </Button>
           </a>
           <a href="https://discord.gg/s6wjaRgraJ" target="_blank">
