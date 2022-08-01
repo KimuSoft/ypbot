@@ -652,6 +652,11 @@
         "name": "이러면 모를 줄 알았나요?",
         "regex": "લસશ|નુલુંગ",
         "ruleType": "Black"
+      },
+      {
+        "name": "깡패",
+        "regex": "깡패",
+        "ruleType": "Black"
       }
     ]
   },
@@ -1269,7 +1274,7 @@
       },
       {
         "name": "노무현",
-        "regex": "노무현|노코리타",
+        "regex": "노?무현|노코리타",
         "ruleType": "Black"
       },
       {
@@ -1414,7 +1419,7 @@
       },
       {
         "name": "더불어민주당",
-        "regex": "민주당|더불어(공산당|만진당)",
+        "regex": "민주당|더불어(공산당|만진당)|더민주",
         "ruleType": "Black"
       },
       {
@@ -1573,8 +1578,8 @@
         "ruleType": "Black"
       },
       {
-        "name": "천안문",
-        "regex": "[천톈탠텐]안[먼문]",
+        "name": "천안문 6.4 항쟁",
+        "regex": "[천톈탠텐]안[먼문]|19890?60?4",
         "ruleType": "Black"
       },
       {
@@ -1736,6 +1741,16 @@
         "name": "월북",
         "regex": "월북",
         "ruleType": "Black"
+      },
+      {
+        "name": "김두한 (대한민국 제3·6대 국회의원)",
+        "regex": "김두한",
+        "ruleType": "Black"
+      },
+      {
+        "name": "동튀르키스탄 독립운동",
+        "regex": "위구르독립|프리위구르",
+        "ruleType": "Black"
       }
     ]
   },
@@ -1825,9 +1840,14 @@
       },
       {
         "name": "의문형 해체 불규칙활용",
-        "regex": ".[해가서둬]$",
+        "regex": ".[해가서둬놔]$",
         "ruleType": "Black",
         "separate": true
+      },
+      {
+        "name": "간결체 평서형",
+        "regex": "하?다$",
+        "ruleType": "Black"
       }
     ]
   },
