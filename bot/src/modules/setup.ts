@@ -30,27 +30,65 @@ class SetupModule extends Extension {
 
     const officialRules: Rule[] = _officialRules
 
-    await prisma.rule.deleteMany({ where: { isOfficial: true } })
+    await prisma.rule.deleteMany({
+      where: {
+        isOfficial: true,
+        name: {
+          notIn: officialRules.map((x) => x.name),
+        },
+      },
+    })
 
     for (const rule of officialRules) {
-      await prisma.rule.create({
-        data: {
-          name: rule.name,
-          description: rule.description,
-          authorId: i.user.id,
+      const r = await prisma.rule.findFirst({
+        where: {
           isOfficial: true,
-          elements: {
-            createMany: {
-              skipDuplicates: true,
-              data: rule.elements.map((x) => ({
-                name: x.name,
-                regex: x.regex,
-                ruleType: x.ruleType as RuleType,
-              })),
-            },
-          },
+          name: rule.name,
         },
       })
+      if (r) {
+        await prisma.ruleElement.deleteMany({
+          where: {
+            ruleId: r.id,
+          },
+        })
+        await prisma.rule.update({
+          where: {
+            id: r.id,
+          },
+          data: {
+            elements: {
+              createMany: {
+                skipDuplicates: true,
+                data: rule.elements.map((x) => ({
+                  name: x.name,
+                  regex: x.regex,
+                  ruleType: x.ruleType as RuleType,
+                })),
+              },
+            },
+          },
+        })
+      } else {
+        await prisma.rule.create({
+          data: {
+            name: rule.name,
+            description: rule.description,
+            authorId: i.user.id,
+            isOfficial: true,
+            elements: {
+              createMany: {
+                skipDuplicates: true,
+                data: rule.elements.map((x) => ({
+                  name: x.name,
+                  regex: x.regex,
+                  ruleType: x.ruleType as RuleType,
+                })),
+              },
+            },
+          },
+        })
+      }
     }
 
     await i.editReply({
