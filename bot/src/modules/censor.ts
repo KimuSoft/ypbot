@@ -31,10 +31,37 @@ class CensorModule extends Extension {
 
       const originalContent = msg.content
         .normalize()
+        // 일반 기호 및 숫자 제거
+        .replace(/[!?@#$%^&*():;+-=~{}<>_\[\]|\\"',.\/`₩\d]/g, "")
+
+        // 특수 기호 제거
+        // U+2000-U+206F 일반적으로 사용되는 문장 부호
+        // U+2070—U+209F 첨자 및 아래 첨자
+        // U+20A0—U+20CF 통화 기호
+        // U+20D0—U+20FF 마크와 함께
+        // U+2100—U+214F 수식 기호 문자
+        // U+2150—U+218F 디지털 형태
+        // ...
+        // U+2B00—U+2BFF 기타 기호와 화살표
+        // U+FF00—U+FFEF 반 폭 및 전체 폭 양식
+        // U+3000—U+303F CJK 기호 및 구두점
+        // U+00A0-U+00BB 라틴-1 보충: 라틴어 1 문장 부호 및 기호
+        // U+00F7 라틴-1 보충: 나눗셈 기호
+        // U+00D7 라틴-1 보충: 곱셈 기호
         .replace(
-          /[!?@#$%^&*():;+-=~{}<>_\[\]|\\"',.\/`₩\s\t\d\u2000-\u2FFF\u200B\u115F\u1160\u3164\uFFA0\u2800]/g,
+          /[\u2000-\u2BFF\uFF00-\uFFEF\u3000-\u303F\u00A0-\u00BB\u00F7\u00D7]/g,
           ""
         )
+
+        // 공백 문자 제거
+        // U+200B 제로 너비 공간
+        // U+115F 한글 조성 필러
+        // U+1160 한글 정성 필러
+        // U+3164 한글 필러
+        // U+FFA0 반쪽 한글 필러
+        // U+2800 점자 패턴 공백
+        // U+17B5 크메르어 모음 고유의 Aa
+        .replace(/[\s\t\d\u200B\u115F\u1160\u3164\uFFA0\u2800\u17B5]/g, "")
 
       if (!originalContent) return
 
@@ -104,7 +131,11 @@ class CensorModule extends Extension {
 
       content += normalizedContent.slice(lastIndex)
 
-      if (content === normalizedContent && rule.ruleType === "Black") {
+      if (
+        content === normalizedContent &&
+        rule.ruleType === "Black" &&
+        !rule.separate
+      ) {
         let newContent: string = ""
         const c = rule.separate
           ? hangul.disassembleToString(originalContent)
