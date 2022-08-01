@@ -5,7 +5,7 @@
     "elements" : [
       {
         "name" : "씨발",
-        "regex" : "([시쉬스슈싯싰씨씻씼쒸씺씹앂싸쓔취씌야ㅅへ人ㅆ⩘入八㉦㈆∧]|//^|//^ㅣ|ㅇㅑ|di|si|she|shi|shu|syu|shyu|ya|se|tl|//^ㅣ)[ㄱ-ㅎㅏ-ㅣ0-9이으ㅣieㅡ-]*(빠|밠|밟|밣|밡|뿔|불|발|뱔|팔|펄|벌|뻘|빨|뿰|붤|봘|뷀|벨|벩|풜|밦|밟|밠|밢|㈅|㉥|ㅂ|8|ㅃ|var|bar|val|bal|vul|bul|bel|qkf)|[쉬쒸씨](바|ba)|[시씨띠][바파][아ㅏ]*[알랄]|^[시씨스ㅅㅆ][바ㅂ㈓]$|[씹쓉씝십쉽][할알팔발핧팛팙팘핤붤벨밸]|tlqk|ㅽ|18[놈넘]",
+        "regex" : "([시쉬스슈싯싰씨씻씼쒸씺씹앂싸쓔취씌야ㅅへ人ㅆ⩘入八㉦㈆∧c]|//^|//^ㅣ|ㅇㅑ|di|si|she|shi|shu|syu|shyu|ya|se|tl|//^ㅣ)[ㄱ-ㅎㅏ-ㅣ0-9이으ㅣieㅡ-]*(빠|밠|밟|밣|밡|뿔|불|발|뱔|팔|펄|벌|뻘|빨|뿰|붤|봘|뷀|벨|벩|풜|밦|밟|밠|밢|㈅|㉥|ㅂ|8|ㅃ|var|bar|val|bal|vul|bul|bel|qkf)|[쉬쒸씨](바|ba)|[시씨띠][바파][아ㅏ]*[알랄]|^[시씨스ㅅㅆ][바ㅂ㈓]$|[씹쓉씝십쉽][할알팔발핧팛팙팘핤붤벨밸]|tlqk|ㅽ|18[놈넘]",
         "ruleType" : "Black"
       },
       {
@@ -16,7 +16,7 @@
       },
       {
         "name" : "씨발 (숫자 우회)",
-        "regex" : "10[할알]?[련년]|십팔련|18[련년]",
+        "regex" : "10[할알]?[련년]|십팔련|18[련년놈]",
         "ruleType" : "Black"
       },
       {
@@ -117,7 +117,7 @@
       },
       {
         "name": "당신의 어머니/아버지",
-        "regex": "[ㄴ니]?[애][미비]|느[금ㄱ][ㅁ마빠]?|ㄴㄱㅁ|늑음마|느개[미비]}|니[앰앱]이|^느엄$",
+        "regex": "[ㄴ니]?[애][미비]|느[금ㄱ][ㅁ마빠]?|ㄴㄱㅁ|늑음마|느개[미비]|니[앰앱]이|^느엄$",
         "ruleType": "Black"
       },
       {
@@ -1049,6 +1049,131 @@
         "name": "냄져",
         "regex": "냄[져저]",
         "ruleType": "Black"
+      },
+      {
+        "name": "설거지론",
+        "regex": "퐁퐁단|퐁퐁이형|설거지론|설겆이론|퐁퐁신도시",
+        "ruleType": "Black"
+      },
+      {
+        "name": "동탄맘",
+        "regex": "동탄맘",
+        "ruleType": "Black"
+      },
+      {
+        "name": "맘충",
+        "regex": "맘충",
+        "ruleType": "Black"
+      },
+      {
+        "name": "잠재적 가해자",
+        "regex": "잠재적 가해자",
+        "ruleType": "Black"
+      },
+      {
+        "name": "파오후",
+        "regex": "파오후|(쿰척)+",
+        "ruleType": "Black"
+      },
+      {
+        "name": "쿵쾅이",
+        "regex": "쿵쾅이",
+        "ruleType": "Black"
+      },
+      {
+        "name": "군캉스",
+        "regex": "군캉스",
+        "ruleType": "Black"
+      },
+      {
+        "name": "갓양남",
+        "regex": "갓양남",
+        "ruleType": "Black"
+      },
+      {
+        "name": "군무새",
+        "regex": "군무새",
+        "ruleType": "Black"
+      },
+      {
+        "name": "관음증 + 자지",
+        "regex": "곽[잦좆]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "군쾅이",
+        "regex": "군쾅이",
+        "ruleType": "Black"
+      },
+      {
+        "name": "김여사, 김아재",
+        "regex": "김여자|김아재",
+        "ruleType": "Black"
+      },
+      {
+        "name": "꽁치남",
+        "regex": "꽁치남",
+        "ruleType": "Black"
+      },
+      {
+        "name": "남자의 적은 남자",
+        "regex": "냄적냄",
+        "ruleType": "Black"
+      },
+      {
+        "name": "싸튀충",
+        "regex": "싸취퉁",
+        "ruleType": "Black"
+      },
+      {
+        "name": "한남유충",
+        "regex": "한남유충",
+        "ruleType": "Black"
+      },
+      {
+        "name": "근근웹",
+        "regex": "[근ㄹ][근ㄹ]웹",
+        "ruleType": "Black"
+      },
+      {
+        "name": "틀리앙",
+        "regex": "틀리앙",
+        "ruleType": "Black"
+      },
+      {
+        "name": "로리웹",
+        "regex": "로리웹",
+        "ruleType": "Black"
+      },
+      {
+        "name": "근첩",
+        "regex": "[근ㄹ]첩",
+        "ruleType": "Black"
+      },
+      {
+        "name": "짭새",
+        "regex": "짭새",
+        "ruleType": "Black"
+      },
+      {
+        "name": "군바리",
+        "regex": "군바리",
+        "ruleType": "Black"
+      },
+      {
+        "name": "디시충",
+        "regex": "디[시씨]충",
+        "ruleType": "Black"
+      },
+      {
+        "name": "중근웹",
+        "regex": "중근웹",
+        "ruleType": "Black"
+      },
+      {
+        "name": "근카라이브",
+        "regex": "근카라이브",
+        "ruleType": "Black"
       }
     ]
   },
@@ -1083,7 +1208,7 @@
       },
       {
         "name": "할짝",
-        "regex": "[할핥핡햘햝햙ㅎ][ㅉ짝쨕작착쟉쨝]",
+        "regex": "[할핥핡햘햝햙ㅎ][ㅉ짝쨕작착쟉쨝]([^업품곡]|$)",
         "ruleType": "Black"
       },
       {
@@ -1150,6 +1275,11 @@
         "name": "무슨 냄새를 맡으시는 거죠",
         "regex": "(킁카?)+",
         "ruleType": "Black"
+      },
+      {
+        "name": "촉수",
+        "regex": "촉수",
+        "ruleType": "Black"
       }
     ]
   },
@@ -1174,7 +1304,7 @@
       },
       {
         "name": "딱 좋다",
-        "regex": "(따악|딱딱+)좋다",
+        "regex": "(따악|딱딱+)좋다|^딱좋[다노]$",
         "ruleType": "Black"
       },
       {
@@ -1189,12 +1319,12 @@
       },
       {
         "name": "야 기분 좋다",
-        "regex": "야기분좋다",
+        "regex": "야기분좋[다노]",
         "ruleType": "Black"
       },
       {
         "name": "이기야",
-        "regex": "이기야$",
+        "regex": "이기야$|^이기$",
         "ruleType": "Black"
       },
       {
@@ -1219,7 +1349,7 @@
       },
       {
         "name": "한남충",
-        "regex": "한남충",
+        "regex": "한남충|^한남$",
         "ruleType": "Black"
       },
       {
@@ -1404,7 +1534,12 @@
       },
       {
         "name": "도널드 트럼프",
-        "regex": "도[널날]드[트도][럼람][프푸]",
+        "regex": "도[널날]드[트도][럼람][프푸]|럼프형|트황상",
+        "ruleType": "Black"
+      },
+      {
+        "name": "조지 부시",
+        "regex": "조지부시",
         "ruleType": "Black"
       },
       {
@@ -1724,7 +1859,7 @@
       },
       {
         "name": "조선민주주의인민공화국",
-        "regex": "북조선|북한|[부쿡]카니스탄|조선민주주의인민공화국",
+        "regex": "북조선|북한|[부쿡]카니스탄|조선민주주의인민공화국|노스코리아|northkorea|democraticpeoplesrepublicofkorea",
         "ruleType": "Black"
       },
       {
@@ -1750,6 +1885,136 @@
       {
         "name": "동튀르키스탄 독립운동",
         "regex": "위구르독립|프리위구르",
+        "ruleType": "Black"
+      },
+      {
+        "name": "통일교",
+        "regex": "통일교",
+        "ruleType": "Black"
+      },
+      {
+        "name": "대순진리교",
+        "regex": "대순진리[교회]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "전국장애인차별철폐연대",
+        "regex": "전장[연련]|전국장애인차별철폐연대",
+        "ruleType": "Black"
+      },
+      {
+        "name": "노동조합",
+        "regex": "노동조합",
+        "ruleType": "Black"
+      },
+      {
+        "name": "한국노동조합총연맹",
+        "regex": "한국노동조합총연맹|한국노총",
+        "ruleType": "Black"
+      },
+      {
+        "name": "전국민주노동조합총연맹",
+        "regex": "전국민주노동조합총연맹|민주노총",
+        "ruleType": "Black"
+      },
+      {
+        "name": "청년유니온",
+        "regex": "청년유니온",
+        "ruleType": "Black"
+      },
+      {
+        "name": "센카쿠열도",
+        "regex": "센카쿠열도|첨각열도|댜오위다오|댜오위타이|피너클열도",
+        "ruleType": "Black"
+      },
+      {
+        "name": "탈레반",
+        "regex": "탈레반|taliban",
+        "ruleType": "Black"
+      },
+      {
+        "name": "2014년 러시아의 크림반도 합병",
+        "regex": "크림반도",
+        "ruleType": "Black"
+      },
+      {
+        "name": "저기 다리가 터졌는데요?",
+        "regex": "국민여러분안심하십시오|서울시민여러분안심하고서울을지키십시오",
+        "ruleType": "Black"
+      },
+      {
+        "name": "이낙연 (대한민국 제45대 국무총리)",
+        "regex": "이낙연",
+        "ruleType": "Black"
+      },
+      {
+        "name": "안철수",
+        "regex": "안[철찰][수스]|안쳤어([는가]|$)",
+        "ruleType": "Black"
+      },
+      {
+        "name": "배리나 (페미니즘 유튜버)",
+        "regex": "배리나|baelina",
+        "ruleType": "Black"
+      },
+      {
+        "name": "윤김지영 (페미니스트)",
+        "regex": "안[철찰][수스]|안쳤어([는가]|$)",
+        "ruleType": "Black"
+      },
+      {
+        "name": "미투운동",
+        "regex": "미투운동",
+        "ruleType": "Black"
+      },
+      {
+        "name": "혜화역 시위",
+        "regex": "혜회역시위",
+        "ruleType": "Black"
+      },
+      {
+        "name": "사담 후사인 압드 알마지드 알티크리티",
+        "regex": "사담후[세사]인",
+        "ruleType": "Black"
+      },
+      {
+        "name": "드미트리 아나톨리예비치 메드베데프",
+        "regex": "메드베데프",
+        "ruleType": "Black"
+      },
+      {
+        "name": "9.11 테러",
+        "regex": "911테러",
+        "ruleType": "Black"
+      },
+      {
+        "name": "그 분",
+        "regex": "비선실세",
+        "ruleType": "Black"
+      },
+      {
+        "name": "네?",
+        "regex": "우주가(나서서)?도와(준다줍니다)",
+        "ruleType": "Black"
+      },
+      {
+        "name": "네?",
+        "regex": "대통령직을사퇴합니다",
+        "ruleType": "Black"
+      },
+      {
+        "name": "네?",
+        "regex": "바쁜벌꿀은슬퍼할시간도없다",
+        "ruleType": "Black"
+      },
+      {
+        "name": "네?",
+        "regex": "이러려고대통령을했나",
+        "ruleType": "Black"
+      },
+      {
+        "name": "네!",
+        "regex": "나만불편해",
         "ruleType": "Black"
       }
     ]
@@ -1848,6 +2113,11 @@
         "name": "간결체 평서형",
         "regex": "하?다$",
         "ruleType": "Black"
+      },
+      {
+        "name": "초성체",
+        "regex": "^[ㄱ-ㅎ]+$",
+        "ruleType": "Black"
       }
     ]
   },
@@ -1894,6 +2164,117 @@
         "regex": "ㅁ",
         "ruleType": "Black",
         "separate": true
+      }
+    ]
+  },
+  {
+    "name": "노체 금지",
+    "description": "경상도 사투리 쓰시는 분들께는 죄송합니다.",
+    "elements": [
+      {
+        "name": "노체",
+        "regex": "노$",
+        "ruleType": "Black"
+      }
+    ]
+  },
+  {
+    "name": "일본어 금지",
+    "description": "와따시 일본어 못쓰는데스",
+    "elements": [
+      {
+        "name": "히라가나",
+        "regex": "[ぁ-ん]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "가타카나",
+        "regex": "[ァ-ン]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "아이누어 확장",
+        "regex": "[ㇰㇱㇲㇳㇴㇵㇶㇷㇸㇹㇺㇻㇼㇽㇾㇿ]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "한자",
+        "regex": "[\\u4E00-\\u9FFF]+",
+        "ruleType": "Black"
+      }
+    ]
+  },
+  {
+    "name": "그리스어 금지",
+    "description": "디스 이스 낫 스파르타",
+    "elements": [
+      {
+        "name": "그리스 문자",
+        "regex": "[\\u0370-\\u03FF]+",
+        "ruleType": "Black"
+      }
+    ]
+  },
+  {
+    "name": "한국어 금지",
+    "description": "세종대왕님 죄송합니다",
+    "elements": [
+      {
+        "name": "한글 자음",
+        "regex": "[ㄱ-ㅎ]+",
+        "ruleType": "Black"
+      },
+      {
+        "name": "한글 모음",
+        "regex": "[ㅏ-ㅣ]+",
+        "ruleType": "Black"
+      },
+      {
+        "name": "한글 조합자",
+        "regex": "[가-힣]+",
+        "ruleType": "Black"
+      }
+    ]
+  },
+  {
+    "name": "영어 금지",
+    "description": "저 영어 할 줄 몰라요우",
+    "elements": [
+      {
+        "name": "알파벳",
+        "regex": "[a-zA-Z]+",
+        "ruleType": "Black"
+      }
+    ]
+  },
+  {
+    "name": "중국어 금지",
+    "description": "나는 베이징의 천안문을 사랑해",
+    "elements": [
+      {
+        "name": "한자 부수",
+        "regex": "[\\u2E80-\\u2EFF]+",
+        "ruleType": "Black"
+      },
+      {
+        "name": "창힐수입법",
+        "regex": "[\\u2F00-\\u2FDF]+",
+        "ruleType": "Black"
+      },
+      {
+        "name": "Ideographic Description Characters",
+        "regex": "[\\u2FF0-\\u2FFF]+",
+        "ruleType": "Black"
+      },
+      {
+        "name": "한자",
+        "regex": "[\\u4E00-\\u9FFF]+",
+        "ruleType": "Black"
+      },
+      {
+        "name": "호환용 확장 한자",
+        "regex": "[\\u3400-\\u4DBF]+",
+        "ruleType": "Black"
       }
     ]
   }

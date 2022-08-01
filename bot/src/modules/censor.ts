@@ -31,6 +31,7 @@ class CensorModule extends Extension {
 
       const originalContent = msg.content
         .normalize()
+
         // 일반 기호 및 숫자 제거
         .replace(/[!?@#$%^&*():;+-=~{}<>_\[\]|\\"',.\/`₩\d]/g, "")
 
