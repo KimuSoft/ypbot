@@ -126,6 +126,7 @@ const manager = new Cluster.Manager(
     shardsPerClusters: 2,
     totalClusters: "auto",
     token: process.env.DISCORD_BOT_TOKEN!,
+    mode: "process",
   }
 )
 
