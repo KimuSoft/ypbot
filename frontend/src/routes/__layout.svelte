@@ -45,6 +45,12 @@
       loadingPromise = fetchInitialData()
     }
   }
+
+  $: {
+    if (!loadingPromise) {
+      loadingPromise = fetchInitialData()
+    }
+  }
 </script>
 
 <svelte:head>
