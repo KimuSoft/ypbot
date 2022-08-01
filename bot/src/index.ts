@@ -8,6 +8,13 @@ import { logger } from "./utils"
 import Cluster from "discord-hybrid-sharding"
 import { ChannelType } from "discord.js"
 
+process.on("uncaughtException", (err) => {
+  logger.error(err)
+})
+process.on("unhandledRejection", (err) => {
+  logger.error(err)
+})
+
 dotenv.config({
   path: path.join(__dirname, "../../.env"),
 })

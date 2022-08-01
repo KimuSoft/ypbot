@@ -66,13 +66,13 @@ class RuleModule extends Extension {
   async interaction(i: Interaction) {
     if (!i.isSelectMenu()) return
     if (i.customId !== "ruleList") return
-    await i.deferReply()
 
     const rule = await prisma.rule.findUnique({
       where: { id: i.values[0] },
     })
 
-    if (!rule) return i.reply("존재하지 않는 규칙입니다.")
+    if (!rule)
+      return i.reply({ content: "존재하지 않는 규칙입니다.", ephemeral: true })
 
     const embed = new EmbedBuilder()
       .setAuthor({ name: rule.isOfficial ? "📕  " : "📙  " + rule.name })
