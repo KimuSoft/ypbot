@@ -167,6 +167,7 @@
           <RuleSelectGroup
             on:select
             title="내 규칙"
+            hideAuthor
             rules={data.my.filter((x) => !excludedIds.includes(x.id))}
           />
           <RuleSelectGroup

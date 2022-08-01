@@ -18,9 +18,9 @@
 
 <div
   on:click={onClick}
-  class="bg-black/40 flex items-center gap-2 rounded-xl p-4 cursor-pointer ring-1 ring-white/20 hover:ring-blue-500 transition-all"
+  class="bg-black/40 flex gap-2 rounded-xl p-4 cursor-pointer ring-1 ring-white/20 hover:ring-blue-500 transition-all"
 >
-  <div class="flex flex-col gap-2 flex-grow">
+  <div class="flex flex-col gap-2 flex-grow h-full justify-between">
     <div>
       <div class="text-lg font-bold">
         {rule.name}
@@ -47,7 +47,7 @@
         <FaPlus />
       </div>
     </div>
-    <div class="flex gap-2 items-center ">
+    <div class="flex gap-2 items-center">
       <div class="leading-[16px]">
         {rule.counts.black}
       </div>

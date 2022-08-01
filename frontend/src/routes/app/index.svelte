@@ -150,6 +150,7 @@
         <RuleSelectGroup
           on:select={onSelectMyRule}
           title="내 규칙"
+          hideAuthor
           rules={rules.my}
         />
         <RuleSelectGroup
