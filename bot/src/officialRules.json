@@ -2237,6 +2237,17 @@
     ]
   },
   {
+    "name": "한국어만 허용",
+    "description": "한국이 문화 승리에 성공하였습니다!",
+    "elements": [
+      {
+        "name": "한글",
+        "regex": "[ㄱ-ㅎㅏ-ㅣ가-힣]+",
+        "ruleType": "White"
+      }
+    ]
+  },
+  {
     "name": "영어 금지",
     "description": "저 영어 할 줄 몰라요우",
     "elements": [
