@@ -2248,6 +2248,17 @@
     ]
   },
   {
+    "name": "아랍어 금지",
+    "description": "석유가 부러워서 그런 건 아니예요",
+    "elements": [
+      {
+        "name": "아랍 문자",
+        "regex": "[\\u0600-\\u06FF]+",
+        "ruleType": "Black"
+      }
+    ]
+  },
+  {
     "name": "중국어 금지",
     "description": "나는 베이징의 천안문을 사랑해",
     "elements": [
