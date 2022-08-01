@@ -20,15 +20,15 @@
           </div>
         </div>
         <div
-          class="max-w-[360px] mt-4 lg:mt-24 flex gap-4 justify-center lg:justify-start mx-auto"
+          class="max-w-[360px] mt-4 lg:mt-24 flex gap-4 justify-center lg:justify-start mx-auto lg:mx-0"
         >
           <a href="/app">
-            <Button class="bg-red-500 lg:text-2xl lg:px-4 lg:py-2 rounded-lg">
+            <Button class="bg-red-500 lg:text-2xl lg:px-4 lg:py-2 rounded-md">
               봇 초대하기
             </Button>
           </a>
           <a href="https://discord.gg/s6wjaRgraJ" target="_blank">
-            <Button class="bg-[#5865F2] lg:text-2xl lg:px-4 lg:py-2 rounded-lg">
+            <Button class="bg-[#5865F2] lg:text-2xl lg:px-4 lg:py-2 rounded-md">
               공식 디스코드
             </Button>
           </a>
