@@ -65,13 +65,6 @@ model RuleElement {
   separate Boolean  @default(false) // 자모 분리 옵션
 }
 
-model Session {
-  id        String   @id
-  sid       String   @unique
-  data      String
-  expiresAt DateTime
-}
-
 enum RuleType {
   Black // 해당 정규식에 해당하면 제재함
   White // 해당 정규식에 해당하지 않으면 제재함
