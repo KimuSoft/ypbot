@@ -71,7 +71,7 @@
       },
       {
         "name" : "병신 (초성우회)",
-        "regex" : "(병|ㅂㅕㅇ)(신|ㅅㅣㄴ)",
+        "regex" : "(병|ㅂㅕㅇ|qud)(신|ㅅㅣㄴ|tls)",
         "ruleType" : "Black",
         "separate": true
       },
@@ -107,7 +107,7 @@
       },
       {
         "name": "썅",
-        "regex": "썅|ㅆㅑㅇ|tid",
+        "regex": "썅|ㅆㅑㅇ",
         "ruleType": "Black"
       },
       {
@@ -181,8 +181,13 @@
         "ruleType": "Black"
       },
       {
-        "name": "~자식",
+        "name": "~자식 (~ = 두글자 이상)",
         "regex": "..자식",
+        "ruleType": "Black"
+      },
+      {
+        "name": "~자식 (~ = 한글자)",
+        "regex": ".자식",
         "ruleType": "Black"
       },
       {
@@ -300,7 +305,7 @@
       },
       {
         "name": "존나",
-        "regex": "[ㅈ존][ㄴ나]",
+        "regex": "([ㅈ존]|jon|jonn)([ㄴ나]|na)",
         "ruleType": "Black"
       },
       {
@@ -395,7 +400,7 @@
       },
       {
         "name": "미치다",
-        "regex": "[미ㅁ][친ㅊ쳐처]",
+        "regex": "[미ㅁ][친ㅊ쳐처]|crazy",
         "ruleType": "Black"
       },
       {
@@ -445,7 +450,7 @@
       },
       {
         "name": "양아치",
-        "regex": "양아치",
+        "regex": "양아치|",
         "ruleType": "Black"
       },
       {
@@ -475,7 +480,7 @@
       },
       {
         "name": "바보",
-        "regex": "([바밥방봐봡봥빠빱빵뽜뽭뽱]|ba)([보봉뽀뽕부붕뿌뿡]|bo|bu)|[ㅂㅃ][rㅏ]([보봉뽀뽕]|bo)|[ㅂq][ㅏk][ㅂq][ㅗh]|ㅂㅏㅂㅗ|([밥빱]|bab)[오옹ㅗ]|fool",
+        "regex": "([바밥방봐봡봥빠빱빵뽜뽭뽱]|ba)([보봉뽀뽕부붕뿌뿡]|bo|bu)|[ㅂㅃ][rㅏ]([보봉뽀뽕]|bo)|[ㅂq][ㅏk][ㅂq][ㅗh]|ㅂㅏㅂㅗ|([밥빱]|bab)[오옹ㅗ]|fool|(천|ㅊㅓㄴ)(재|ㅈㅐ)(의|ㅇㅡㅣ)(반|ㅂㅏㄴ)(대|ㄷㅐ)|stupid",
         "ruleType": "Black"
       },
       {
@@ -485,12 +490,17 @@
       },
       {
         "name": "당신은 사랑받기 위해 태어난 사람이에요!",
-        "regex": "자살할|죽고싶다|죽을까|죽어버릴까|죽을[것거]같",
+        "regex": "자[살해]할|죽고싶다|죽을까|죽어버릴까|죽을[것거]같",
         "ruleType": "Black"
       },
       {
-        "name": "자살해라",
-        "regex": "자살해",
+        "name": "자살/자해해라",
+        "regex": "자[살해]해",
+        "ruleType": "Black"
+      },
+      {
+        "name": "ㅁ...무서워요!",
+        "regex": "살해|타살",
         "ruleType": "Black"
       },
       {
@@ -671,6 +681,11 @@
       {
         "name": "깡패",
         "regex": "깡패",
+        "ruleType": "Black"
+      },
+      {
+        "name": "못 배워 먹은 놈",
+        "regex": "못배워먹은놈",
         "ruleType": "Black"
       }
     ]
@@ -962,6 +977,31 @@
       {
         "name": "따먹다",
         "regex": "따먹어[버줄]",
+        "ruleType": "Black"
+      },
+      {
+        "name": "으우...",
+        "regex": "fetish",
+        "ruleType": "Black"
+      },
+      {
+        "name": "이건 좀...",
+        "regex": "boob",
+        "ruleType": "Black"
+      },
+      {
+        "name": "Nsfw",
+        "regex": "nsfw",
+        "ruleType": "Black"
+      },
+      {
+        "name": "젖꼭지",
+        "regex": "tit|nipple",
+        "ruleType": "Black"
+      },
+      {
+        "name": "자위",
+        "regex": "자위|Masturbation",
         "ruleType": "Black"
       }
     ]
