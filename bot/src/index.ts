@@ -111,6 +111,9 @@ const rpc = trpc
             "const count = global.stats.censorCount; global.stats.censorCount = 0; count"
           )
         ).reduce((a, b) => a + b),
+        bot_memory_usage: (
+          await manager.broadcastEval("process.memoryUsage().rss")
+        ).reduce((a, b) => a + b),
       }
     },
   })

@@ -59,12 +59,9 @@ app.get("/metrics", async (req, res) => {
   if (req.headers.authorization !== `Bearer ${process.env.METRICS_TOKEN}`)
     return res.sendStatus(401)
   try {
-    const memoryUsage = Object.fromEntries(
-      Object.entries(process.memoryUsage()).map(([k, v]) => [
-        `server_memory_${k}`,
-        v,
-      ])
-    )
+    const memoryUsage = {
+      server_memory_usage: process.memoryUsage().rss,
+    }
 
     const metrics: Record<string, any> = {
       ...(await rpc.query("stats")),
