@@ -62,6 +62,10 @@ class CensorModule extends Extension {
         // U+2800 점자 패턴 공백
         // U+17B5 크메르어 모음 고유의 Aa
         .replace(/[\s\t\d\u200B\u115F\u1160\u3164\uFFA0\u2800\u17B5]/g, "")
+      
+      
+        // ~ to the ~ 제거
+        .replace(/tothe/g, "")
 
       if (!originalContent) return
 
