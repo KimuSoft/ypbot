@@ -450,7 +450,7 @@
       },
       {
         "name": "양아치",
-        "regex": "양아치|",
+        "regex": "(양|sheep)아치",
         "ruleType": "Black"
       },
       {
