@@ -3,6 +3,8 @@ import {
   ApplicationCommandType,
   ChatInputCommandInteraction,
   Client,
+  Options,
+  Partials,
 } from "discord.js"
 import path from "path"
 import { YPClient } from "./structures/YPClient"
@@ -54,6 +56,16 @@ class DevModule extends Extension {
 
 export const client = new Client({
   intents: ["MessageContent", "Guilds", "DirectMessages", "GuildMessages"],
+  partials: [
+    Partials.User,
+    Partials.ThreadMember,
+    Partials.Channel,
+    Partials.GuildMember,
+  ],
+  makeCache: Options.cacheWithLimits({
+    MessageManager: 0,
+    PresenceManager: 0,
+  }),
 })
 
 export const cts = new YPClient(client, logger)
