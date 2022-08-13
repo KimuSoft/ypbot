@@ -4,12 +4,10 @@ import fs from "fs"
 
 dotenv.config({
   path: path.join(__dirname, "../../.env"),
-  override: true,
 })
 
 dotenv.config({
   path: path.join(__dirname, "../../shared/.env"),
-  override: true,
 })
 
 import { ApolloServer } from "apollo-server-express"
