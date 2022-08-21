@@ -29,8 +29,13 @@ class CensorModule extends Extension {
       if (msg.author.bot || msg.author.id === this.client.user?.id) return
       if (!msg.guild) return
 
-      const originalContent = msg.content
-        .normalize()
+      const normalizedContent = msg.content
+        .normalize("NFC")
+        .normalize("NFKC")
+        .normalize("NFD")
+        .normalize("NFKD")
+
+      const originalContent = normalizedContent
 
         // 일반 기호 및 숫자 제거
         .replace(/[!?@#$%^&*():;+-=~{}<>_\[\]|\\"',.\/`₩\d]/g, "")
@@ -102,8 +107,6 @@ class CensorModule extends Extension {
       const rule = matches[0]
 
       const regex = new RegExp(rule.regex, "g")
-
-      const normalizedContent = msg.content.normalize()
 
       const regexMatches = normalizedContent.matchAll(regex)
 
