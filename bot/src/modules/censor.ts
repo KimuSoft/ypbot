@@ -29,7 +29,7 @@ class CensorModule extends Extension {
       if (msg.author.bot || msg.author.id === this.client.user?.id) return
       if (!msg.guild) return
 
-      const normalizedContent = msg.content.normalize("NFC").normalize("NFKC")
+      const normalizedContent = msg.content.normalize("NFKC").normalize("NFC")
 
       const originalContent = normalizedContent
 
