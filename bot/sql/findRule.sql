@@ -59,12 +59,12 @@ _matches as (
     r."regex",
     r."separate",
     r."ruleId",
-    r."_Keyword" ~* r."regex" as "_Match"
+    r."_Keyword" ~* normalize(r."regex", nfkc) as "_Match"
   from _elements as r
 )
 select r."name",
   r."ruleType",
-  r."regex",
+  normalize(r."regex", nfkc) as regex,
   r."separate",
   rule."name" as "ruleName"
 from _matches as r
