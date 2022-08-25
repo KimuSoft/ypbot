@@ -12,6 +12,7 @@ import fs from "fs"
 import path from "path"
 import { sqlDir } from "../utils"
 import { captureException } from "@sentry/node"
+import { runInThisContext } from "vm"
 
 class CensorModule extends Extension {
   private findRuleSql!: string
@@ -213,9 +214,18 @@ class CensorModule extends Extension {
     }
   }
 
-  @listener({ event: "messageUpdate" })
-  async messageUpdate(oldMsg: Message, newMsg: Message) {
-    return this.messageCreate(newMsg)
+  @listener({ event: "raw" })
+  async raw(data: any) {
+    if (data.t === "MESSAGE_UPDATE") {
+      // @ts-ignore
+      const m = new Message(this.client, data.d)
+
+      const msg = m as Message
+
+      if (!msg.content) return
+
+      return this.messageCreate(msg)
+    }
   }
 }
 

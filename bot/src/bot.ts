@@ -65,6 +65,7 @@ export const client = new Client({
   makeCache: Options.cacheWithLimits({
     MessageManager: 0,
     PresenceManager: 0,
+    UserManager: 0,
   }),
 })
 
