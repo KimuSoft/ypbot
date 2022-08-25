@@ -11,6 +11,7 @@ import { YPClient } from "./structures/YPClient"
 import { logger } from "./utils"
 import * as Sentry from "@sentry/node"
 import "@sentry/tracing"
+import * as Cluster from "discord-hybrid-sharding"
 
 process.on("uncaughtException", (err) => {
   logger.error(err)
@@ -54,6 +55,8 @@ class DevModule extends Extension {
   }
 }
 
+const clusterInfo = Cluster.Client.getInfo()
+
 export const client = new Client({
   intents: ["MessageContent", "Guilds", "DirectMessages", "GuildMessages"],
   partials: [
@@ -67,6 +70,8 @@ export const client = new Client({
     PresenceManager: 0,
     UserManager: 0,
   }),
+  shardCount: clusterInfo.TOTAL_SHARDS,
+  shards: clusterInfo.SHARD_LIST,
 })
 
 export const cts = new YPClient(client, logger)
