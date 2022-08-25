@@ -217,12 +217,12 @@ class CensorModule extends Extension {
   @listener({ event: "raw" })
   async raw(data: any) {
     if (data.t === "MESSAGE_UPDATE") {
-      if (!data.d.content) return
-
       // @ts-ignore
       const m = new Message(this.client, data.d)
 
       const msg = m as Message
+
+      if (!msg.content) return
 
       return this.messageCreate(msg)
     }
