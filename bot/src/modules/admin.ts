@@ -16,21 +16,48 @@ import { prisma, RuleType } from "shared"
 class AdminModule extends Extension {
   @applicationCommand({
     type: ApplicationCommandType.ChatInput,
-    name: "알림채널",
-    description: "알림채널 설정",
+    name: "alert_channel",
+    nameLocalizations: {
+      ko: "알림채널",
+    },
+    description: "Setting notification channel",
+    descriptionLocalizations: {
+      ko: "알림채널 설정 관련 명령어예요.",
+    },
     dmPermission: false,
   })
   async setNotificationChannel(
     i: ChatInputCommandInteraction,
     @option({
       type: ApplicationCommandOptionType.Subcommand,
-      name: "설정",
-      description: "알림 채널을 설정합니다",
+      name: "set",
+      name_localizations: {
+        ko: "설정",
+      },
+      description: "Set the channel on which notifications will be posted",
+      description_localizations: {
+        ko: "알림 채널을 설정합니다",
+        ja: "通知チャンネルを設定します。",
+        "zh-TW": "配置通知信道 。",
+        "zh-CN": "配置通知信道 。",
+      },
       options: [
         {
           type: ApplicationCommandOptionType.Channel,
-          name: "채널",
-          description: "알림 채널로 설정할 채널",
+          name: "channel",
+          name_localizations: {
+            ko: "채널",
+            ja: "チャンネル",
+            "zh-TW": "通道",
+            "zh-CN": "渠道",
+          },
+          description: "The channel on which notifications are posted",
+          description_localizations: {
+            ko: "알림 채널로 설정할 채널",
+            ja: "通知チャンネルに設定するチャンネル",
+            "zh-TW": "設置爲通知信道的信道",
+            "zh-CN": "设置为通知信道的信道",
+          },
           required: true,
           channel_types: [
             ChannelType.GuildText,
@@ -43,8 +70,17 @@ class AdminModule extends Extension {
     set: boolean,
     @option({
       type: ApplicationCommandOptionType.Subcommand,
-      name: "초기화",
-      description: "알림 채널 설정을 초기화합니다",
+      name: "reset",
+      name_localizations: {
+        ko: "초기화",
+      },
+      description: "Initialize notification channel setting",
+      description_localizations: {
+        ko: "알림 채널 설정을 초기화합니다.",
+        ja: "通知チャンネルの設定を初期化します。",
+        "zh-TW": "重置通知信道設置 。",
+        "zh-CN": "重置通知信道设置 。",
+      },
     })
     reset: boolean
   ) {
@@ -83,8 +119,17 @@ class AdminModule extends Extension {
 
   @applicationCommand({
     type: ApplicationCommandType.ChatInput,
-    name: "관리",
-    description: "관리 페이지로 이동합니다",
+    name: "admin",
+    nameLocalizations: {
+      ko: "관리",
+    },
+    description: "Get link of dashboard",
+    descriptionLocalizations: {
+      ko: "서버 규칙 관리 페이지로 이동합니다.",
+      ja: "サーバールール管理ページに移動します。",
+      "zh-TW": "轉到服務器規則管理頁面 。",
+      "zh-CN": "转到服务器规则管理页面 。",
+    },
     dmPermission: false,
   })
   async manage(i: ChatInputCommandInteraction) {
