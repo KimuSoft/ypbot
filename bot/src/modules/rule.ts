@@ -13,8 +13,17 @@ import { prisma, Rule, RuleType } from "shared"
 class RuleModule extends Extension {
   @applicationCommand({
     type: ApplicationCommandType.ChatInput,
-    name: "규칙",
-    description: "이 채널에 적용된 규칙 목록을 보여줍니다.",
+    name: "rules",
+    nameLocalizations: {
+      ko: "규칙",
+    },
+    description: "View a list of rules applied to this channel.",
+    descriptionLocalizations: {
+      ko: "이 채널에 적용된 규칙 목록을 보여줍니다.",
+      ja: "このチャンネルに適用されたルールの一覧を見ます。",
+      "zh-TW": "查看適用於此通道的規則列表 。",
+      "zh-CN": "查看适用于此通道的规则列表 。",
+    },
     dmPermission: false,
   })
   async tags(i: ChatInputCommandInteraction) {
