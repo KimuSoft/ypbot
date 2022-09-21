@@ -1,0 +1,21 @@
+{
+  "name": "bot",
+  "packageManager": "yarn@3.2.3",
+  "dependencies": {
+    "bluebird": "^3.7.2",
+    "chalk": "^5.0.1",
+    "dotenv": "^16.0.2",
+    "eris": "github:coolcalcacol/eris#v10",
+    "socket.io-client": "^4.5.2"
+  },
+  "devDependencies": {
+    "@types/bluebird": "^3.5.36",
+    "@types/node": "^18.7.18",
+    "ansi-styles": "^6.1.1",
+    "typescript": "^4.8.3"
+  },
+  "scripts": {
+    "dev": "tsc -w"
+  },
+  "type": "module"
+}
