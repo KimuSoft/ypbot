@@ -20,6 +20,7 @@ type MetricData = {
   id: number
   shards: MetricShard[]
   guilds: number
+  memoryUsage: NodeJS.MemoryUsage
 }
 
 scheduleJob('*/30 * * * * *', () => {

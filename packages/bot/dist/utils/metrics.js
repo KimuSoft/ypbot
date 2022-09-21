@@ -10,6 +10,7 @@ export const initMetrics = (client) => {
             id: +process.env.CLUSTER_ID,
             shards,
             guilds: client.guilds.size,
+            memoryUsage: process.memoryUsage(),
         });
     });
 };
