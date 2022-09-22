@@ -2,6 +2,7 @@ import chalk from 'chalk'
 import fastify from 'fastify'
 
 import { apiRoutes } from './api/index.js'
+import './config.js'
 
 const server = fastify()
 
