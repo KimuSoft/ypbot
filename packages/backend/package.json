@@ -10,5 +10,9 @@
   "type": "module",
   "scripts": {
     "dev": "concurrently --handle-input \"tsc && nodemon dist\" \"tsc -w\""
+  },
+  "dependencies": {
+    "chalk": "^5.0.1",
+    "fastify": "^4.6.0"
   }
 }
