@@ -44,10 +44,12 @@ export const userRoutes: FastifyPluginAsync = async (server) => {
 
     await user.rules.init()
 
-    if (user.id === req.user?.id) {
-      return user.rules.toArray()
-    }
+    await req.em.populate(user, ['rules.authors'])
 
-    return user.rules.toArray().filter((x) => x.visibility === Visibility.Public)
+    return user.rules
+      .toArray()
+      .filter(
+        (x) => x.visibility === Visibility.Public || x.authors.some((y) => y.id === req.user!.id)
+      )
   })
 }

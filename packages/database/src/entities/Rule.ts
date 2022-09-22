@@ -5,7 +5,7 @@ import type { User } from './User.js'
 
 @Entity({ tableName: 'rules' })
 export class Rule {
-  @PrimaryKey({ type: 'serial' })
+  @PrimaryKey({ autoincrement: true })
   id!: number
 
   @Property({ type: 'varchar(36)' })

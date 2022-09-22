@@ -15,4 +15,4 @@ export const orm = await MikroORM.init({
 
 export const YPEntities = [User, Rule]
 
-export { User, Visibility }
+export { User, Visibility, Rule }
