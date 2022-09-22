@@ -1,18 +1,14 @@
-import { DataSource } from 'typeorm'
+import { MikroORM } from '@mikro-orm/core'
 
+import { dbUrl } from './constants.js'
 import { User } from './entities/User.js'
 
 export { UserFlags } from './flags/UserFlags.js'
 
-export const dataSource = new DataSource({
-  type: 'postgres',
-  url: process.env.PG_DSN!,
+export const orm = await MikroORM.init({
   entities: [User],
-  synchronize: true,
+  clientUrl: dbUrl,
+  type: 'postgresql',
 })
-
-await dataSource.initialize()
-
-export const UserRepo = dataSource.getRepository(User)
 
 export { User }

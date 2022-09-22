@@ -12,11 +12,11 @@
   },
   "typings": "./dist/index.d.ts",
   "dependencies": {
+    "@mikro-orm/core": "^5.4.2",
+    "@mikro-orm/postgresql": "^5.4.2",
     "dotenv": "^16.0.2",
     "pg": "^8.8.0",
-    "reflect-metadata": "^0.1.13",
-    "typeorm": "^0.3.10",
-    "typeorm-encrypted": "^0.8.0"
+    "reflect-metadata": "^0.1.13"
   },
   "scripts": {
     "dev": "tsc -w",

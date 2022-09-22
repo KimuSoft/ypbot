@@ -1,55 +1,44 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm'
-import { EncryptionTransformer } from 'typeorm-encrypted'
+import { Entity, PrimaryKey, Property } from '@mikro-orm/core'
 
 import { dbSecret } from '../constants.js'
 import { UserFlags } from '../flags/UserFlags.js'
 
-@Entity({ name: 'users' })
+@Entity({ tableName: 'users' })
 export class User {
-  @PrimaryColumn()
+  @PrimaryKey({ type: 'serial' })
   id!: string
 
-  @Column()
+  @Property()
   username!: string
 
-  @Column()
+  @Property()
   discriminator!: string
 
-  @Column({ nullable: true })
+  @Property({ nullable: true })
   avatar?: string
 
-  @Column({ nullable: true })
+  @Property({ nullable: true })
   banner?: string
 
-  @Column({ nullable: true })
+  @Property({ nullable: true })
   accentColor?: number
 
-  @Column({
+  @Property({
     type: 'varchar',
     nullable: false,
-    transformer: new EncryptionTransformer({
-      algorithm: 'aes-256-gcm',
-      ivLength: 10,
-      key: dbSecret,
-    }),
   })
   discordAccessToken!: string
 
-  @Column({
+  @Property({
     type: 'varchar',
     nullable: false,
-    transformer: new EncryptionTransformer({
-      algorithm: 'aes-256-gcm',
-      ivLength: 10,
-      key: dbSecret,
-    }),
   })
   discordRefreshToken!: string
 
-  @Column({ select: false })
+  @Property()
   discordTokenExpiresAt!: Date
 
-  @Column({ default: 0, type: 'int' })
+  @Property({ default: 0, type: 'int' })
   flags!: UserFlags
 
   get avatarURL() {

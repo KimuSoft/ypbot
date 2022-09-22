@@ -13,6 +13,8 @@
     "dev": "concurrently --handle-input \"tsc && nodemon dist\" \"tsc -w\""
   },
   "dependencies": {
+    "@mikro-orm/core": "^5.4.2",
+    "@mikro-orm/postgresql": "^5.4.2",
     "@sinclair/typebox": "^0.24.42",
     "@ypbot/database": "workspace:*",
     "axios": "^0.27.2",
@@ -22,7 +24,6 @@
     "fastify": "^4.6.0",
     "ioredis": "^5.2.3",
     "jsonwebtoken": "^8.5.1",
-    "reflect-metadata": "^0.1.13",
-    "typeorm": "^0.3.10"
+    "reflect-metadata": "^0.1.13"
   }
 }

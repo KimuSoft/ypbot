@@ -1,3 +1,4 @@
+import { EntityManager } from '@mikro-orm/core'
 import { User } from '@ypbot/database'
 import chalk from 'chalk'
 import fastify from 'fastify'
@@ -8,6 +9,8 @@ import './config.js'
 declare module 'fastify' {
   interface FastifyRequest {
     user?: User
+
+    em: EntityManager
   }
 }
 

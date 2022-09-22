@@ -7,3 +7,4 @@ const dirname = fileURLToPath(import.meta.url)
 dotenv.config({ path: path.join(dirname, '..', '..', '..', '..', '.env') })
 
 export const dbSecret = process.env.DB_SECRET_KEY!
+export const dbUrl = process.env.PG_DSN!

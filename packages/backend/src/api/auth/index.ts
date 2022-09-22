@@ -1,5 +1,5 @@
 import { Static, Type } from '@sinclair/typebox'
-import { User, UserRepo } from '@ypbot/database'
+import { User, orm } from '@ypbot/database'
 import {
   APIUser,
   RESTGetAPIUserResult,
@@ -64,10 +64,10 @@ export const authRoutes: FastifyPluginAsync = async (server) => {
         })
       ).data as APIUser
 
+      const UserRepo = req.em.getRepository(User)
+
       let user: User | null = await UserRepo.findOne({
-        where: {
-          id: discordUser.id,
-        },
+        id: discordUser.id,
       })
 
       if (!user) {
@@ -87,7 +87,7 @@ export const authRoutes: FastifyPluginAsync = async (server) => {
       user.banner = discordUser.banner ?? undefined
       user.accentColor = discordUser.accent_color ?? undefined
 
-      await UserRepo.save(user)
+      await req.em.persistAndFlush(user)
 
       const token = jwt.sign({ id: user.id }, jwtSecret, { expiresIn: '7d' })
 

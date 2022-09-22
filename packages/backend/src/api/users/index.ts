@@ -1,4 +1,4 @@
-import { UserRepo } from '@ypbot/database'
+import { User } from '@ypbot/database'
 import { FastifyPluginAsync } from 'fastify'
 
 export const userRoutes: FastifyPluginAsync = async (server) => {
@@ -13,7 +13,9 @@ export const userRoutes: FastifyPluginAsync = async (server) => {
       return reply.status(200).send(req.user)
     }
 
-    const user = await UserRepo.findOne({ where: { id } })
+    const UserRepo = req.em.getRepository(User)
+
+    const user = await UserRepo.findOne({ id })
 
     if (!user) return reply.status(404).send(new Error('User not found.'))
 

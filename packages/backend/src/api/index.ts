@@ -1,4 +1,4 @@
-import { UserRepo } from '@ypbot/database'
+import { User, orm } from '@ypbot/database'
 import { FastifyPluginAsync } from 'fastify'
 import jwt from 'jsonwebtoken'
 
@@ -10,6 +10,8 @@ export const apiRoutes: FastifyPluginAsync = async (server) => {
   server.get('/', () => ({ hello: 'world' }))
 
   server.addHook('onRequest', async (req) => {
+    req.em = orm.em.fork()
+
     try {
       let token = req.headers.authorization
 
@@ -19,7 +21,9 @@ export const apiRoutes: FastifyPluginAsync = async (server) => {
 
       const data = jwt.verify(token, jwtSecret) as { id: string }
 
-      const user = await UserRepo.findOne({ where: { id: data.id } })
+      const UserRepo = req.em.getRepository(User)
+
+      const user = await UserRepo.findOne({ id: data.id })
 
       req.user = user ?? undefined
     } catch (e) {
