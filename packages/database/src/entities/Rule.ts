@@ -22,4 +22,15 @@ export class Rule {
 
   @ManyToMany(() => 'User')
   authors = new Collection<User>(this)
+
+  toJSON(fields: string[] = []) {
+    return {
+      id: this.id,
+      name: this.name,
+      brief: this.brief,
+      visibility: this.visibility,
+      authors: this.authors,
+      description: fields.includes('description') ? this.description : undefined,
+    }
+  }
 }
