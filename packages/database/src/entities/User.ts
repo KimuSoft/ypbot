@@ -1,6 +1,7 @@
-import { Entity, PrimaryKey, Property } from '@mikro-orm/core'
+import { Collection, Entity, ManyToMany, PrimaryKey, Property } from '@mikro-orm/core'
 
 import { UserFlags } from '../flags/UserFlags.js'
+import { Rule } from './Rule.js'
 
 @Entity({ tableName: 'users' })
 export class User {
@@ -37,6 +38,9 @@ export class User {
 
   @Property({ default: 0, type: 'int' })
   flags!: UserFlags
+
+  @ManyToMany(() => Rule, (r) => r.authors)
+  rules = new Collection<Rule>(this)
 
   get avatarURL() {
     if (!this.avatar) {

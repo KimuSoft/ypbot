@@ -1,24 +1,53 @@
 import { User } from '@ypbot/database'
+import { Visibility } from '@ypbot/database'
 import { FastifyPluginAsync } from 'fastify'
 
+declare module 'fastify' {
+  interface FastifyContext {
+    apiUser: User
+  }
+}
+
 export const userRoutes: FastifyPluginAsync = async (server) => {
+  server.addHook('onRequest', async (req, reply) => {
+    const id = (req.params as { id: string }).id
+
+    if (id) {
+      if (id === '@me') {
+        if (!req.user) return reply.status(401).send(new Error('Unauthorized'))
+
+        req.context.apiUser = req.user
+
+        return
+      }
+
+      const UserRepo = req.em.getRepository(User)
+
+      const user = await UserRepo.findOne({ id })
+
+      if (!user) return reply.status(404).send(new Error('User not found.'))
+
+      req.context.apiUser = user
+    }
+  })
+
   server.get<{
     Params: { id: string }
-  }>('/:id', async (req, reply) => {
-    const id = req.params.id
+  }>('/:id', async (req) => {
+    return req.context.apiUser
+  })
 
-    if (id === '@me') {
-      if (!req.user) return reply.status(401).send(new Error('Unauthorized'))
+  server.get<{
+    Params: { id: string }
+  }>('/:id/rules', async (req) => {
+    const user = req.context.apiUser
 
-      return reply.status(200).send(req.user)
+    await user.rules.init()
+
+    if (user.id === req.user?.id) {
+      return user.rules.toArray()
     }
 
-    const UserRepo = req.em.getRepository(User)
-
-    const user = await UserRepo.findOne({ id })
-
-    if (!user) return reply.status(404).send(new Error('User not found.'))
-
-    return user
+    return user.rules.toArray().filter((x) => x.visibility === Visibility.Public)
   })
 }
