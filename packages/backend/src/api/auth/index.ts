@@ -1,6 +1,7 @@
 import { Static, Type } from '@sinclair/typebox'
 import { User, UserRepo } from '@ypbot/database'
 import {
+  APIUser,
   RESTGetAPIUserResult,
   RESTPostOAuth2AccessTokenResult,
   Routes,
@@ -55,11 +56,13 @@ export const authRoutes: FastifyPluginAsync = async (server) => {
         })
       )
 
-      const { data: discordUser } = await discordApi.get<RESTGetAPIUserResult>(Routes.user(), {
-        headers: {
-          Authorization: `Bearer ${tokens.access_token}`,
-        },
-      })
+      const discordUser = (
+        await discordApi.get<RESTGetAPIUserResult>(Routes.user(), {
+          headers: {
+            Authorization: `Bearer ${tokens.access_token}`,
+          },
+        })
+      ).data as APIUser
 
       let user: User | null = await UserRepo.findOne({
         where: {
@@ -81,9 +84,12 @@ export const authRoutes: FastifyPluginAsync = async (server) => {
       user.discordRefreshToken = tokens.refresh_token
       user.discordTokenExpiresAt = new Date(Date.now() + tokens.expires_in * 1000)
 
+      user.banner = discordUser.banner ?? undefined
+      user.accentColor = discordUser.accent_color ?? undefined
+
       await UserRepo.save(user)
 
-      const token = jwt.sign({ id: user.id }, jwtSecret)
+      const token = jwt.sign({ id: user.id }, jwtSecret, { expiresIn: '7d' })
 
       return reply.status(200).send({ token })
     }

@@ -1,8 +1,15 @@
+import { User } from '@ypbot/database'
 import chalk from 'chalk'
 import fastify from 'fastify'
 
 import { apiRoutes } from './api/index.js'
 import './config.js'
+
+declare module 'fastify' {
+  interface FastifyRequest {
+    user?: User
+  }
+}
 
 const server = fastify()
 

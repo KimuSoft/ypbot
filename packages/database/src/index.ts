@@ -2,6 +2,8 @@ import { DataSource } from 'typeorm'
 
 import { User } from './entities/User.js'
 
+export { UserFlags } from './flags/UserFlags.js'
+
 export const dataSource = new DataSource({
   type: 'postgres',
   url: process.env.PG_DSN!,
