@@ -1,11 +1,10 @@
 import { Entity, PrimaryKey, Property } from '@mikro-orm/core'
 
-import { dbSecret } from '../constants.js'
 import { UserFlags } from '../flags/UserFlags.js'
 
 @Entity({ tableName: 'users' })
 export class User {
-  @PrimaryKey({ type: 'serial' })
+  @PrimaryKey({ type: 'varchar' })
   id!: string
 
   @Property()
@@ -25,13 +24,11 @@ export class User {
 
   @Property({
     type: 'varchar',
-    nullable: false,
   })
   discordAccessToken!: string
 
   @Property({
     type: 'varchar',
-    nullable: false,
   })
   discordRefreshToken!: string
 

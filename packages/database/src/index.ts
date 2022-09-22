@@ -11,4 +11,6 @@ export const orm = await MikroORM.init({
   type: 'postgresql',
 })
 
+export const YPEntities = [User]
+
 export { User }
