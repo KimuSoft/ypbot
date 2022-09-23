@@ -2,6 +2,7 @@ import { Rule, User } from '@ypbot/database'
 import { Visibility } from '@ypbot/database'
 import { FastifyPluginAsync } from 'fastify'
 
+import { meilisearch } from '../../utils/meilisearch.js'
 import { PaginationResponse } from '../schema/pagination.js'
 import { RuleSearchSchema, RuleSearchSchemaType } from '../schema/ruleSearch.js'
 
@@ -48,22 +49,33 @@ export const userRoutes: FastifyPluginAsync = async (server) => {
 
     const RulesRepository = req.em.getRepository(Rule)
 
-    const query = req.query as RuleSearchSchemaType
+    const query = req.query
 
-    const [rules, count] = await RulesRepository.findAndCount(
+    let filter = `(visibility = ${Visibility.Public})`
+
+    if (req.user) {
+      filter += `OR (authors = '${req.user.id}')`
+    }
+
+    if (query.visibility !== undefined) {
+      filter = `(${filter})AND(visibility=${query.visibility})`
+    }
+
+    const { hits, estimatedTotalHits } = await meilisearch.index('rules').search(query.query, {
+      offset: query.offset,
+      limit: query.limit,
+      filter: `authors = '${user.id}' AND (${filter})`,
+    })
+
+    const rules = await RulesRepository.find(
       {
-        authors: { id: user.id },
-        $or: req.user
-          ? [{ visibility: Visibility.Public }, { authors: { id: req.user.id } }]
-          : [{ visibility: Visibility.Public }],
-        ...(query.visibility !== undefined ? { visibility: query.visibility } : {}),
-        ...(query.query ? { name: { $like: `%${query.query}%` } } : {}),
+        id: { $in: hits.map((x) => x.id) },
       },
       { limit: query.limit, offset: query.offset }
     )
 
     await req.em.populate(rules, ['authors'])
 
-    return new PaginationResponse(count, rules)
+    return new PaginationResponse(estimatedTotalHits, rules)
   })
 }
