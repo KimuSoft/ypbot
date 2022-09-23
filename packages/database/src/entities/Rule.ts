@@ -1,6 +1,15 @@
-import { Collection, Entity, Enum, ManyToMany, PrimaryKey, Property } from '@mikro-orm/core'
+import {
+  Collection,
+  Entity,
+  Enum,
+  ManyToMany,
+  OneToMany,
+  PrimaryKey,
+  Property,
+} from '@mikro-orm/core'
 
 import { Visibility } from '../enums/Visibility.js'
+import { RuleElement } from './RuleElement.js'
 import type { User } from './User.js'
 
 @Entity({ tableName: 'rules' })
@@ -22,6 +31,9 @@ export class Rule {
 
   @ManyToMany(() => 'User')
   authors = new Collection<User>(this)
+
+  @OneToMany(() => RuleElement, (e) => e.rule)
+  elements = new Collection<RuleElement>(this)
 
   toJSON(fields: string[] = []) {
     return {
