@@ -20,7 +20,7 @@ export const ruleList = (server: FastifyInstance) => {
 
       const query = req.query
 
-      let filter = '(visibility = 0)'
+      let filter = `(visibility = ${Visibility.Private})`
 
       if (req.user) {
         filter += `OR (authors = '${req.user.id}')`
