@@ -3,6 +3,7 @@ import { Rule, Visibility } from '@ypbot/database'
 import { FastifyPluginAsync } from 'fastify'
 
 import { createRule } from './create.js'
+import { ruleList } from './list.js'
 
 declare module 'fastify' {
   interface FastifyContext {
@@ -12,6 +13,7 @@ declare module 'fastify' {
 
 export const rulesRoutes: FastifyPluginAsync = async (server) => {
   createRule(server)
+  ruleList(server)
 
   server.addHook('onRequest', async (req, reply) => {
     const { id } = req.params as { id: string }
