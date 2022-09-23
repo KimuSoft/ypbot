@@ -48,6 +48,6 @@ export const rulesRoutes: FastifyPluginAsync = async (server) => {
   server.get('/:id', async (req) => {
     await req.em.populate(req.context.apiRule, ['authors'])
 
-    return req.context.apiRule
+    return req.context.apiRule.toJSON(['description'])
   })
 }
