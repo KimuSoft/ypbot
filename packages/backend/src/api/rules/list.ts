@@ -26,15 +26,15 @@ export const ruleList = (server: FastifyInstance) => {
         filter += `OR (authors = '${req.user.id}')`
       }
 
-      console.log(filter)
+      if (query.visibility !== undefined) {
+        filter = `(${filter})AND(visibility=${query.visibility})`
+      }
 
       const { hits, estimatedTotalHits } = await meilisearch.index('rules').search(query.query, {
         offset: query.offset,
         limit: query.limit,
         filter,
       })
-
-      console.log(hits, estimatedTotalHits)
 
       const rules = await RulesRepository.find(
         {
