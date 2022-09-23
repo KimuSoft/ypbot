@@ -1,9 +1,9 @@
-import { Collection } from '@mikro-orm/core'
 import { Rule, User } from '@ypbot/database'
 import { Visibility } from '@ypbot/database'
 import { FastifyPluginAsync } from 'fastify'
 
-import { PaginationResponse, PaginationSchema, PaginationType } from '../schema/Pagination.js'
+import { PaginationResponse } from '../schema/pagination.js'
+import { RuleSearchSchema, RuleSearchSchemaType } from '../schema/ruleSearch.js'
 
 declare module 'fastify' {
   interface FastifyContext {
@@ -42,13 +42,13 @@ export const userRoutes: FastifyPluginAsync = async (server) => {
 
   server.get<{
     Params: { id: string }
-    QueryString: PaginationType
-  }>('/:id/rules', { schema: { querystring: PaginationSchema } }, async (req) => {
+    QueryString: RuleSearchSchemaType
+  }>('/:id/rules', { schema: { querystring: RuleSearchSchema } }, async (req) => {
     const user = req.context.apiUser
 
     const RulesRepository = req.em.getRepository(Rule)
 
-    const query = req.query as PaginationType
+    const query = req.query as RuleSearchSchemaType
 
     const [rules, count] = await RulesRepository.findAndCount(
       {
@@ -56,6 +56,8 @@ export const userRoutes: FastifyPluginAsync = async (server) => {
         $or: req.user
           ? [{ visibility: Visibility.Public }, { authors: { id: req.user.id } }]
           : [{ visibility: Visibility.Public }],
+        ...(query.visibility !== undefined ? { visibility: query.visibility } : {}),
+        ...(query.query ? { name: { $like: `%${query.query}%` } } : {}),
       },
       { limit: query.limit, offset: query.offset }
     )
