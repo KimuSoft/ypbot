@@ -32,9 +32,9 @@ export const apiRoutes: FastifyPluginAsync = async (server) => {
     }
   })
 
-  server.register(userRoutes, { prefix: '/users' })
+  await server.register(userRoutes, { prefix: '/users' })
 
-  server.register(authRoutes, { prefix: '/auth' })
+  await server.register(authRoutes, { prefix: '/auth' })
 
-  server.register(rulesRoutes, { prefix: '/rules' })
+  await server.register(rulesRoutes, { prefix: '/rules' })
 }

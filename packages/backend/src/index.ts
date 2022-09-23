@@ -16,7 +16,7 @@ declare module 'fastify' {
 
 const server = fastify()
 
-server.register(apiRoutes, { prefix: '/api' })
+await server.register(apiRoutes, { prefix: '/api' })
 
 const addr = await server.listen({ host: '0.0.0.0', port: 3000 })
 
