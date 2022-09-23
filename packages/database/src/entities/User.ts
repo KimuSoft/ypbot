@@ -1,6 +1,7 @@
 import { Collection, Entity, ManyToMany, PrimaryKey, Property } from '@mikro-orm/core'
 
 import { UserFlags } from '../flags/UserFlags.js'
+import { EncryptedText } from '../types/EncryptedText.js'
 import { Rule } from './Rule.js'
 
 @Entity({ tableName: 'users' })
@@ -24,12 +25,12 @@ export class User {
   accentColor?: number
 
   @Property({
-    type: 'varchar',
+    type: EncryptedText,
   })
   discordAccessToken!: string
 
   @Property({
-    type: 'varchar',
+    type: EncryptedText,
   })
   discordRefreshToken!: string
 
