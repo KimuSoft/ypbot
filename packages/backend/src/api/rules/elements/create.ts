@@ -2,6 +2,8 @@ import { Static, Type } from '@sinclair/typebox'
 import { RuleElement } from '@ypbot/database'
 import { FastifyPluginAsync } from 'fastify'
 
+import { meilisearch, searchDocumentTransformers } from '../../../utils/meilisearch.js'
+
 const CreateElementSchema = Type.Object({
   name: Type.String({ minLength: 1 }),
   keyword: Type.String({ minLength: 1 }),
@@ -23,6 +25,10 @@ export const createRuleElement: FastifyPluginAsync = async (server) => {
     elem.rule = rule
 
     await req.em.persistAndFlush(elem)
+
+    await meilisearch
+      .index('ruleElements')
+      .addDocuments([searchDocumentTransformers.ruleElement(elem)])
 
     return elem
   })
