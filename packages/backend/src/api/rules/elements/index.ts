@@ -1,8 +1,8 @@
 import { RuleElement } from '@ypbot/database'
 import { FastifyPluginAsync } from 'fastify'
 
-import { PaginationResponse, PaginationSchemaType } from '../../schema/pagination.js'
 import { createRuleElement } from './create.js'
+import { ruleElementListRoutes } from './list.js'
 
 declare module 'fastify' {
   interface FastifyContext {
@@ -11,23 +11,6 @@ declare module 'fastify' {
 }
 
 export const ruleElementsRoutes: FastifyPluginAsync = async (server) => {
-  server.get<{ Querystring: PaginationSchemaType }>('/', async (req) => {
-    const rule = req.context.apiRule
-
-    const RuleElementsRepo = req.em.getRepository(RuleElement)
-
-    const query = req.query
-
-    const [elements, count] = await RuleElementsRepo.findAndCount(
-      {
-        rule: { id: rule.id },
-      },
-      { limit: query.limit, offset: query.offset }
-    )
-
-    return new PaginationResponse(count, elements)
-  })
-
   server.addHook('onRequest', async (req, reply) => {
     const { elId } = req.params as { elId: string }
     if (elId) {
@@ -49,6 +32,8 @@ export const ruleElementsRoutes: FastifyPluginAsync = async (server) => {
   server.get('/:elId', async (req) => {
     return req.context.apiRuleElement
   })
+
+  await server.register(ruleElementListRoutes)
 
   await server.register(createRuleElement)
 }
