@@ -18,4 +18,14 @@ export class RuleElement {
 
   @ManyToOne('Rule')
   rule!: Rule
+
+  toJSON() {
+    return {
+      id: this.id,
+
+      name: this.name,
+      advanced: this.advanced,
+      keyword: this.keyword,
+    }
+  }
 }
