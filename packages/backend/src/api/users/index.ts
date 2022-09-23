@@ -42,7 +42,7 @@ export const userRoutes: FastifyPluginAsync = async (server) => {
 
   server.get<{
     Params: { id: string }
-    QueryString: RuleSearchSchemaType
+    Querystring: RuleSearchSchemaType
   }>('/:id/rules', { schema: { querystring: RuleSearchSchema } }, async (req) => {
     const user = req.context.apiUser
 

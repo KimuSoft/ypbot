@@ -6,8 +6,7 @@ import { RuleSearchSchema, RuleSearchSchemaType } from '../schema/ruleSearch.js'
 
 export const ruleList = (server: FastifyInstance) => {
   server.get<{
-    Params: {}
-    QueryString: RuleSearchSchemaType
+    Querystring: RuleSearchSchemaType
   }>(
     '/',
     {
@@ -18,7 +17,7 @@ export const ruleList = (server: FastifyInstance) => {
     async (req) => {
       const RulesRepository = req.em.getRepository(Rule)
 
-      const query = req.query as RuleSearchSchemaType
+      const query = req.query
 
       const [rules, count] = await RulesRepository.findAndCount(
         {
