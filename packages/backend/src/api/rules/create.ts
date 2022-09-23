@@ -3,10 +3,11 @@ import { Rule, Visibility } from '@ypbot/database'
 import { FastifyInstance } from 'fastify'
 
 import { requireAuth } from '../../utils/auth.js'
+import { meilisearch, searchDocumentTransformers } from '../../utils/meilisearch.js'
 
 const RuleCreateData = Type.Object({
   name: Type.String({ minLength: 1 }),
-  brief: Type.String({ minLength: 6 }),
+  brief: Type.String({ minLength: 1 }),
 })
 
 export const createRule = (server: FastifyInstance) => {
