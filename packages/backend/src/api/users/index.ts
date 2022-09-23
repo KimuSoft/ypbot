@@ -1,7 +1,9 @@
 import { Collection } from '@mikro-orm/core'
-import { User } from '@ypbot/database'
+import { Rule, User } from '@ypbot/database'
 import { Visibility } from '@ypbot/database'
 import { FastifyPluginAsync } from 'fastify'
+
+import { PaginationResponse, PaginationSchema, PaginationType } from '../schema/Pagination.js'
 
 declare module 'fastify' {
   interface FastifyContext {
@@ -40,16 +42,26 @@ export const userRoutes: FastifyPluginAsync = async (server) => {
 
   server.get<{
     Params: { id: string }
-  }>('/:id/rules', async (req) => {
+    QueryString: PaginationType
+  }>('/:id/rules', { schema: { querystring: PaginationSchema } }, async (req) => {
     const user = req.context.apiUser
 
-    await user.rules.init()
+    const RulesRepository = req.em.getRepository(Rule)
 
-    await req.em.populate(user, ['rules.authors'])
+    const query = req.query as PaginationType
 
-    return user.rules.toArray().filter((x) => {
-      const authors = (x.authors as unknown as Collection<User, object>).toArray()
-      return x.visibility === Visibility.Public || authors.some((y) => y.id === req.user!.id)
-    })
+    const [rules, count] = await RulesRepository.findAndCount(
+      {
+        authors: { id: user.id },
+        $or: req.user
+          ? [{ visibility: Visibility.Public }, { authors: { id: req.user.id } }]
+          : [{ visibility: Visibility.Public }],
+      },
+      { limit: query.limit, offset: query.offset }
+    )
+
+    await req.em.populate(rules, ['authors'])
+
+    return new PaginationResponse(count, rules)
   })
 }
