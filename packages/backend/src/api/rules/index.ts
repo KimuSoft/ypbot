@@ -2,6 +2,7 @@ import { FilterQuery } from '@mikro-orm/core'
 import { Rule, Visibility } from '@ypbot/database'
 import { FastifyPluginAsync } from 'fastify'
 
+import { meilisearch } from '../../utils/meilisearch.js'
 import { createRule } from './create.js'
 import { ruleElementsRoutes } from './elements/index.js'
 import { ruleList } from './list.js'
@@ -51,6 +52,32 @@ export const rulesRoutes: FastifyPluginAsync = async (server) => {
     await req.em.populate(req.context.apiRule, ['authors'])
 
     return req.context.apiRule.toJSON(['description'])
+  })
+
+  server.delete('/:id', async (req, reply) => {
+    const rule = req.context.apiRule
+
+    const authors = rule.authors
+
+    await authors.init()
+
+    if (!authors.toArray().some((x) => x.id === req.user!.id))
+      return reply.status(400).send(new Error('Missing permissions'))
+
+    await rule.elements.init()
+
+    const elements = rule.elements.toArray().map((x) => x.id)
+
+    const rulesIndex = meilisearch.index('rules')
+    const ruleElementsIndex = meilisearch.index('ruleElements')
+
+    await ruleElementsIndex.deleteDocuments(elements)
+
+    await rulesIndex.deleteDocument(rule.id)
+
+    await req.em.removeAndFlush(rule)
+
+    return { deleted: true }
   })
 
   await server.register(ruleElementsRoutes, { prefix: '/:id/elements' })

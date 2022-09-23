@@ -2,6 +2,7 @@ import { Static, Type } from '@sinclair/typebox'
 import { RuleElement } from '@ypbot/database'
 import { FastifyPluginAsync } from 'fastify'
 
+import { requireAuth } from '../../../utils/auth.js'
 import { meilisearch, searchDocumentTransformers } from '../../../utils/meilisearch.js'
 
 const CreateElementSchema = Type.Object({
@@ -13,23 +14,32 @@ const CreateElementSchema = Type.Object({
 export const createRuleElement: FastifyPluginAsync = async (server) => {
   server.post<{
     Body: Static<typeof CreateElementSchema>
-  }>('/', { schema: { body: CreateElementSchema } }, async (req) => {
-    const { name, keyword, advanced } = req.body
-    const rule = req.context.apiRule
+  }>(
+    '/',
+    { schema: { body: CreateElementSchema } },
+    requireAuth(async (req, reply) => {
+      const { name, keyword, advanced } = req.body
+      const rule = req.context.apiRule
 
-    const elem = new RuleElement()
+      const authors = await rule.authors.init()
 
-    elem.name = name
-    elem.keyword = keyword
-    elem.advanced = advanced
-    elem.rule = rule
+      if (!authors.toArray().some((x) => x.id === req.user!.id))
+        return reply.status(400).send(new Error('Missing permissions'))
 
-    await req.em.persistAndFlush(elem)
+      const elem = new RuleElement()
 
-    await meilisearch
-      .index('ruleElements')
-      .addDocuments([searchDocumentTransformers.ruleElement(elem)])
+      elem.name = name
+      elem.keyword = keyword
+      elem.advanced = advanced
+      elem.rule = rule
 
-    return elem
-  })
+      await req.em.persistAndFlush(elem)
+
+      await meilisearch
+        .index('ruleElements')
+        .addDocuments([searchDocumentTransformers.ruleElement(elem)])
+
+      return elem
+    })
+  )
 }

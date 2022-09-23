@@ -1,4 +1,5 @@
 import {
+  Cascade,
   Collection,
   Entity,
   Enum,
@@ -32,7 +33,7 @@ export class Rule {
   @ManyToMany(() => 'User')
   authors = new Collection<User>(this)
 
-  @OneToMany(() => RuleElement, (e) => e.rule)
+  @OneToMany(() => RuleElement, (e) => e.rule, { cascade: [Cascade.REMOVE] })
   elements = new Collection<RuleElement>(this)
 
   toJSON(fields: string[] = []) {
