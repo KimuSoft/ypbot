@@ -3,6 +3,7 @@ import { Rule, Visibility } from '@ypbot/database'
 import { FastifyPluginAsync } from 'fastify'
 
 import { createRule } from './create.js'
+import { ruleElementsRoutes } from './elements/index.js'
 import { ruleList } from './list.js'
 
 declare module 'fastify' {
@@ -50,4 +51,6 @@ export const rulesRoutes: FastifyPluginAsync = async (server) => {
 
     return req.context.apiRule.toJSON(['description'])
   })
+
+  await server.register(ruleElementsRoutes, { prefix: '/:id/elements' })
 }
