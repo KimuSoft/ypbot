@@ -3,6 +3,7 @@ import { FastifyPluginAsync } from 'fastify'
 
 import { createRuleElement } from './create.js'
 import { ruleElementListRoutes } from './list.js'
+import { updateRuleElementRoutes } from './update.js'
 
 declare module 'fastify' {
   interface FastifyContext {
@@ -36,4 +37,6 @@ export const ruleElementsRoutes: FastifyPluginAsync = async (server) => {
   await server.register(ruleElementListRoutes)
 
   await server.register(createRuleElement)
+
+  await server.register(updateRuleElementRoutes)
 }
