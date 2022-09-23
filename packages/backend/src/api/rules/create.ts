@@ -30,6 +30,8 @@ export const createRule = (server: FastifyInstance) => {
 
       await req.em.persistAndFlush(rule)
 
+      await meilisearch.index('rules').addDocuments([searchDocumentTransformers.rule(rule)])
+
       return rule
     })
   )
