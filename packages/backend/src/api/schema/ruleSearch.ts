@@ -9,3 +9,11 @@ export const RuleSearchSchema = Type.Object({
 })
 
 export type RuleSearchSchemaType = Static<typeof RuleSearchSchema>
+
+export const RuleElementSearchSchema = Type.Object({
+  limit: Type.Integer({ maximum: 30, minimum: 1, default: 30 }),
+  offset: Type.Integer({ minimum: 0, default: 0 }),
+  query: Type.String({ default: '' }),
+})
+
+export type RuleElementSearchSchemaType = Static<typeof RuleElementSearchSchema>
