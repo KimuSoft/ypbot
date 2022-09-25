@@ -10,13 +10,13 @@ import { redis } from './redis.js'
 export const getUserGuilds = async (
   req: FastifyRequest,
   user: User
-): Promise<Omit<APIGuild, 'features'>> => {
+): Promise<Omit<APIGuild, 'features'>[]> => {
   const key = `yp:users:${user.id}:guilds`
 
-  const data = await redis.getBuffer(key)
+  const data = await redis.hgetallBuffer(key)
 
-  if (data) {
-    return decode(data) as Omit<APIGuild, 'features'>
+  if (Object.keys(data).length) {
+    return Object.values(data).map((x) => decode(x)) as Omit<APIGuild, 'features'>[]
   }
 
   const { data: guilds } = await discordApi.get('/users/@me/guilds', {
@@ -29,7 +29,17 @@ export const getUserGuilds = async (
     delete guild.features
   }
 
-  await redis.set(key, Buffer.from(encode(guilds)), 'EX', 30)
+  let res: Omit<APIGuild, 'features'>[] = []
 
-  return guilds
+  for (const guild of guilds) {
+    if ((guild.permissions & 8) === 8) {
+      res.push(guild)
+    }
+  }
+
+  await redis.hset(key, Object.fromEntries(res.map((x) => [x.id, Buffer.from(encode(x))])))
+
+  await redis.expire(key, 60)
+
+  return res
 }
