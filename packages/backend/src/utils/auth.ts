@@ -4,11 +4,11 @@ import { FastifyRequest, RouteGenericInterface, RouteHandler } from 'fastify'
 
 import { discordApi } from './api.js'
 
-export const requireAuth = <T extends RouteGenericInterface>(handler: RouteHandler<T>) => {
+export const requireAuth = <T extends RouteGenericInterface>(handler?: RouteHandler<T>) => {
   return (async (req, reply) => {
     if (!req.user) return reply.status(401).send(new Error('Unauthorized') as never)
 
-    return handler.bind(req.server)(req, reply)
+    return handler?.bind(req.server)(req, reply)
   }) as RouteHandler<T>
 }
 
