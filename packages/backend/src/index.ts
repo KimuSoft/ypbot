@@ -5,6 +5,13 @@ import fastify from 'fastify'
 
 import { apiRoutes } from './api/index.js'
 import './config.js'
+import { rpc } from './utils/rpc.js'
+
+await new Promise<void>((resolve) => {
+  rpc.once('connect', resolve)
+
+  rpc.connect()
+})
 
 declare module 'fastify' {
   interface FastifyRequest {
