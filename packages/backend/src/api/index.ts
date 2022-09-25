@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken'
 import { jwtSecret } from '../config.js'
 import { adminRoutes } from './admin/index.js'
 import { authRoutes } from './auth/index.js'
+import { guildRoutes } from './guilds/index.js'
 import { rulesRoutes } from './rules/index.js'
 import { userRoutes } from './users/index.js'
 
@@ -38,6 +39,8 @@ export const apiRoutes: FastifyPluginAsync = async (server) => {
   await server.register(authRoutes, { prefix: '/auth' })
 
   await server.register(rulesRoutes, { prefix: '/rules' })
+
+  await server.register(guildRoutes, { prefix: '/guilds' })
 
   await server.register(adminRoutes, { prefix: '/admin' })
 }
