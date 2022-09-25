@@ -7,13 +7,16 @@ import { discordApi } from './api.js'
 import { getUserDiscordAccessToken } from './auth.js'
 import { redis } from './redis.js'
 
-export const getUserGuilds = async (req: FastifyRequest, user: User) => {
+export const getUserGuilds = async (
+  req: FastifyRequest,
+  user: User
+): Promise<Omit<APIGuild, 'features'>> => {
   const key = `yp:users:${user.id}:guilds`
 
   const data = await redis.getBuffer(key)
 
   if (data) {
-    return decode(data) as APIGuild[]
+    return decode(data) as Omit<APIGuild, 'features'>
   }
 
   const { data: guilds } = await discordApi.get('/users/@me/guilds', {
