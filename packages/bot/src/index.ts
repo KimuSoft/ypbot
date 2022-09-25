@@ -3,6 +3,7 @@ import chalk from 'chalk'
 import Eris from 'eris'
 
 import './config.js'
+import { lookupEvents } from './utils/lookup.js'
 import { initMetrics } from './utils/metrics.js'
 import { rpc } from './utils/rpc.js'
 
@@ -48,6 +49,8 @@ rpc.on('disconnect', (reason) => {
 })
 
 initMetrics(client)
+
+lookupEvents(client)
 
 rpc.connect()
 
