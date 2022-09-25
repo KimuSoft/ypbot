@@ -22,6 +22,12 @@ export const lookupEvents = (eris: Eris.Client) => {
     cb(res.map(transformGuild))
   })
 
+  rpc.on('lookupGuild', (id: string, cb) => {
+    const guild = eris.guilds.get(id)
+
+    cb(guild ? transformGuild(guild) : null)
+  })
+
   rpc.on('lookupGuildChannels', (id: string, cb) => {
     const guild = eris.guilds.get(id)
 
