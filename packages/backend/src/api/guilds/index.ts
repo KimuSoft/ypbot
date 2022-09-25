@@ -4,6 +4,7 @@ import { FastifyPluginAsync } from 'fastify'
 import { requireAuth } from '../../utils/auth.js'
 import { getUserGuild, getUserGuilds } from '../../utils/guilds.js'
 import { rpcFetch } from '../../utils/rpc.js'
+import { guildChannelsRoutes } from './channels.js'
 
 type BotGuild = {
   id: string
@@ -12,7 +13,7 @@ type BotGuild = {
 
 declare module 'fastify' {
   interface FastifyContext {
-    guild: Awaited<ReturnType<typeof getUserGuild>>
+    guild: NonNullable<Awaited<ReturnType<typeof getUserGuild>>>
   }
 }
 
@@ -53,4 +54,6 @@ export const guildRoutes: FastifyPluginAsync = async (server) => {
   })
 
   server.get('/:id', (req) => req.context.guild)
+
+  await server.register(guildChannelsRoutes, { prefix: '/:id/channels' })
 }

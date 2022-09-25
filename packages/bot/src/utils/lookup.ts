@@ -1,4 +1,5 @@
-import Eris, { Channel, ChannelTypes, Constants, Guild } from 'eris'
+import Eris, { Channel, ChannelTypes, Constants, Guild, GuildTextableChannel } from 'eris'
+import _ from 'lodash'
 
 import { rpc } from './rpc.js'
 
@@ -6,6 +7,15 @@ const transformGuild = (guild: Guild) => {
   return {
     id: guild.id,
     name: guild.name,
+  }
+}
+
+const transformChannel = (channel: GuildTextableChannel) => {
+  return {
+    id: channel.id,
+    name: channel.name,
+    position: channel.position,
+    type: channel.type,
   }
 }
 
@@ -33,16 +43,37 @@ export const lookupEvents = (eris: Eris.Client) => {
 
     if (!guild) return cb(null)
 
-    const categories = guild.channels
-      .filter((x) => x.type === Constants.ChannelTypes.GUILD_CATEGORY)
-      .map((x) => ({
-        id: x.id,
-        name: x.name,
-        position: x.position,
-      }))
+    const categories = _.sortBy(
+      guild.channels
+        .filter((x) => x.type === Constants.ChannelTypes.GUILD_CATEGORY)
+        .map((x) => ({
+          id: x.id,
+          name: x.name,
+          position: x.position,
+          channels: [] as ReturnType<typeof transformChannel>[],
+        })),
+      'position'
+    )
 
-    console.log(categories)
+    for (const category of categories) {
+      category.channels = _.sortBy(
+        (
+          guild.channels.filter(
+            (x) =>
+              x.parentID === category.id &&
+              (
+                [
+                  Constants.ChannelTypes.GUILD_TEXT,
+                  Constants.ChannelTypes.GUILD_VOICE,
+                  Constants.ChannelTypes.GUILD_NEWS,
+                ] as ChannelTypes[]
+              ).includes(x.type)
+          ) as GuildTextableChannel[]
+        ).map(transformChannel),
+        'position'
+      )
+    }
 
-    cb([])
+    cb(categories)
   })
 }

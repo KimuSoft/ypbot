@@ -22,23 +22,43 @@ export const lookupEvents = (io: Socket) => {
     ).filter((x) => !!x)
 
     cb(_.flatten(guilds))
-  }).on('lookupGuild', async (id: string, cb) => {
-    const guild = (
-      await Promise.all(
-        clusters.map(
-          (x) =>
-            new Promise((resolve) => {
-              x.socket.emit('lookupGuild', id, (data: unknown) => {
-                resolve(data)
-              })
-              setTimeout(() => {
-                resolve(null)
-              }, 1000)
-            })
-        )
-      )
-    ).find((x) => !!x)
-
-    cb(guild ?? null)
   })
+    .on('lookupGuild', async (id: string, cb) => {
+      const guild = (
+        await Promise.all(
+          clusters.map(
+            (x) =>
+              new Promise((resolve) => {
+                x.socket.emit('lookupGuild', id, (data: unknown) => {
+                  resolve(data)
+                })
+                setTimeout(() => {
+                  resolve(null)
+                }, 1000)
+              })
+          )
+        )
+      ).find((x) => !!x)
+
+      cb(guild ?? null)
+    })
+    .on('lookupGuildChannels', async (id: string, cb) => {
+      const guild = (
+        await Promise.all(
+          clusters.map(
+            (x) =>
+              new Promise((resolve) => {
+                x.socket.emit('lookupGuildChannels', id, (data: unknown) => {
+                  resolve(data)
+                })
+                setTimeout(() => {
+                  resolve(null)
+                }, 1000)
+              })
+          )
+        )
+      ).find((x) => !!x)
+
+      cb(guild ?? null)
+    })
 }
