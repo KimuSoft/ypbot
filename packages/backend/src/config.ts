@@ -7,3 +7,5 @@ const dirname = fileURLToPath(import.meta.url)
 dotenv.config({ path: path.join(dirname, '..', '..', '..', '..', '.env') })
 
 export const jwtSecret = process.env.JWT_SECRET!
+
+export const redisUrl = process.env.REDIS_URL!
