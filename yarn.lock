@@ -767,6 +767,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/lodash@npm:^4":
+  version: 4.14.185
+  resolution: "@types/lodash@npm:4.14.185"
+  checksum: f81d13da5ecab110ca9c5c7cc2bedc3c9802a6acf668576aecd1b8f4b134ed81d06c15f1e600fb08f05975098280a0d97d30cddfc2cb39ec1c6b56e971ca53b3
+  languageName: node
+  linkType: hard
+
 "@types/node-schedule@npm:^2.1.0":
   version: 2.1.0
   resolution: "@types/node-schedule@npm:2.1.0"
@@ -1079,6 +1086,7 @@ __metadata:
     meilisearch: ^0.27.0
     nodemon: ^2.0.20
     reflect-metadata: ^0.1.13
+    socket.io-client: ^4.5.2
     typescript: ^4.8.3
   languageName: unknown
   linkType: soft
@@ -3464,11 +3472,13 @@ __metadata:
   dependencies:
     "@discordjs/collection": ^1.1.0
     "@types/bluebird": ^3.5.36
+    "@types/lodash": ^4
     "@types/node": ^18.7.18
     "@types/node-schedule": ^2.1.0
     bluebird: ^3.7.2
     chalk: ^5.0.1
     concurrently: ^7.4.0
+    lodash: ^4.17.21
     node-schedule: ^2.1.0
     nodemon: ^2.0.20
     socket.io: ^4.5.2
