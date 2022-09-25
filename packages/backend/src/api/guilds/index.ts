@@ -1,16 +1,38 @@
+import { APIGuild } from 'discord-api-types/v10.js'
 import { FastifyPluginAsync } from 'fastify'
 
 import { requireAuth } from '../../utils/auth.js'
-import { getUserGuilds } from '../../utils/guilds.js'
-import { rpc, rpcFetch } from '../../utils/rpc.js'
+import { getUserGuild, getUserGuilds } from '../../utils/guilds.js'
+import { rpcFetch } from '../../utils/rpc.js'
 
 type BotGuild = {
   id: string
   name: string
 }
 
+declare module 'fastify' {
+  interface FastifyContext {
+    guild: Awaited<ReturnType<typeof getUserGuild>>
+  }
+}
+
 export const guildRoutes: FastifyPluginAsync = async (server) => {
-  server.addHook('onRequest', requireAuth())
+  server.addHook(
+    'onRequest',
+    requireAuth(async (req, reply) => {
+      const { id } = req.params as { id: string }
+
+      if (id) {
+        const guild = await getUserGuild(req, req.user!, id)
+
+        if (!guild) {
+          return reply.status(404).send(new Error('Guild not found'))
+        }
+
+        req.context.guild = guild
+      }
+    })
+  )
 
   server.get('/', async (req) => {
     const user = req.user!
@@ -29,4 +51,6 @@ export const guildRoutes: FastifyPluginAsync = async (server) => {
       return { ...x, invited: false }
     })
   })
+
+  server.get('/:id', (req) => req.context.guild)
 }

@@ -6,6 +6,35 @@ import { FastifyRequest } from 'fastify'
 import { discordApi } from './api.js'
 import { getUserDiscordAccessToken } from './auth.js'
 import { redis } from './redis.js'
+import { rpcFetch } from './rpc.js'
+
+export const getUserGuild = async (
+  req: FastifyRequest,
+  user: User,
+  id: string
+): Promise<Omit<APIGuild, 'features'> | null> => {
+  const key = `yp:user:${user.id}:guilds`
+
+  const buf = await redis.hgetBuffer(key, id)
+
+  let guild: Omit<APIGuild, 'features'> | null = null
+
+  if (buf) {
+    guild = decode(buf) as Omit<APIGuild, 'features'>
+  } else {
+    const guilds = await getUserGuilds(req, user)
+
+    guild = guilds.find((x) => x.id === id) ?? null
+  }
+
+  if (!guild) return guild
+
+  const fetchedGuild = await rpcFetch('lookupGuild', guild.id)
+
+  if (!fetchedGuild) return null
+
+  return { ...guild, ...fetchedGuild }
+}
 
 export const getUserGuilds = async (
   req: FastifyRequest,
