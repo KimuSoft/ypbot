@@ -8,6 +8,11 @@ export const RuleSearchSchema = Type.Object({
   query: Type.String({ default: '' }),
 })
 
+export const ChanenlRuleSearchSchema = Type.Object({
+  limit: Type.Integer({ maximum: 30, minimum: 1, default: 30 }),
+  offset: Type.Integer({ minimum: 0, default: 0 }),
+})
+
 export type RuleSearchSchemaType = Static<typeof RuleSearchSchema>
 
 export const RuleElementSearchSchema = Type.Object({

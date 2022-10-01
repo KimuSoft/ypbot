@@ -10,6 +10,7 @@ import {
 } from '@mikro-orm/core'
 
 import { Visibility } from '../enums/Visibility.js'
+import type { Channel } from './Channel.js'
 import { RuleElement } from './RuleElement.js'
 import type { User } from './User.js'
 
@@ -35,6 +36,9 @@ export class Rule {
 
   @OneToMany(() => RuleElement, (e) => e.rule, { cascade: [Cascade.REMOVE] })
   elements = new Collection<RuleElement>(this)
+
+  @ManyToMany('Channel')
+  channels = new Collection<Channel>(this)
 
   toJSON(fields: string[] = []) {
     return {
