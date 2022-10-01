@@ -1,4 +1,4 @@
-import Eris, { Channel, ChannelTypes, Constants, Guild, GuildTextableChannel } from 'eris'
+import Eris, { ChannelTypes, Constants, Guild, GuildTextableChannel } from 'eris'
 import _ from 'lodash'
 
 import { rpc } from './rpc.js'
@@ -17,6 +17,12 @@ const transformChannel = (channel: GuildTextableChannel) => {
     type: channel.type,
   }
 }
+
+const whitelistedChannelTypes = [
+  Constants.ChannelTypes.GUILD_TEXT,
+  Constants.ChannelTypes.GUILD_VOICE,
+  Constants.ChannelTypes.GUILD_NEWS,
+] as ChannelTypes[]
 
 export const lookupEvents = (eris: Eris.Client) => {
   rpc.on('lookupGuilds', (id: string[], cb) => {
@@ -54,20 +60,24 @@ export const lookupEvents = (eris: Eris.Client) => {
     for (const category of categories) {
       category.channels = _.sortBy(
         guild.channels.filter(
-          (x) =>
-            x.parentID === category.id &&
-            (
-              [
-                Constants.ChannelTypes.GUILD_TEXT,
-                Constants.ChannelTypes.GUILD_VOICE,
-                Constants.ChannelTypes.GUILD_NEWS,
-              ] as ChannelTypes[]
-            ).includes(x.type)
+          (x) => x.parentID === category.id && whitelistedChannelTypes.includes(x.type)
         ) as GuildTextableChannel[],
         'position'
       ).map(transformChannel)
     }
 
     cb(categories)
+  })
+
+  rpc.on('lookupGuildChannel', (guildId: string, channelId: string, cb) => {
+    const guild = eris.guilds.get(guildId)
+
+    const channel = guild?.channels.get(channelId)
+
+    if (!channel) return cb(null)
+
+    if (!whitelistedChannelTypes.includes(channel.type)) return cb(null)
+
+    return cb(transformChannel(channel as GuildTextableChannel))
   })
 }

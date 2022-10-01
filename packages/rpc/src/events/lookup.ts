@@ -61,4 +61,23 @@ export const lookupEvents = (io: Socket) => {
 
       cb(guild ?? null)
     })
+    .on('lookupGuildChannel', async (guildId: string, channelId: string, cb) => {
+      const guild = (
+        await Promise.all(
+          clusters.map(
+            (x) =>
+              new Promise((resolve) => {
+                x.socket.emit('lookupGuildChannel', guildId, channelId, (data: unknown) => {
+                  resolve(data)
+                })
+                setTimeout(() => {
+                  resolve(null)
+                }, 1000)
+              })
+          )
+        )
+      ).find((x) => !!x)
+
+      cb(guild ?? null)
+    })
 }
