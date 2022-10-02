@@ -1,7 +1,8 @@
-import { Static } from '@sinclair/typebox'
-import { Channel, Guild, Rule } from '@ypbot/database'
+import { Static, Type } from '@sinclair/typebox'
+import { Channel, Guild, Rule, Visibility } from '@ypbot/database'
 import { FastifyContext, FastifyPluginAsync } from 'fastify'
 
+import { requireAuth } from '../../utils/auth.js'
 import { rpcFetch } from '../../utils/rpc.js'
 import { PaginationResponse } from '../schema/pagination.js'
 import { ChanenlRuleSearchSchema } from '../schema/ruleSearch.js'
@@ -16,6 +17,10 @@ declare module 'fastify' {
     channel: Channel
   }
 }
+
+const ChannelRuleAddSchema = Type.Object({
+  rule: Type.Integer(),
+})
 
 export const guildChannelsRoutes: FastifyPluginAsync = async (server) => {
   server.get('/', async (req) => {
@@ -93,5 +98,49 @@ export const guildChannelsRoutes: FastifyPluginAsync = async (server) => {
 
       return new PaginationResponse(count, rules)
     }
+  )
+
+  server.post<{ Body: Static<typeof ChannelRuleAddSchema> }>(
+    '/:channelId/rules',
+    {
+      schema: {
+        body: ChannelRuleAddSchema,
+      },
+    },
+    requireAuth(async (req, reply) => {
+      const RuleRepo = req.em.getRepository(Rule)
+
+      const rule = await RuleRepo.findOne({
+        id: req.body.rule,
+        $or: [
+          {
+            authors: {
+              id: req.user!.id,
+            },
+          },
+          {
+            visibility: Visibility.Public,
+          },
+        ],
+      })
+
+      if (!rule) return reply.status(400).send(new Error('Rule not found'))
+
+      const channel = req.context.channel
+
+      await channel.rules.init()
+
+      if (channel.rules.contains(rule)) {
+        return reply.status(400).send(new Error('Rule is already added'))
+      }
+
+      channel.rules.add(rule)
+
+      await req.em.populate(rule, ['authors'])
+
+      await req.em.persistAndFlush(channel)
+
+      return reply.send(rule)
+    })
   )
 }
