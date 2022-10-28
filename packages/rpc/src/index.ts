@@ -11,6 +11,11 @@ global.Promise = Promise
 
 const io = new Server({ cors: { origin: '*' } })
 
+io.use((socket, next) => {
+  if (socket.handshake.auth.token !== process.env.RPC_SECRET) return next(new Error('Unauthorized'))
+  next()
+})
+
 io.on('connection', (socket) => {
   console.log(`${chalk.green('+')} ${chalk.blue(socket.id)}`)
 
