@@ -1,12 +1,12 @@
-import { FilterQuery } from '@mikro-orm/core'
-import { Rule, Visibility } from '@ypbot/database'
-import { FastifyPluginAsync } from 'fastify'
-
-import { meilisearch } from '../../utils/meilisearch.js'
-import { createRule } from './create.js'
-import { ruleElementsRoutes } from './elements/index.js'
-import { ruleList } from './list.js'
-import { ruleUpdateRoutes } from './update.js'
+import type { FilterQuery }        from '@mikro-orm/core'
+import { Rule }                    from '@ypbot/database'
+import { createRule }              from 'backend/src/api/rules/create.js'
+import { ruleElementsRoutes }      from 'backend/src/api/rules/elements/index.js'
+import { ruleList }                from 'backend/src/api/rules/list.js'
+import { ruleUpdateRoutes }        from 'backend/src/api/rules/update.js'
+import { meilisearch }             from 'backend/src/utils/meilisearch.js'
+import type { FastifyPluginAsync } from 'fastify'
+import { Visibility }              from 'ypbot-api-types'
 
 declare module 'fastify' {
   interface FastifyContext {
@@ -20,30 +20,30 @@ export const rulesRoutes: FastifyPluginAsync = async (server) => {
 
   server.addHook('onRequest', async (req, reply) => {
     const { id } = req.params as { id: string }
-    if (id) {
+    if (typeof id === 'string') {
       if (!isNaN(Number(id))) {
         const RuleRepo = req.em.getRepository(Rule)
 
-        const or: FilterQuery<Rule>[] = [{ visibility: Visibility.Public }]
+        const or: Array<FilterQuery<Rule>> = [{ visibility: Visibility.Public }]
 
-        if (req.user) {
+        if (req.user != null) {
           or.push({
             authors: {
-              id: req.user.id,
-            },
+              id: req.user.id
+            }
           })
         }
 
         const rule = await RuleRepo.findOne({
           id: Number(id),
-          $or: or,
+          $or: or
         })
 
-        req.context.apiRule = rule!
+        req.context.apiRule = (rule ?? null) as Rule
       }
 
-      if (!req.context.apiRule) {
-        return reply.status(404).send(new Error('Rule not found.'))
+      if (req.context.apiRule === null) {
+        return await reply.status(404).send(new Error('Rule not found.'))
       }
     }
   })
@@ -61,8 +61,7 @@ export const rulesRoutes: FastifyPluginAsync = async (server) => {
 
     await authors.init()
 
-    if (!authors.toArray().some((x) => x.id === req.user!.id))
-      return reply.status(400).send(new Error('Missing permissions'))
+    if (!authors.toArray().some((x) => x.id === req.user?.id)) return await reply.status(400).send(new Error('Missing permissions'))
 
     await rule.elements.init()
 

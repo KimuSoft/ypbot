@@ -1,12 +1,11 @@
-import { decode, encode } from '@msgpack/msgpack'
-import { User } from '@ypbot/database'
-import { APIGuild } from 'discord-api-types/v10.js'
-import { FastifyRequest } from 'fastify'
-
-import { discordApi } from './api.js'
-import { getUserDiscordAccessToken } from './auth.js'
-import { redis } from './redis.js'
-import { rpcFetch } from './rpc.js'
+import { decode, encode }            from '@msgpack/msgpack'
+import type { User }                 from '@ypbot/database'
+import { discordApi }                from 'backend/src/utils/api.js'
+import { getUserDiscordAccessToken } from 'backend/src/utils/auth.js'
+import { redis }                     from 'backend/src/utils/redis.js'
+import { rpcFetch }                  from 'backend/src/utils/rpc.js'
+import type { APIGuild }             from 'discord-api-types/v10.js'
+import type { FastifyRequest }       from 'fastify'
 
 export const getUserGuild = async (
   req: FastifyRequest,
@@ -19,7 +18,7 @@ export const getUserGuild = async (
 
   let guild: Omit<APIGuild, 'features'> | null = null
 
-  if (buf) {
+  if (buf !== null) {
     guild = decode(buf) as Omit<APIGuild, 'features'>
   } else {
     const guilds = await getUserGuilds(req, user)
@@ -27,11 +26,11 @@ export const getUserGuild = async (
     guild = guilds.find((x) => x.id === id) ?? null
   }
 
-  if (!guild) return guild
+  if (guild == null) return guild
 
   const fetchedGuild = await rpcFetch('lookupGuild', guild.id)
 
-  if (!fetchedGuild) return null
+  if (typeof fetchedGuild !== 'object') return null
 
   return { ...guild, ...fetchedGuild }
 }
@@ -39,26 +38,22 @@ export const getUserGuild = async (
 export const getUserGuilds = async (
   req: FastifyRequest,
   user: User
-): Promise<Omit<APIGuild, 'features'>[]> => {
+): Promise<Array<Omit<APIGuild, 'features'>>> => {
   const key = `yp:users:${user.id}:guilds`
 
   const data = await redis.hgetallBuffer(key)
 
-  if (Object.keys(data).length) {
-    return Object.values(data).map((x) => decode(x)) as Omit<APIGuild, 'features'>[]
-  }
+  if (Object.keys(data).length > 0) return Object.values(data).map((x) => decode(x)) as Array<Omit<APIGuild, 'features'>>
 
   const { data: guilds } = await discordApi.get('/users/@me/guilds', {
     headers: {
-      authorization: `Bearer ${await getUserDiscordAccessToken(req, user)}`,
-    },
+      authorization: `Bearer ${await getUserDiscordAccessToken(req, user)}`
+    }
   })
 
-  for (const guild of guilds) {
-    delete guild.features
-  }
+  for (const guild of guilds) delete guild.features
 
-  let res: Omit<APIGuild, 'features'>[] = []
+  const res: Array<Omit<APIGuild, 'features'>> = []
 
   for (const guild of guilds) {
     if ((guild.permissions & 8) === 8) {

@@ -1,17 +1,22 @@
-import Promise from 'bluebird'
-import chalk from 'chalk'
-import Eris from 'eris'
-
-import './config.js'
-import { lookupEvents } from './utils/lookup.js'
-import { initMetrics } from './utils/metrics.js'
-import { rpc } from './utils/rpc.js'
+import 'bot/src/config.js'
+import Promise          from 'bluebird'
+import { lookupEvents } from 'bot/src/utils/lookup.js'
+import { initMetrics }  from 'bot/src/utils/metrics.js'
+import { rpc }          from 'bot/src/utils/rpc.js'
+import chalk            from 'chalk'
+import Eris             from 'eris'
 
 // @ts-expect-error bluebird
 global.Promise = Promise
 
-const client = Eris(process.env.BOT_TOKEN!, {
-  intents: ['guildMessages', 'guilds', 'messageContent'],
+if (process.env.CLUSTER_ID === undefined) throw new Error('CLUSTER_ID is undefined')
+
+const clusterId = +process.env.CLUSTER_ID
+
+if (process.env.BOT_TOKEN === undefined) throw new Error('BOT_TOKEN is undefined')
+
+const client = Eris(process.env.BOT_TOKEN, {
+  intents: ['guildMessages', 'guilds', 'messageContent']
 })
 
 client.on('ready', () => {
@@ -39,7 +44,7 @@ const waitIdentify = new Promise<void>((resolve) => {
 rpc.on('connect', () => {
   console.log(chalk.gray('Connected to RPC server.'))
 
-  rpc.emit('identifyCluster', +process.env.CLUSTER_ID!)
+  rpc.emit('identifyCluster', clusterId)
 
   waitIdentifyResolve()
 })

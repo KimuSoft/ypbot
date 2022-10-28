@@ -1,10 +1,10 @@
-import Promise from 'bluebird'
-import chalk from 'chalk'
-import { Server } from 'socket.io'
-
-import { identifyCluster } from './cluster/index.js'
-import { lookupEvents } from './events/lookup.js'
-import './scheduler/index.js'
+import 'rpc/src/config.js'
+import 'rpc/src/scheduler/index.js'
+import Promise             from 'bluebird'
+import chalk               from 'chalk'
+import { identifyCluster } from 'rpc/src/cluster/index.js'
+import { lookupEvents }    from 'rpc/src/events/lookup.js'
+import { Server }          from 'socket.io'
 
 // @ts-expect-error bluebird
 global.Promise = Promise
@@ -22,7 +22,9 @@ io.on('connection', (socket) => {
   lookupEvents(socket)
 
   socket.on('identifyCluster', (id: number) => {
-    identifyCluster(socket, id)
+    identifyCluster(socket, id).catch(err => {
+      console.error(chalk.red('Failed to identify cluster:'), err)
+    })
   })
 
   socket.on('disconnect', (reason) => {

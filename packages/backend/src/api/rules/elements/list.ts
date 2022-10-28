@@ -1,9 +1,9 @@
-import { RuleElement } from '@ypbot/database'
-import { FastifyPluginAsync } from 'fastify'
-
-import { meilisearch } from '../../../utils/meilisearch.js'
-import { PaginationResponse } from '../../schema/pagination.js'
-import { RuleElementSearchSchema, RuleElementSearchSchemaType } from '../../schema/ruleSearch.js'
+import { RuleElement }                      from '@ypbot/database'
+import { PaginationResponse }               from 'backend/src/api/schema/pagination.js'
+import type { RuleElementSearchSchemaType } from 'backend/src/api/schema/ruleSearch.js'
+import { RuleElementSearchSchema }          from 'backend/src/api/schema/ruleSearch.js'
+import { meilisearch }                      from 'backend/src/utils/meilisearch.js'
+import type { FastifyPluginAsync }          from 'fastify'
 
 export const ruleElementListRoutes: FastifyPluginAsync = async (server) => {
   server.get<{ Querystring: RuleElementSearchSchemaType }>(
@@ -19,14 +19,14 @@ export const ruleElementListRoutes: FastifyPluginAsync = async (server) => {
       const hitElements = await meilisearch.index('ruleElements').search(query.query, {
         filter: [`rule = ${rule.id}`],
         offset: query.offset,
-        limit: query.limit,
+        limit: query.limit
       })
 
       const elements = await RuleElementsRepo.find(
         {
           id: {
-            $in: hitElements.hits.map((x) => x.id),
-          },
+            $in: hitElements.hits.map((x) => x.id)
+          }
         },
         { limit: query.limit, offset: query.offset }
       )

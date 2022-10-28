@@ -1,71 +1,69 @@
 import { Collection, Entity, ManyToMany, PrimaryKey, Property } from '@mikro-orm/core'
-
-import { UserFlags } from '../flags/UserFlags.js'
-import { EncryptedText } from '../types/EncryptedText.js'
-import { Rule } from './Rule.js'
+import { Rule }                                                 from '@ypbot/database/src/entities/Rule.js'
+import { EncryptedText }                                        from '@ypbot/database/src/types/EncryptedText.js'
+import { UserFlags }                                            from 'ypbot-api-types'
+import type { YPUser }                                          from 'ypbot-api-types'
 
 @Entity({ tableName: 'users' })
 export class User {
   @PrimaryKey({ type: 'varchar' })
-  id!: string
+    id!: string
 
   @Property()
-  username!: string
+    username!: string
 
   @Property()
-  discriminator!: string
+    discriminator!: string
 
   @Property({ nullable: true })
-  avatar?: string
+    avatar?: string
 
   @Property({ nullable: true })
-  banner?: string
+    banner?: string
 
   @Property({ nullable: true })
-  accentColor?: number
+    accentColor?: number
 
   @Property({
-    type: EncryptedText,
+    type: EncryptedText
   })
-  discordAccessToken!: string
+    discordAccessToken!: string
 
   @Property({
-    type: EncryptedText,
+    type: EncryptedText
   })
-  discordRefreshToken!: string
+    discordRefreshToken!: string
 
   @Property()
-  discordTokenExpiresAt!: Date
+    discordTokenExpiresAt!: Date
 
   @Property({ default: 0, type: 'int' })
-  flags!: UserFlags
+    flags!: UserFlags
 
   @ManyToMany(() => Rule, (r) => r.authors)
-  rules = new Collection<Rule>(this)
+    rules = new Collection<Rule>(this)
 
-  get avatarURL() {
-    if (!this.avatar) {
-      return `https://cdn.discordapp.com/embed/avatars/${+this.discriminator % 4}.png`
-    }
+  get avatarURL (): string {
+    if (this.avatar === undefined) return `https://cdn.discordapp.com/embed/avatars/${+this.discriminator % 4}.png`
+
     return `https://cdn.discordapp.com/avatars/${this.id}/${this.avatar}.${
       this.avatar.startsWith('a_') ? 'gif' : 'webp'
     }?size=512`
   }
 
-  get bannerURL() {
-    if (!this.banner) {
-      return null
-    }
+  get bannerURL (): string | null {
+    if (this.banner === undefined) return null
+
     return `https://cdn.discordapp.com/banners/${this.id}/${this.banner}.${
       this.banner.startsWith('a_') ? 'gif' : 'webp'
     }?size=4096`
   }
 
-  get tag() {
+  get tag (): string {
     return `${this.username}#${this.discriminator}`
   }
 
-  toJSON() {
+  toJSON (): YPUser {
     return {
       id: this.id,
       username: this.username,
@@ -74,7 +72,7 @@ export class User {
       tag: this.tag,
       flags: this.flags,
       banner: this.bannerURL,
-      accentColor: this.accentColor ?? null,
+      accentColor: this.accentColor ?? null
     }
   }
 }

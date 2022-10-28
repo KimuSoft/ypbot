@@ -1,20 +1,23 @@
-import Eris from 'eris'
+import { rpc }   from 'bot/src/utils/rpc.js'
+import type Eris from 'eris'
 
-import { rpc } from './rpc.js'
+if (process.env.CLUSTER_ID === undefined) throw new Error('CLUSTER_ID is undefined')
 
-export const initMetrics = (client: Eris.Client) => {
+const clusterId = +process.env.CLUSTER_ID
+
+export const initMetrics = (client: Eris.Client): void => {
   rpc.on('metrics', (respond) => {
     const shards = client.shards.map((x) => ({
       status: x.status,
       ping: x.latency,
-      id: x.id,
+      id: x.id
     }))
 
     respond({
-      id: +process.env.CLUSTER_ID!,
+      id: clusterId,
       shards,
       guilds: client.guilds.size,
-      memoryUsage: process.memoryUsage(),
+      memoryUsage: process.memoryUsage()
     })
   })
 }

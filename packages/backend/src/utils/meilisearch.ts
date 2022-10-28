@@ -1,11 +1,12 @@
-import { Rule, RuleElement } from '@ypbot/database'
-import { MeiliSearch } from 'meilisearch'
+import 'backend/src/config.js'
+import type { Rule, RuleElement } from '@ypbot/database'
+import { MeiliSearch }            from 'meilisearch'
 
-import '../config.js'
+if (process.env.MEILISEARCH_URL === undefined) throw new Error('MEILISEARCH_URL is undefined')
 
 export const meilisearch = new MeiliSearch({
-  host: process.env.MEILISEARCH_URL!,
-  apiKey: process.env.MEILISEARCH_TOKEN!,
+  host: process.env.MEILISEARCH_URL,
+  apiKey: process.env.MEILISEARCH_TOKEN
 })
 
 export const searchDocumentTransformers = {
@@ -15,13 +16,13 @@ export const searchDocumentTransformers = {
     brief: rule.brief,
     description: rule.description,
     visibility: rule.visibility,
-    authors: rule.authors.toArray().map((x) => x.id),
+    authors: rule.authors.toArray().map((x) => x.id)
   }),
   ruleElement: (elem: RuleElement) => ({
     id: elem.id,
     name: elem.name,
     keyword: elem.keyword,
     advanced: elem.advanced,
-    rule: elem.rule.id,
-  }),
+    rule: elem.rule.id
+  })
 }

@@ -1,23 +1,22 @@
-import { Rule, RuleElement } from '@ypbot/database'
-import chalk from 'chalk'
-import { FastifyPluginAsync } from 'fastify'
-
-import { meilisearch, searchDocumentTransformers } from '../../utils/meilisearch.js'
+import { Rule, RuleElement }                       from '@ypbot/database'
+import { meilisearch, searchDocumentTransformers } from 'backend/src/utils/meilisearch.js'
+import chalk                                       from 'chalk'
+import type { FastifyPluginAsync }                 from 'fastify'
 
 export const indexingRoutes: FastifyPluginAsync = async (server) => {
   server.post('/reindex', async (req, reply) => {
-    reply.status(200).send({ message: 'Queued.' })
+    await reply.status(200).send({ message: 'Queued.' })
 
     const rulesIndex = meilisearch.index('rules')
     const ruleElementsIndex = meilisearch.index('ruleElements')
 
     await rulesIndex.updateSettings({
       searchableAttributes: ['id', 'name', 'brief', 'description'],
-      filterableAttributes: ['authors', 'visibility'],
+      filterableAttributes: ['authors', 'visibility']
     })
     await ruleElementsIndex.updateSettings({
       searchableAttributes: ['name', 'keyword'],
-      filterableAttributes: ['rule'],
+      filterableAttributes: ['rule']
     })
 
     console.log(

@@ -1,5 +1,5 @@
-import { Socket } from 'socket.io'
+import type { Socket } from 'socket.io'
 
 export class Cluster {
-  constructor(public id: number, public socket: Socket) {}
+  constructor (public id: number, public socket: Socket) {}
 }

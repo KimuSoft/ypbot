@@ -1,1 +1,1 @@
-import './metrics.js'
+import 'rpc/src/scheduler/metrics.js'

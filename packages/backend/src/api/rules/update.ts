@@ -1,16 +1,16 @@
-import { Static, Type } from '@sinclair/typebox'
-import { Visibility } from '@ypbot/database'
-import { FastifyPluginAsync } from 'fastify'
-
-import { requireAuth } from '../../utils/auth.js'
-import { meilisearch, searchDocumentTransformers } from '../../utils/meilisearch.js'
+import type { Static }                             from '@sinclair/typebox'
+import { Type }                                    from '@sinclair/typebox'
+import { requireAuth }                             from 'backend/src/utils/auth.js'
+import { meilisearch, searchDocumentTransformers } from 'backend/src/utils/meilisearch.js'
+import type { FastifyPluginAsync }                 from 'fastify'
+import { Visibility }                              from 'ypbot-api-types'
 
 const RuleUpdateSchema = Type.Partial(
   Type.Object({
     name: Type.String({ minLength: 1 }),
     brief: Type.String({ minLength: 1 }),
     description: Type.String(),
-    visibility: Type.Enum(Visibility),
+    visibility: Type.Enum(Visibility)
   })
 )
 
@@ -26,12 +26,11 @@ export const ruleUpdateRoutes: FastifyPluginAsync = async (server) => {
 
       await authors.init()
 
-      if (!authors.toArray().some((x) => x.id === req.user!.id))
-        return reply.status(400).send(new Error('Missing permissions'))
+      if (!authors.toArray().some((x) => x.id === req.user?.id)) return await reply.status(400).send(new Error('Missing permissions'))
 
-      if (body.name) rule.name = body.name
-      if (body.brief) rule.brief = body.brief
-      if (body.description) rule.description = body.description
+      if (body.name !== undefined && body.name.length !== 0) rule.name = body.name
+      if (body.brief !== undefined && body.brief.length !== 0) rule.brief = body.brief
+      if (body.description !== undefined && body.description.length !== 0) rule.description = body.description
       if (body.visibility !== undefined) rule.visibility = body.visibility
 
       await rule.authors.init()

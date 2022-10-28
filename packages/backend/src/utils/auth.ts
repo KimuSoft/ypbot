@@ -1,27 +1,32 @@
-import { User } from '@ypbot/database'
-import { RESTPostOAuth2RefreshTokenResult } from 'discord-api-types/v10.js'
-import { FastifyRequest, RouteGenericInterface, RouteHandler } from 'fastify'
+import type { User }                                                from '@ypbot/database'
+import { discordApi }                                               from 'backend/src/utils/api.js'
+import type { RESTPostOAuth2RefreshTokenResult }                    from 'discord-api-types/v10.js'
+import type { FastifyRequest, RouteGenericInterface, RouteHandler } from 'fastify'
 
-import { discordApi } from './api.js'
-
-export const requireAuth = <T extends RouteGenericInterface>(handler?: RouteHandler<T>) => {
+export const requireAuth = <T extends RouteGenericInterface>(handler?: RouteHandler<T>): RouteHandler<T> => {
   return (async (req, reply) => {
-    if (!req.user) return reply.status(401).send(new Error('Unauthorized') as never)
+    if (req.user == null) return await reply.status(401).send(new Error('Unauthorized') as never)
 
-    return handler?.bind(req.server)(req, reply)
+    return await handler?.bind(req.server)(req, reply)
   }) as RouteHandler<T>
 }
 
-export const getUserDiscordAccessToken = async (req: FastifyRequest, user: User) => {
+if (process.env.DISCORD_CLIENT_ID === undefined) throw new Error('DISCORD_CLIENT_ID is undefined')
+if (process.env.DISCORD_CLIENT_SECRET === undefined) throw new Error('DISCORD_CLIENT_SECRET is undefined')
+
+const discordClientId = process.env.DISCORD_CLIENT_ID
+const discordClientSecret = process.env.DISCORD_CLIENT_SECRET
+
+export const getUserDiscordAccessToken = async (req: FastifyRequest, user: User): Promise<string> => {
   if (user.discordTokenExpiresAt.getTime() > Date.now()) return user.discordAccessToken
 
   const { data: tokens } = await discordApi.post<RESTPostOAuth2RefreshTokenResult>(
     '/oauth2/token',
     new URLSearchParams({
-      client_id: process.env.DISCORD_CLIENT_ID!,
-      client_secret: process.env.DISCORD_CLIENT_SECRET!,
+      client_id: discordClientId,
+      client_secret: discordClientSecret,
       grant_type: 'refresh_token',
-      refresh_token: user.discordRefreshToken,
+      refresh_token: user.discordRefreshToken
     })
   )
 

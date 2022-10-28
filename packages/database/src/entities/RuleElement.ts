@@ -1,31 +1,32 @@
 import { Entity, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core'
-
-import type { Rule } from './Rule.js'
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+import type { Rule }                               from '@ypbot/database/src/entities/Rule.js'
+import type { YPRuleElement }                      from 'ypbot-api-types'
 
 @Entity({ tableName: 'ruleElements' })
 export class RuleElement {
   @PrimaryKey({ autoincrement: true })
-  id!: number
+    id!: number
 
   @Property()
-  name!: string
+    name!: string
 
   @Property()
-  advanced!: boolean
+    advanced!: boolean
 
   @Property()
-  keyword!: string
+    keyword!: string
 
   @ManyToOne('Rule')
-  rule!: Rule
+    rule!: Rule
 
-  toJSON() {
+  toJSON (): YPRuleElement {
     return {
       id: this.id,
 
       name: this.name,
       advanced: this.advanced,
-      keyword: this.keyword,
+      keyword: this.keyword
     }
   }
 }

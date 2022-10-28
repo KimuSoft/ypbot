@@ -1,19 +1,20 @@
-import { Rule, Visibility } from '@ypbot/database'
-import { FastifyInstance } from 'fastify'
+import { Rule }                      from '@ypbot/database'
+import { PaginationResponse }        from 'backend/src/api/schema/pagination.js'
+import type { RuleSearchSchemaType } from 'backend/src/api/schema/ruleSearch.js'
+import { RuleSearchSchema }          from 'backend/src/api/schema/ruleSearch.js'
+import { meilisearch }               from 'backend/src/utils/meilisearch.js'
+import type { FastifyInstance }      from 'fastify'
+import { Visibility }                from 'ypbot-api-types'
 
-import { meilisearch } from '../../utils/meilisearch.js'
-import { PaginationResponse } from '../schema/pagination.js'
-import { RuleSearchSchema, RuleSearchSchemaType } from '../schema/ruleSearch.js'
-
-export const ruleList = (server: FastifyInstance) => {
+export const ruleList = (server: FastifyInstance): void => {
   server.get<{
     Querystring: RuleSearchSchemaType
   }>(
     '/',
     {
       schema: {
-        querystring: RuleSearchSchema,
-      },
+        querystring: RuleSearchSchema
+      }
     },
     async (req) => {
       const RulesRepository = req.em.getRepository(Rule)
@@ -22,23 +23,19 @@ export const ruleList = (server: FastifyInstance) => {
 
       let filter = `(visibility = ${Visibility.Private})`
 
-      if (req.user) {
-        filter += `OR (authors = '${req.user.id}')`
-      }
+      if (req.user != null) filter += `OR (authors = '${req.user.id}')`
 
-      if (query.visibility !== undefined) {
-        filter = `(${filter})AND(visibility=${query.visibility})`
-      }
+      if (query.visibility !== undefined) filter = `(${filter})AND(visibility=${query.visibility})`
 
       const { hits, estimatedTotalHits } = await meilisearch.index('rules').search(query.query, {
         offset: query.offset,
         limit: query.limit,
-        filter,
+        filter
       })
 
       const rules = await RulesRepository.find(
         {
-          id: { $in: hits.map((x) => x.id) },
+          id: { $in: hits.map((x) => x.id) }
         },
         { limit: query.limit, offset: query.offset }
       )

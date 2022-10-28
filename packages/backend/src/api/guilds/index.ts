@@ -1,12 +1,10 @@
-import { APIGuild } from 'discord-api-types/v10.js'
-import { FastifyPluginAsync } from 'fastify'
+import { guildChannelsRoutes }         from 'backend/src/api/guilds/channels.js'
+import { requireAuth }                 from 'backend/src/utils/auth.js'
+import { getUserGuild, getUserGuilds } from 'backend/src/utils/guilds.js'
+import { rpcFetch }                    from 'backend/src/utils/rpc.js'
+import type { FastifyPluginAsync }     from 'fastify'
 
-import { requireAuth } from '../../utils/auth.js'
-import { getUserGuild, getUserGuilds } from '../../utils/guilds.js'
-import { rpcFetch } from '../../utils/rpc.js'
-import { guildChannelsRoutes } from './channels.js'
-
-type BotGuild = {
+interface BotGuild {
   id: string
   name: string
 }
@@ -21,14 +19,14 @@ export const guildRoutes: FastifyPluginAsync = async (server) => {
   server.addHook(
     'onRequest',
     requireAuth(async (req, reply) => {
+      if (req.user === undefined) throw new Error('user is undefined')
+
       const { id } = req.params as { id: string }
 
-      if (id) {
-        const guild = await getUserGuild(req, req.user!, id)
+      if (typeof id === 'string') {
+        const guild = await getUserGuild(req, req.user, id)
 
-        if (!guild) {
-          return reply.status(404).send(new Error('Guild not found'))
-        }
+        if (guild == null) return await reply.status(404).send(new Error('Guild not found'))
 
         req.context.guild = guild
       }
@@ -36,7 +34,9 @@ export const guildRoutes: FastifyPluginAsync = async (server) => {
   )
 
   server.get('/', async (req) => {
-    const user = req.user!
+    if (req.user === undefined) throw new Error('user is undefined')
+
+    const user = req.user
 
     const guilds = await getUserGuilds(req, user)
 
@@ -46,9 +46,8 @@ export const guildRoutes: FastifyPluginAsync = async (server) => {
 
     return guilds.map((x) => {
       const botGuild = fetchedGuilds.find((y) => y.id === x.id)
-      if (botGuild) {
-        return { ...x, ...botGuild, invited: true }
-      }
+      if (botGuild != null) return { ...x, ...botGuild, invited: true }
+
       return { ...x, invited: false }
     })
   })

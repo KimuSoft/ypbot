@@ -13,3 +13,6 @@
 .env
 dist
 /data
+
+node_modules
+.turbo

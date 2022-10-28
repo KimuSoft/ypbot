@@ -1,14 +1,14 @@
-import { Static, Type } from '@sinclair/typebox'
-import { RuleElement } from '@ypbot/database'
-import { FastifyPluginAsync } from 'fastify'
-
-import { requireAuth } from '../../../utils/auth.js'
-import { meilisearch, searchDocumentTransformers } from '../../../utils/meilisearch.js'
+import type { Static }                             from '@sinclair/typebox'
+import { Type }                                    from '@sinclair/typebox'
+import { RuleElement }                             from '@ypbot/database'
+import { requireAuth }                             from 'backend/src/utils/auth.js'
+import { meilisearch, searchDocumentTransformers } from 'backend/src/utils/meilisearch.js'
+import type { FastifyPluginAsync }                 from 'fastify'
 
 const CreateElementSchema = Type.Object({
   name: Type.String({ minLength: 1 }),
   keyword: Type.String({ minLength: 1 }),
-  advanced: Type.Boolean(),
+  advanced: Type.Boolean()
 })
 
 export const createRuleElement: FastifyPluginAsync = async (server) => {
@@ -23,8 +23,7 @@ export const createRuleElement: FastifyPluginAsync = async (server) => {
 
       const authors = await rule.authors.init()
 
-      if (!authors.toArray().some((x) => x.id === req.user!.id))
-        return reply.status(400).send(new Error('Missing permissions'))
+      if (!authors.toArray().some((x) => x.id === req.user?.id)) return await reply.status(400).send(new Error('Missing permissions'))
 
       const elem = new RuleElement()
 

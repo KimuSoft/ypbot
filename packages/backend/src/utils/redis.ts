@@ -1,5 +1,4 @@
-import Redis from 'ioredis'
-
-import { redisUrl } from '../config.js'
+import { redisUrl } from 'backend/src/config.js'
+import Redis        from 'ioredis'
 
 export const redis = new Redis(redisUrl)

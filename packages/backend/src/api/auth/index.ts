@@ -1,34 +1,43 @@
-import { Static, Type } from '@sinclair/typebox'
-import { User, orm } from '@ypbot/database'
-import {
-  APIUser,
+import type { Static } from '@sinclair/typebox'
+import { Type }        from '@sinclair/typebox'
+import { User }        from '@ypbot/database'
+import { jwtSecret }   from 'backend/src/config.js'
+import { discordApi }  from 'backend/src/utils/api.js'
+import type {
   RESTGetAPIUserResult,
-  RESTPostOAuth2AccessTokenResult,
-  Routes,
+  RESTPostOAuth2AccessTokenResult
 } from 'discord-api-types/v10'
-import { FastifyPluginAsync } from 'fastify'
-import jwt from 'jsonwebtoken'
-
-import { jwtSecret } from '../../config.js'
-import { discordApi } from '../../utils/api.js'
+import {
+  Routes
+} from 'discord-api-types/v10'
+import type { FastifyPluginAsync } from 'fastify'
+import jwt                         from 'jsonwebtoken'
 
 const LoginData = Type.Object({
-  code: Type.String(),
+  code: Type.String()
 })
 
 const LoginResponseData = Type.Object({
-  token: Type.String(),
+  token: Type.String()
 })
+
+if (process.env.DISCORD_CLIENT_ID === undefined) throw new Error('DISCORD_CLIENT_ID is undefined')
+if (process.env.DISCORD_CLIENT_SECRET === undefined) throw new Error('DISCORD_CLIENT_SECRET is undefined')
+if (process.env.DISCORD_REDIRECT_URI === undefined) throw new Error('DISCORD_REDIRECT_URI is undefined')
+
+const discordClientId = process.env.DISCORD_CLIENT_ID
+const discordClientSecret = process.env.DISCORD_CLIENT_SECRET
+const discordRedirectUri = process.env.DISCORD_REDIRECT_URI
 
 export const authRoutes: FastifyPluginAsync = async (server) => {
   server.get('/login', async (_req, reply) => {
-    return reply.redirect(
+    return await reply.redirect(
       302,
       `https://discord.com/api/v10/oauth2/authorize?${new URLSearchParams({
-        client_id: process.env.DISCORD_CLIENT_ID!,
+        client_id: discordClientId,
         scope: 'identify guilds',
         response_type: 'code',
-        redirect_uri: process.env.DISCORD_REDIRECT_URI!,
+        redirect_uri: discordRedirectUri
       })}`
     )
   })
@@ -40,37 +49,37 @@ export const authRoutes: FastifyPluginAsync = async (server) => {
       schema: {
         body: LoginData,
         response: {
-          200: LoginResponseData,
-        },
-      },
+          200: LoginResponseData
+        }
+      }
     },
     async (req, reply) => {
       const { data: tokens } = await discordApi.post<RESTPostOAuth2AccessTokenResult>(
         Routes.oauth2TokenExchange(),
         new URLSearchParams({
-          client_id: process.env.DISCORD_CLIENT_ID!,
-          client_secret: process.env.DISCORD_CLIENT_SECRET!,
+          client_id: discordClientId,
+          client_secret: discordClientSecret,
           grant_type: 'authorization_code',
-          redirect_uri: process.env.DISCORD_REDIRECT_URI!,
-          code: req.body.code,
+          redirect_uri: discordRedirectUri,
+          code: req.body.code
         })
       )
 
       const discordUser = (
         await discordApi.get<RESTGetAPIUserResult>(Routes.user(), {
           headers: {
-            Authorization: `Bearer ${tokens.access_token}`,
-          },
+            Authorization: `Bearer ${tokens.access_token}`
+          }
         })
-      ).data as APIUser
+      ).data
 
       const UserRepo = req.em.getRepository(User)
 
       let user: User | null = await UserRepo.findOne({
-        id: discordUser.id,
+        id: discordUser.id
       })
 
-      if (!user) {
+      if (user == null) {
         user = new User()
 
         user.id = discordUser.id
@@ -91,7 +100,7 @@ export const authRoutes: FastifyPluginAsync = async (server) => {
 
       const token = jwt.sign({ id: user.id }, jwtSecret, { expiresIn: '7d' })
 
-      return reply.status(200).send({ token })
+      return await reply.status(200).send({ token })
     }
   )
 }

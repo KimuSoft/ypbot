@@ -1,11 +1,12 @@
-import { Static, Type } from '@sinclair/typebox'
-import { Channel, Guild, Rule, Visibility } from '@ypbot/database'
-import { FastifyContext, FastifyPluginAsync } from 'fastify'
-
-import { requireAuth } from '../../utils/auth.js'
-import { rpcFetch } from '../../utils/rpc.js'
-import { PaginationResponse } from '../schema/pagination.js'
-import { ChanenlRuleSearchSchema } from '../schema/ruleSearch.js'
+import type { Static }                             from '@sinclair/typebox'
+import { Type }                                    from '@sinclair/typebox'
+import { Channel, Guild, Rule }                    from '@ypbot/database'
+import { PaginationResponse }                      from 'backend/src/api/schema/pagination.js'
+import { ChanenlRuleSearchSchema }                 from 'backend/src/api/schema/ruleSearch.js'
+import { requireAuth }                             from 'backend/src/utils/auth.js'
+import { rpcFetch }                                from 'backend/src/utils/rpc.js'
+import type { FastifyContext, FastifyPluginAsync } from 'fastify'
+import { Visibility }                              from 'ypbot-api-types'
 
 declare module 'fastify' {
   interface FastifyContext {
@@ -19,7 +20,7 @@ declare module 'fastify' {
 }
 
 const ChannelRuleAddSchema = Type.Object({
-  rule: Type.Integer(),
+  rule: Type.Integer()
 })
 
 export const guildChannelsRoutes: FastifyPluginAsync = async (server) => {
@@ -34,21 +35,21 @@ export const guildChannelsRoutes: FastifyPluginAsync = async (server) => {
 
     const botChannel = await rpcFetch('lookupGuildChannel', req.context.guild.id, channelId)
 
-    if (!botChannel) return reply.status(404).send(new Error('Channel not found'))
+    if (botChannel === null) return await reply.status(404).send(new Error('Channel not found'))
 
     let channel = await req.em.getRepository(Channel).findOne({
       id: channelId,
       guild: {
-        id: req.context.guild.id,
-      },
+        id: req.context.guild.id
+      }
     })
 
-    if (!channel) {
+    if (channel == null) {
       let guild = await req.em.getRepository(Guild).findOne({
-        id: req.context.guild.id,
+        id: req.context.guild.id
       })
 
-      if (!guild) {
+      if (guild == null) {
         guild = new Guild()
         guild.id = req.context.guild.id
       }
@@ -79,10 +80,12 @@ export const guildChannelsRoutes: FastifyPluginAsync = async (server) => {
     '/:channelId/rules',
     {
       schema: {
-        querystring: ChanenlRuleSearchSchema,
-      },
+        querystring: ChanenlRuleSearchSchema
+      }
     },
     async (req) => {
+      if (req.user === undefined) throw new Error('user is undefined')
+
       const ch = req.context.channel
 
       const RulesRepository = req.em.getRepository(Rule)
@@ -90,8 +93,8 @@ export const guildChannelsRoutes: FastifyPluginAsync = async (server) => {
       const [rules, count] = await RulesRepository.findAndCount(
         {
           channels: {
-            id: ch.id,
-          },
+            id: ch.id
+          }
         },
         { limit: req.query.limit, offset: req.query.offset }
       )
@@ -104,10 +107,12 @@ export const guildChannelsRoutes: FastifyPluginAsync = async (server) => {
     '/:channelId/rules',
     {
       schema: {
-        body: ChannelRuleAddSchema,
-      },
+        body: ChannelRuleAddSchema
+      }
     },
     requireAuth(async (req, reply) => {
+      if (req.user === undefined) throw new Error('user is undefined')
+
       const RuleRepo = req.em.getRepository(Rule)
 
       const rule = await RuleRepo.findOne({
@@ -115,24 +120,22 @@ export const guildChannelsRoutes: FastifyPluginAsync = async (server) => {
         $or: [
           {
             authors: {
-              id: req.user!.id,
-            },
+              id: req.user.id
+            }
           },
           {
-            visibility: Visibility.Public,
-          },
-        ],
+            visibility: Visibility.Public
+          }
+        ]
       })
 
-      if (!rule) return reply.status(400).send(new Error('Rule not found'))
+      if (rule == null) return await reply.status(400).send(new Error('Rule not found'))
 
       const channel = req.context.channel
 
       await channel.rules.init()
 
-      if (channel.rules.contains(rule)) {
-        return reply.status(400).send(new Error('Rule is already added'))
-      }
+      if (channel.rules.contains(rule)) return await reply.status(400).send(new Error('Rule is already added'))
 
       channel.rules.add(rule)
 
@@ -140,7 +143,7 @@ export const guildChannelsRoutes: FastifyPluginAsync = async (server) => {
 
       await req.em.persistAndFlush(channel)
 
-      return reply.send(rule)
+      return await reply.send(rule)
     })
   )
 }

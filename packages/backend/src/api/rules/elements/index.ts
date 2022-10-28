@@ -1,10 +1,9 @@
-import { RuleElement } from '@ypbot/database'
-import { FastifyPluginAsync } from 'fastify'
-
-import { meilisearch } from '../../../utils/meilisearch.js'
-import { createRuleElement } from './create.js'
-import { ruleElementListRoutes } from './list.js'
-import { updateRuleElementRoutes } from './update.js'
+import { RuleElement }             from '@ypbot/database'
+import { createRuleElement }       from 'backend/src/api/rules/elements/create.js'
+import { ruleElementListRoutes }   from 'backend/src/api/rules/elements/list.js'
+import { updateRuleElementRoutes } from 'backend/src/api/rules/elements/update.js'
+import { meilisearch }             from 'backend/src/utils/meilisearch.js'
+import type { FastifyPluginAsync } from 'fastify'
 
 declare module 'fastify' {
   interface FastifyContext {
@@ -15,7 +14,7 @@ declare module 'fastify' {
 export const ruleElementsRoutes: FastifyPluginAsync = async (server) => {
   server.addHook('onRequest', async (req, reply) => {
     const { elId } = req.params as { elId: string }
-    if (elId) {
+    if (typeof elId === 'string') {
       if (!isNaN(Number(elId))) {
         const id = Number(elId)
 
@@ -23,11 +22,10 @@ export const ruleElementsRoutes: FastifyPluginAsync = async (server) => {
 
         const el = await RuleElementsRepo.findOne({ id, rule: { id: req.context.apiRule.id } })
 
-        req.context.apiRuleElement = el!
+        req.context.apiRuleElement = el as RuleElement
       }
 
-      if (!req.context.apiRuleElement)
-        return reply.status(404).send(new Error('Rule element not found'))
+      if (typeof req.context.apiRuleElement !== 'object') { return await reply.status(404).send(new Error('Rule element not found')) }
     }
   })
 
@@ -42,8 +40,7 @@ export const ruleElementsRoutes: FastifyPluginAsync = async (server) => {
 
     await authors.init()
 
-    if (!authors.toArray().some((x) => x.id === req.user!.id))
-      return reply.status(400).send(new Error('Missing permissions'))
+    if (!authors.toArray().some((x) => x.id === req.user?.id)) return await reply.status(400).send(new Error('Missing permissions'))
 
     const el = req.context.apiRuleElement
 

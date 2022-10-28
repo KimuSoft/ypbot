@@ -1,16 +1,15 @@
-import { Collection, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryKey } from '@mikro-orm/core'
-
-import type { Guild } from './Guild.js'
-import { Rule } from './Rule.js'
+import { Collection, Entity, ManyToMany, ManyToOne, PrimaryKey } from '@mikro-orm/core'
+import { Guild }                                                 from '@ypbot/database/src/entities/Guild.js'
+import { Rule }                                                  from '@ypbot/database/src/entities/Rule.js'
 
 @Entity({ tableName: 'channels' })
 export class Channel {
   @PrimaryKey()
-  id!: string
+    id!: string
 
   @ManyToOne('Guild')
-  guild!: Guild
+    guild!: Guild
 
   @ManyToMany(() => Rule, (r) => r.channels)
-  rules = new Collection<Rule>(this)
+    rules = new Collection<Rule>(this)
 }

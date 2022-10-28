@@ -1,11 +1,10 @@
-import { EntityManager } from '@mikro-orm/core'
-import { User } from '@ypbot/database'
-import chalk from 'chalk'
-import fastify from 'fastify'
-
-import { apiRoutes } from './api/index.js'
-import './config.js'
-import { rpc } from './utils/rpc.js'
+import 'backend/src/config.js'
+import type { EntityManager } from '@mikro-orm/core'
+import type { User }          from '@ypbot/database'
+import { apiRoutes }          from 'backend/src/api/index.js'
+import { rpc }                from 'backend/src/utils/rpc.js'
+import chalk                  from 'chalk'
+import fastify                from 'fastify'
 
 await new Promise<void>((resolve) => {
   rpc.once('connect', resolve)

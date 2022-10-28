@@ -1,37 +1,42 @@
-import Eris, { ChannelTypes, Constants, Guild, GuildTextableChannel } from 'eris'
-import _ from 'lodash'
+import { rpc }                                                                                          from 'bot/src/utils/rpc.js'
+import type { ChannelTypes, Guild, GuildTextableChannel, GuildTextChannelTypes, TextVoiceChannelTypes } from 'eris'
+import type Eris                                                                                        from 'eris'
+import { Constants }                                                                                    from 'eris'
+import _                                                                                                from 'lodash'
 
-import { rpc } from './rpc.js'
-
-const transformGuild = (guild: Guild) => {
+const transformGuild = (guild: Guild): { id: string, name: string } => {
   return {
     id: guild.id,
-    name: guild.name,
+    name: guild.name
   }
 }
 
-const transformChannel = (channel: GuildTextableChannel) => {
+const transformChannel = (channel: GuildTextableChannel): {
+  id: string
+  name: string
+  type: GuildTextChannelTypes | TextVoiceChannelTypes
+} => {
   return {
     id: channel.id,
     name: channel.name,
-    type: channel.type,
+    type: channel.type
   }
 }
 
 const whitelistedChannelTypes = [
   Constants.ChannelTypes.GUILD_TEXT,
   Constants.ChannelTypes.GUILD_VOICE,
-  Constants.ChannelTypes.GUILD_NEWS,
+  Constants.ChannelTypes.GUILD_NEWS
 ] as ChannelTypes[]
 
-export const lookupEvents = (eris: Eris.Client) => {
+export const lookupEvents = (eris: Eris.Client): void => {
   rpc.on('lookupGuilds', (id: string[], cb) => {
     const res: Guild[] = []
 
     for (const g of id) {
       const guild = eris.guilds.get(g)
 
-      if (guild) res.push(guild)
+      if (guild != null) res.push(guild)
     }
 
     cb(res.map(transformGuild))
@@ -40,13 +45,13 @@ export const lookupEvents = (eris: Eris.Client) => {
   rpc.on('lookupGuild', (id: string, cb) => {
     const guild = eris.guilds.get(id)
 
-    cb(guild ? transformGuild(guild) : null)
+    cb((guild != null) ? transformGuild(guild) : null)
   })
 
   rpc.on('lookupGuildChannels', (id: string, cb) => {
     const guild = eris.guilds.get(id)
 
-    if (!guild) return cb(null)
+    if (guild == null) return cb(null)
 
     const categories = _.sortBy(
       guild.channels.filter((x) => x.type === Constants.ChannelTypes.GUILD_CATEGORY),
@@ -54,7 +59,7 @@ export const lookupEvents = (eris: Eris.Client) => {
     ).map((x) => ({
       id: x.id,
       name: x.name,
-      channels: [] as ReturnType<typeof transformChannel>[],
+      channels: [] as Array<ReturnType<typeof transformChannel>>
     }))
 
     for (const category of categories) {
@@ -74,7 +79,7 @@ export const lookupEvents = (eris: Eris.Client) => {
 
     const channel = guild?.channels.get(channelId)
 
-    if (!channel) return cb(null)
+    if (channel == null) return cb(null)
 
     if (!whitelistedChannelTypes.includes(channel.type)) return cb(null)
 

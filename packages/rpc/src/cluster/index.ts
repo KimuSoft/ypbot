@@ -1,14 +1,16 @@
-import { Collection } from '@discordjs/collection'
-import chalk from 'chalk'
-import { Socket } from 'socket.io'
-
-import { collectMetrics } from '../scheduler/metrics.js'
-import { Cluster } from './structures/Cluster.js'
+import { Collection }     from '@discordjs/collection'
+import chalk              from 'chalk'
+import { Cluster }        from 'rpc/src/cluster/structures/Cluster.js'
+import { collectMetrics } from 'rpc/src/scheduler/metrics.js'
+import type { Socket }    from 'socket.io'
 
 export const clusters = new Collection<number, Cluster>()
 
-export const identifyCluster = async (socket: Socket, id: number) => {
-  if (clusters.has(id)) return socket.disconnect(true)
+export const identifyCluster = async (socket: Socket, id: number): Promise<void> => {
+  if (clusters.has(id)) {
+    socket.disconnect(true)
+    return
+  }
 
   const cluster = new Cluster(id, socket)
 

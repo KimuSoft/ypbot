@@ -1,13 +1,12 @@
-import { User, orm } from '@ypbot/database'
-import { FastifyPluginAsync } from 'fastify'
-import jwt from 'jsonwebtoken'
-
-import { jwtSecret } from '../config.js'
-import { adminRoutes } from './admin/index.js'
-import { authRoutes } from './auth/index.js'
-import { guildRoutes } from './guilds/index.js'
-import { rulesRoutes } from './rules/index.js'
-import { userRoutes } from './users/index.js'
+import { User, orm }               from '@ypbot/database'
+import { adminRoutes }             from 'backend/src/api/admin/index.js'
+import { authRoutes }              from 'backend/src/api/auth/index.js'
+import { guildRoutes }             from 'backend/src/api/guilds/index.js'
+import { rulesRoutes }             from 'backend/src/api/rules/index.js'
+import { userRoutes }              from 'backend/src/api/users/index.js'
+import { jwtSecret }               from 'backend/src/config.js'
+import type { FastifyPluginAsync } from 'fastify'
+import jwt                         from 'jsonwebtoken'
 
 export const apiRoutes: FastifyPluginAsync = async (server) => {
   server.get('/', () => ({ hello: 'world' }))
@@ -18,7 +17,7 @@ export const apiRoutes: FastifyPluginAsync = async (server) => {
     try {
       let token = req.headers.authorization
 
-      if (!token) return
+      if (token === undefined) return
       if (!token.startsWith('Bearer ')) return
       token = token.slice('Bearer '.length)
 
@@ -30,7 +29,7 @@ export const apiRoutes: FastifyPluginAsync = async (server) => {
 
       req.user = user ?? undefined
     } catch (e) {
-      return
+
     }
   })
 

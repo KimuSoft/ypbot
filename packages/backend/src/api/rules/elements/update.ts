@@ -1,14 +1,14 @@
-import { Static, Type } from '@sinclair/typebox'
-import { FastifyPluginAsync } from 'fastify'
-
-import { requireAuth } from '../../../utils/auth.js'
-import { meilisearch, searchDocumentTransformers } from '../../../utils/meilisearch.js'
+import type { Static }                             from '@sinclair/typebox'
+import { Type }                                    from '@sinclair/typebox'
+import { requireAuth }                             from 'backend/src/utils/auth.js'
+import { meilisearch, searchDocumentTransformers } from 'backend/src/utils/meilisearch.js'
+import type { FastifyPluginAsync }                 from 'fastify'
 
 const RuleElementUpdateSchema = Type.Partial(
   Type.Object({
     name: Type.String({ minLength: 1 }),
     keyword: Type.String({ minLength: 1 }),
-    advanced: Type.Boolean(),
+    advanced: Type.Boolean()
   })
 )
 
@@ -23,15 +23,14 @@ export const updateRuleElementRoutes: FastifyPluginAsync = async (server) => {
 
       await authors.init()
 
-      if (!authors.toArray().some((x) => x.id === req.user!.id))
-        return reply.status(400).send(new Error('Missing permissions'))
+      if (!authors.toArray().some((x) => x.id === req.user?.id)) return await reply.status(400).send(new Error('Missing permissions'))
 
       const body = req.body
 
       const el = req.context.apiRuleElement
 
-      if (body.name) el.name = body.name
-      if (body.keyword) el.keyword = body.keyword
+      if (body.name !== undefined && body.name.length !== 0) el.name = body.name
+      if (body.keyword !== undefined && body.keyword.length !== 0) el.keyword = body.keyword
       if (body.advanced !== undefined) el.advanced = body.advanced
 
       await req.em.persistAndFlush(el)

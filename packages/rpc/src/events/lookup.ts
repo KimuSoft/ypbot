@@ -1,15 +1,14 @@
-import _ from 'lodash'
-import { Socket } from 'socket.io'
+import _               from 'lodash'
+import { clusters }    from 'rpc/src/cluster/index.js'
+import type { Socket } from 'socket.io'
 
-import { clusters } from '../cluster/index.js'
-
-export const lookupEvents = (io: Socket) => {
+export const lookupEvents = (io: Socket): void => {
   io.on('lookupGuilds', async (ids: string[], cb) => {
     const guilds = (
       await Promise.all(
         clusters.map(
-          (x) =>
-            new Promise((resolve) => {
+          async (x) =>
+            await new Promise((resolve) => {
               x.socket.emit('lookupGuilds', ids, (data: unknown) => {
                 resolve(data)
               })
@@ -19,7 +18,7 @@ export const lookupEvents = (io: Socket) => {
             })
         )
       )
-    ).filter((x) => !!x)
+    ).filter((x) => x !== null)
 
     cb(_.flatten(guilds))
   })
@@ -27,8 +26,8 @@ export const lookupEvents = (io: Socket) => {
       const guild = (
         await Promise.all(
           clusters.map(
-            (x) =>
-              new Promise((resolve) => {
+            async (x) =>
+              await new Promise((resolve) => {
                 x.socket.emit('lookupGuild', id, (data: unknown) => {
                   resolve(data)
                 })
@@ -38,7 +37,7 @@ export const lookupEvents = (io: Socket) => {
               })
           )
         )
-      ).find((x) => !!x)
+      ).find((x) => x !== null)
 
       cb(guild ?? null)
     })
@@ -46,8 +45,8 @@ export const lookupEvents = (io: Socket) => {
       const guild = (
         await Promise.all(
           clusters.map(
-            (x) =>
-              new Promise((resolve) => {
+            async (x) =>
+              await new Promise((resolve) => {
                 x.socket.emit('lookupGuildChannels', id, (data: unknown) => {
                   resolve(data)
                 })
@@ -57,7 +56,7 @@ export const lookupEvents = (io: Socket) => {
               })
           )
         )
-      ).find((x) => !!x)
+      ).find((x) => x !== null)
 
       cb(guild ?? null)
     })
@@ -65,8 +64,8 @@ export const lookupEvents = (io: Socket) => {
       const guild = (
         await Promise.all(
           clusters.map(
-            (x) =>
-              new Promise((resolve) => {
+            async (x) =>
+              await new Promise((resolve) => {
                 x.socket.emit('lookupGuildChannel', guildId, channelId, (data: unknown) => {
                   resolve(data)
                 })
@@ -76,7 +75,7 @@ export const lookupEvents = (io: Socket) => {
               })
           )
         )
-      ).find((x) => !!x)
+      ).find((x) => x !== null)
 
       cb(guild ?? null)
     })
