@@ -2,6 +2,8 @@ import { Migration } from '@mikro-orm/migrations'
 
 export class Migration20221118121910 extends Migration {
   async up (): Promise<void> {
+    this.addSql('create extension pgcrypto;')
+
     this.addSql('create table "guilds" ("id" varchar(255) not null, constraint "guilds_pkey" primary key ("id"));')
 
     this.addSql('create table "channels" ("id" varchar(255) not null, "guild_id" varchar(255) not null, constraint "channels_pkey" primary key ("id"));')
@@ -53,5 +55,7 @@ export class Migration20221118121910 extends Migration {
     this.addSql('drop table if exists "users" cascade;')
 
     this.addSql('drop table if exists "rules_authors" cascade;')
+
+    this.addSql('drop extension pgcrypto;')
   }
 }
