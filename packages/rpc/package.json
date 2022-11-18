@@ -14,7 +14,7 @@
     "typescript-transform-paths": "^3.4.4"
   },
   "scripts": {
-    "dev": "concurrently --handle-input \"tsc && nodemon dist\" \"ttsc -w\"",
+    "dev": "concurrently --handle-input \"ttsc && nodemon dist\" \"ttsc -w\"",
     "build": "ttsc"
   },
   "dependencies": {

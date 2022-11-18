@@ -10,3 +10,9 @@ services:
     image: redis
     ports:
       - '127.0.0.1:6379:6379'
+  postgres:
+    image: postgres
+    ports:
+      - '127.0.0.1:5432:5432'
+    environment:
+      - 'POSTGRES_PASSWORD=wowtest'
