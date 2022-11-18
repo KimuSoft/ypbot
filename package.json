@@ -16,7 +16,7 @@
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-n": "^15.0.0",
     "eslint-plugin-promise": "^6.0.0",
-    "turbo": "^1.6.1",
+    "turbo": "^1.6.3",
     "typescript": "*"
   },
   "dependencies": {
