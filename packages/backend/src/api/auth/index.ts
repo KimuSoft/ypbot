@@ -87,13 +87,13 @@ export const authRoutes: FastifyPluginAsync = async (server) => {
 
       user.username = discordUser.username
       user.discriminator = discordUser.discriminator
-      user.avatar = discordUser.avatar ?? undefined
+      user.avatar = discordUser.avatar ?? null
 
       user.discordAccessToken = tokens.access_token
       user.discordRefreshToken = tokens.refresh_token
       user.discordTokenExpiresAt = new Date(Date.now() + tokens.expires_in * 1000)
 
-      user.banner = discordUser.banner ?? undefined
+      user.banner = discordUser.banner ?? null
       user.accentColor = discordUser.accent_color ?? undefined
 
       await req.em.persistAndFlush(user)

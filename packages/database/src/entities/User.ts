@@ -16,10 +16,10 @@ export class User {
     discriminator!: string
 
   @Property({ nullable: true })
-    avatar?: string
+    avatar!: string | null
 
   @Property({ nullable: true })
-    banner?: string
+    banner!: string | null
 
   @Property({ nullable: true })
     accentColor?: number
@@ -44,7 +44,7 @@ export class User {
     rules = new Collection<Rule>(this)
 
   get avatarURL (): string {
-    if (this.avatar === undefined) return `https://cdn.discordapp.com/embed/avatars/${+this.discriminator % 4}.png`
+    if (this.avatar === null) return `https://cdn.discordapp.com/embed/avatars/${+this.discriminator % 4}.png`
 
     return `https://cdn.discordapp.com/avatars/${this.id}/${this.avatar}.${
       this.avatar.startsWith('a_') ? 'gif' : 'webp'
@@ -52,7 +52,7 @@ export class User {
   }
 
   get bannerURL (): string | null {
-    if (this.banner === undefined) return null
+    if (this.banner === null) return null
 
     return `https://cdn.discordapp.com/banners/${this.id}/${this.banner}.${
       this.banner.startsWith('a_') ? 'gif' : 'webp'
