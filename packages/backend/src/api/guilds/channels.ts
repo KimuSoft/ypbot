@@ -33,6 +33,8 @@ export const guildChannelsRoutes: FastifyPluginAsync = async (server) => {
   server.addHook('onRequest', async (req, reply) => {
     const { channelId } = req.params as { channelId: string }
 
+    if (channelId === undefined) return
+
     const botChannel = await rpcFetch('lookupGuildChannel', req.context.guild.id, channelId)
 
     if (botChannel === null) return await reply.status(404).send(new Error('Channel not found'))
