@@ -46,7 +46,7 @@ export class Rule {
       name: this.name,
       brief: this.brief,
       visibility: this.visibility,
-      authors: Array.from(this.authors.toArray().values()).map(x => (x as unknown as User).toJSON()),
+      authors: this.authors.getItems().map(x => x.toJSON()),
       description: fields.includes('description') ? this.description : undefined
     }
   }
