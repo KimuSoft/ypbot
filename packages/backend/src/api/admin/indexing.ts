@@ -10,15 +10,6 @@ export const indexingRoutes: FastifyPluginAsync = async (server) => {
     const rulesIndex = meilisearch.index('rules')
     const ruleElementsIndex = meilisearch.index('ruleElements')
 
-    await rulesIndex.updateSettings({
-      searchableAttributes: ['id', 'name', 'brief', 'description'],
-      filterableAttributes: ['authors', 'visibility']
-    })
-    await ruleElementsIndex.updateSettings({
-      searchableAttributes: ['name', 'keyword'],
-      filterableAttributes: ['rule']
-    })
-
     console.log(
       `${chalk.blue(`Queued(${chalk.green('delete all documents - rules')})`)}:`,
       await rulesIndex.deleteAllDocuments()

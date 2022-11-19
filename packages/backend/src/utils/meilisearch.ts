@@ -9,6 +9,23 @@ export const meilisearch = new MeiliSearch({
   apiKey: process.env.MEILISEARCH_TOKEN
 })
 
+await meilisearch.waitForTasks([
+  (await meilisearch.createIndex('rules')).taskUid,
+  (await meilisearch.createIndex('ruleElements')).taskUid
+])
+
+const rulesIndex = meilisearch.index('rules')
+const ruleElementsIndex = meilisearch.index('ruleElements')
+
+await rulesIndex.updateSettings({
+  searchableAttributes: ['id', 'name', 'brief', 'description'],
+  filterableAttributes: ['authors', 'visibility']
+})
+await ruleElementsIndex.updateSettings({
+  searchableAttributes: ['name', 'keyword'],
+  filterableAttributes: ['rule']
+})
+
 export const searchDocumentTransformers = {
   rule: (rule: Rule) => ({
     id: rule.id,
