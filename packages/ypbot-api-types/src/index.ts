@@ -14,6 +14,8 @@ export interface YPRuleElement {
   name: string
   advanced: boolean
   keyword: string
+
+  type: RuleElementType
 }
 
 export interface YPRule {
@@ -35,4 +37,9 @@ export enum UserFlags {
   None,
   Admin = 1 << 1,
   Contributor = 1 << 2,
+}
+
+export enum RuleElementType {
+  White,
+  Black
 }

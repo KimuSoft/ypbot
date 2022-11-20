@@ -4,11 +4,13 @@ import { RuleElement }                             from '@ypbot/database'
 import { requireAuth }                             from 'backend/src/utils/auth.js'
 import { meilisearch, searchDocumentTransformers } from 'backend/src/utils/meilisearch.js'
 import type { FastifyPluginAsync }                 from 'fastify'
+import { RuleElementType }                         from 'ypbot-api-types'
 
 const CreateElementSchema = Type.Object({
   name: Type.String({ minLength: 1 }),
   keyword: Type.String({ minLength: 1 }),
-  advanced: Type.Boolean()
+  advanced: Type.Boolean(),
+  type: Type.Enum(RuleElementType)
 })
 
 export const createRuleElement: FastifyPluginAsync = async (server) => {
@@ -18,7 +20,7 @@ export const createRuleElement: FastifyPluginAsync = async (server) => {
     '/',
     { schema: { body: CreateElementSchema } },
     requireAuth(async (req, reply) => {
-      const { name, keyword, advanced } = req.body
+      const { name, keyword, advanced, type } = req.body
       const rule = req.context.apiRule
 
       const authors = await rule.authors.init()
@@ -30,6 +32,7 @@ export const createRuleElement: FastifyPluginAsync = async (server) => {
       elem.name = name
       elem.keyword = keyword
       elem.advanced = advanced
+      elem.type = type
       elem.rule = rule
 
       await req.em.persistAndFlush(elem)

@@ -15,10 +15,10 @@ export class User {
   @Property()
     discriminator!: string
 
-  @Property({ nullable: true })
+  @Property({ nullable: true, type: 'string' })
     avatar!: string | null
 
-  @Property({ nullable: true })
+  @Property({ nullable: true, type: 'string' })
     banner!: string | null
 
   @Property({ nullable: true })
