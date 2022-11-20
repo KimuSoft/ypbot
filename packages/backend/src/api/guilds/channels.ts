@@ -101,6 +101,8 @@ export const guildChannelsRoutes: FastifyPluginAsync = async (server) => {
         { limit: req.query.limit, offset: req.query.offset }
       )
 
+      await req.em.populate(rules, ['authors'])
+
       return new PaginationResponse(count, rules)
     }
   )
