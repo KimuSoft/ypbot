@@ -1,3 +1,5 @@
+const path = require('path')
+
 module.exports = {
   root: true,
   env: {
@@ -13,7 +15,7 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
     project: [
-      './packages/*/tsconfig.json'
+      path.join(__dirname, 'packages/*/tsconfig.json')
       // './packages/bot/tsconfig.json',
       // './packages/database/tsconfig.json',
       // './packages/rpc/tsconfig.json'
