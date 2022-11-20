@@ -1,0 +1,16 @@
+{
+  "extends": "next/core-web-vitals",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "project": [
+      "./packages/frontend/tsconfig.json"
+      // './packages/bot/tsconfig.json',
+      // './packages/database/tsconfig.json',
+      // './packages/rpc/tsconfig.json'
+    ]
+  },
+  "rules": {
+    "arca/no-default-export": 0
+  }
+}
