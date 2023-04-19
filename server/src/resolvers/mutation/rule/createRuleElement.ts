@@ -10,6 +10,7 @@ export const createRuleElement: Resolver<
   if (info.regex) {
     try {
       new RegExp(info.regex)
+      await prisma.$queryRaw`select '' ~* ${info.regex}`
     } catch (e) {
       throw new ValidationError("Invalid regex")
     }

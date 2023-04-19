@@ -7,6 +7,7 @@ import {
   EmbedBuilder,
   Interaction,
   SelectMenuBuilder,
+  TextBasedChannel
 } from "discord.js"
 import { prisma, Rule, RuleType } from "shared"
 
@@ -29,7 +30,7 @@ class RuleModule extends Extension {
   async tags(i: ChatInputCommandInteraction) {
     let channel = i.channel
     if (!channel) return
-    if (channel.isThread()) channel = channel.parent
+    if (channel.isThread()) channel = channel.parent as TextBasedChannel
     if (!channel) return
     if (channel.isDMBased()) return i.reply("DM 안 받아요")
 

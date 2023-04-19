@@ -6,10 +6,11 @@ export const updateRuleElement: Resolver<
   RuleElement,
   RuleElement,
   { info: Partial<RuleElementInfo> }
-> = (elem, { info }) => {
+> = async (elem, { info }) => {
   if (info.regex) {
     try {
       new RegExp(info.regex)
+      await prisma.$queryRaw`select '' ~* ${info.regex}`
     } catch (e) {
       throw new ValidationError("Invalid regex")
     }
