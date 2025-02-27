@@ -1,0 +1,8 @@
+node_modules
+dist
+.idea
+.env
+build
+data
+postgres-data
+yarn-error.log
