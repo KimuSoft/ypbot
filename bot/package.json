@@ -4,7 +4,7 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "devDependencies": {
-    "@swc-node/register": "1.5.1",
+    "@swc-node/register": "1.10.9",
     "@types/chalk": "2.2.0",
     "@types/node": "18.0.6",
     "prettier": "2.7.1",
