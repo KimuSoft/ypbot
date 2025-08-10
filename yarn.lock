@@ -734,10 +734,10 @@
     "@types/connect" "*"
     "@types/node" "*"
 
-"@types/chalk@2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@types/chalk/-/chalk-2.2.0.tgz#b7f6e446f4511029ee8e3f43075fb5b73fbaa0ba"
-  integrity sha512-1zzPV9FDe1I/WHhRkf9SNgqtRJWZqrBWgu7JGveuHmmyR9CnAPCie2N/x+iHrgnpYBIcCJWHBoMRv2TRWktsvw==
+"@types/chalk@2.2.4":
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/@types/chalk/-/chalk-2.2.4.tgz#32cd215134f191402f4909b250c28efa1f3a9c01"
+  integrity sha512-pb/QoGqtCpH2famSp72qEsXkNzcErlVmiXlQ/ww+5AddD8TmmYS7EWg5T20YiNCAiTgs8pMf2G8SJG5h/ER1ZQ==
   dependencies:
     chalk "*"
 
